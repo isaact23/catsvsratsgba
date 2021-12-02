@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/${workspaceFolderBasename}.elf",
+            "args": [
+                "target remote ${env:TODAYSIP}:2345"
+            ],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "miDebuggerServerAddress": "${env:TODAYSIP}:2345",
+            "serverStarted": "started",
+            "preLaunchTask": "${defaultBuildTask}",
+            "logging": {
+                "moduleLoad": true,
+                "trace": true,
+                "engineLogging": true,
+                "programOutput": true,
+                "exceptions": true
+            },
+            "MIMode": "gdb",
+            "miDebuggerPath": "/opt/devkitpro/devkitARM/bin/arm-none-eabi-gdb",
+            "debugServerPath": "${workspaceFolder}/mgba.sh",
+            "debugServerArgs": "${workspaceFolder}/${workspaceFolderBasename}.elf -g"
+        }
+    ]
+}
