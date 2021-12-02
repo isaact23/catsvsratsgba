@@ -18,17 +18,17 @@ volatile u16* screen_block(u16 block) {
 int main() {
     
     // Load palette into palette memory
-    for (int i = 0; i < TILES_PALETTE_SIZE; i++) {
-        palette[i] = tiles_palette[i];
+    for (int i = 0; i < TILES25_PALETTE_SIZE; i++) {
+        palette[i] = TILES25_PALETTE[i];
     }
 
     // Load image into char block 0, two bytes at a time
     volatile u16* dest = char_block(0);
-    u16* image = (u16*) TILES_IMAGE;
-    if (TILES_WIDTH * TILES_HEIGHT > 16000) {
+    u16* image = (u16*) TILES25_IMAGE;
+    if (TILES25_WIDTH * TILES25_HEIGHT > 16000) {
         exit(-1);
     }
-    for (int i = 0; i < ((TILES_WIDTH * TILES_HEIGHT) / 2); i++) {
+    for (int i = 0; i < ((TILES25_WIDTH * TILES25_HEIGHT) / 2); i++) {
         dest[i] = image[i];
     }
 

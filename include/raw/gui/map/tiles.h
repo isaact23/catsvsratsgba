@@ -7,7 +7,7 @@
 #include <stdint.h>
 
 #define TILES_WIDTH 320
-#define TILES_HEIGHT 16 // should be 256
+#define TILES_HEIGHT 256
 
 #define TILES_PALETTE_SIZE 4
 

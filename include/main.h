@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include "gba_int.h"
 #include "tilemap.h"
-#include "raw/gui/map/tiles.h"
+#include "raw/gui/map/tiles25.h"
 
 #define WIDTH 240
 #define HEIGHT 160
