@@ -25,6 +25,9 @@ int main() {
     // Load image into char block 0, two bytes at a time
     volatile u16* dest = char_block(0);
     u16* image = (u16*) TILES_IMAGE;
+    if (TILES_WIDTH * TILES_HEIGHT > 16000) {
+        exit(-1);
+    }
     for (int i = 0; i < ((TILES_WIDTH * TILES_HEIGHT) / 2); i++) {
         dest[i] = image[i];
     }
@@ -39,7 +42,8 @@ int main() {
 
     *bg0cnt = (1 << 7)  | // 0 is 16 colors, 1 is 256
               (16 << 8) | // Tile data stored in screen block 16
-              (1 << 13);  // Enable wrapping
+              (1 << 13) | // Enable wrapping
+              (0 << 14);  // Background size, 0 is 256x256 (32x32 tiles)
 
 
     while (1) {}

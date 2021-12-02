@@ -2,6 +2,7 @@
 #define MAIN_H
 
 #include <stdint.h>
+#include <stdlib.h>
 #include "gba_int.h"
 #include "tilemap.h"
 #include "raw/gui/map/tiles.h"

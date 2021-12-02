@@ -5,4 +5,7 @@
 	echo "started"
 )&
 
-mgba-qt $1
+echo "YES!";
+echo $1 $2
+echo "NO!";
+mgba-qt $1 $2
