@@ -1,7 +1,7 @@
 #!/bin/bash
 
 (
-	sleep 1
+	sleep 2
 	echo "started"
 )&
 
