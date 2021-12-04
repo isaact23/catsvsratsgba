@@ -8,4 +8,4 @@
 echo "YES!";
 echo $1 $2
 echo "NO!";
-mgba-qt $1 $2
+mgba-qt -2 $1 $2
