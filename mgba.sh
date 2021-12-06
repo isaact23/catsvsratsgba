@@ -5,7 +5,5 @@
 	echo "started"
 )&
 
-echo "YES!";
-echo $1 $2
-echo "NO!";
+#echo $1 $2
 mgba-qt -2 $1 $2
