@@ -1,11 +1,8 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <stdint.h>
-#include <stdlib.h>
 #include "gba_int.h"
 #include "tilemap.h"
-#include "raw/images/gui/map/tiles25.h"
 
 #define WIDTH 240
 #define HEIGHT 160
@@ -69,6 +66,6 @@
 #define BUTTON_R (1 << 8)
 #define BUTTON_L (1 << 9)
 
-u16 getColor(u8 r, u8 g, u8 b);
+//u16 getColor(u8 r, u8 g, u8 b);
 
 #endif
