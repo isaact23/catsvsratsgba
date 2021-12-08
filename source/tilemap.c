@@ -1,4 +1,4 @@
-// Initialize tilemap with paths, bricks and side panel
+// Set up background tilemap
 
 #include "tilemap.h"
 
@@ -8,24 +8,25 @@ volatile u16* palette = (volatile u16*) 0x5000000;
 volatile u16* vram    = (volatile u16*) 0x6000000;
 
 // Return pointer to one of 4 character blocks
-volatile u16* tilemap_charBlock(u16 block) {
+volatile u16* char_block(u16 block) {
     return (volatile u16*) (0x6000000 + (block * 0x800));
 }
 
 // Return pointer to one of 32 screen blocks
-volatile u16* tilemap_screenBlock(u16 block) {
+volatile u16* screen_block(u16 block) {
     return (volatile u16*) (0x6000000 + (block * 0x800));
 }
 
-// Set up tilemap in GBA memory
+// Set up tilemap
 void tilemap_init() {
+    
     // Load palette into palette memory
     for (int i = 0; i < TILES25_PALETTE_SIZE; i++) {
         palette[i] = TILES25_PALETTE[i];
     }
-    
+
     // Load image into char block 0, two bytes at a time
-    volatile u16* dest = tilemap_charBlock(0);
+    volatile u16* dest = char_block(0);
     u16* image = (u16*) TILES25_IMAGE;
     if (TILES25_WIDTH * TILES25_HEIGHT > 16000) {
         exit(-1);
@@ -35,7 +36,7 @@ void tilemap_init() {
     }
 
     // Load tile data into screen block 16
-    dest = tilemap_screenBlock(16);
+    dest = screen_block(16);
     for (int i = 0; i < (TILEMAP_WIDTH * TILEMAP_HEIGHT); i++) {
         dest[i] = TILEMAP[i];
     }
