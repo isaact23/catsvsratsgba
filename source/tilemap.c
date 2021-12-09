@@ -21,17 +21,17 @@ volatile uint16_t* screen_block(uint16_t block) {
 void tilemap_init() {
     
     // Load palette into palette memory
-    for (int i = 0; i < TILES25_PALETTE_SIZE; i++) {
-        palette[i] = TILES25_PALETTE[i];
+    for (int i = 0; i < IMAGE_TILES_PALETTE_SIZE; i++) {
+        palette[i] = IMAGE_TILES_PALETTE[i];
     }
 
     // Load image into char block 0, two bytes at a time
     volatile uint16_t* dest = char_block(0);
-    uint16_t* image = (uint16_t*) TILES25_IMAGE;
-    if (TILES25_WIDTH * TILES25_HEIGHT > 16000) {
+    uint16_t* image = (uint16_t*) IMAGE_TILES_DATA;
+    if (IMAGE_TILES_WIDTH * IMAGE_TILES_HEIGHT > 16000) {
         exit(-1);
     }
-    for (int i = 0; i < ((TILES25_WIDTH * TILES25_HEIGHT) / 2); i++) {
+    for (int i = 0; i < ((IMAGE_TILES_WIDTH * IMAGE_TILES_HEIGHT) / 2); i++) {
         dest[i] = image[i];
     }
 

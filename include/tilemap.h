@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 #include "data/tilemap_data.h"
-#include "data/tiles25.h"
+#include "data/image_tiles.h"
 
 // Return pointer to one of 4 character blocks
 volatile uint16_t* char_block(uint16_t block);
