@@ -1,7 +1,6 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <stdint.h>
 #include <stdlib.h>
 
 #include "tilemap.h"
@@ -68,6 +67,6 @@
 #define BUTTON_R (1 << 8)
 #define BUTTON_L (1 << 9)
 
-u16 getColor(u8 r, u8 g, u8 b);
+uint16_t getColor(uint8_t r, uint8_t g, uint8_t b);
 
 #endif
