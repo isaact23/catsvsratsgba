@@ -4,8 +4,14 @@ struct RatManager ratManager;
 
 // Initialize rat manager
 void rat_manager_init() {
-    for (uint32_t i = 0; i < RAT_LIMIT; i++) {
-        struct Rat emptyRat = {0, 0, 0, 0};
-        ratManager.ratArray[i] = emptyRat;
+    ratManager.ratCount = 0;
+}
+
+// Add a new rat
+void rat_manager_add_rat(struct Rat rat) {
+    if (ratManager.ratCount >= RAT_LIMIT) {
+        exit(1);
     }
+    ratManager.ratArray[ratManager.ratCount] = rat;
+    ratManager.ratCount++;
 }
