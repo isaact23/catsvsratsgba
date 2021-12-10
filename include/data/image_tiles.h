@@ -6,8 +6,8 @@
 
 #include <stdint.h>
 
-#define IMAGE_TILES_WIDTH 80
-#define IMAGE_TILES_HEIGHT 64
+#define IMAGE_TILES_WIDTH 10
+#define IMAGE_TILES_HEIGHT 8
 
 #define IMAGE_TILES_PALETTE_SIZE 26
 
