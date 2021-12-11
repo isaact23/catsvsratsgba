@@ -22,7 +22,7 @@ void tilemap_init() {
     
     // Load palette into palette memory
     for (int i = 0; i < IMAGE_TILES_PALETTE_SIZE; i++) {
-        palette[i] = IMAGE_TILES_PALETTE[i];
+        bg_palette[i] = IMAGE_TILES_PALETTE[i];
     }
 
     // Load image into char block 0, two bytes at a time
