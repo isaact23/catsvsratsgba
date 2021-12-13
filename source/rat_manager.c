@@ -26,8 +26,9 @@ void rat_manager_render() {
     }
 
     // Copy sprite into sprite image memory
-    for (uint32_t i = 0; i < IMAGE_RAT_DEFAULT_WALK_WIDTH * IMAGE_RAT_DEFAULT_WALK_HEIGHT * 64; i++) {
-        sprite_image_vram[i] = IMAGE_RAT_DEFAULT_WALK_DATA[i];
+    uint16_t* sprite16 = (uint16_t*) IMAGE_RAT_DEFAULT_WALK_DATA;
+    for (uint32_t i = 0; i < IMAGE_RAT_DEFAULT_WALK_WIDTH * IMAGE_RAT_DEFAULT_WALK_HEIGHT * 32; i++) {
+        sprite_image_vram[i] = sprite16[i];
     }
 
     // Update sprite attributes
@@ -36,11 +37,12 @@ void rat_manager_render() {
         sprite_attributes[i * 4] =
             (rat.y)   |
             (1 << 13) | // 256 colors
-            (0 << 14);  // Square shape
+            (0 << 14);  // Shape
         sprite_attributes[i * 4 + 1] =
             (rat.x)   |
-            (1 << 14);  // 16x16 sprite size (2x2 tiles)
+            (1 << 14);  // Size
         sprite_attributes[i * 4 + 2] =
-            0; // Tile index
+            0         | // Tile index
+            (1 << 12);  // Priority
     }
 }

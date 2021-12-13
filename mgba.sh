@@ -1,5 +1,7 @@
 #!/bin/bash
 
+pkill mgba-qt
+
 (
 	sleep 2
 	echo "started"
