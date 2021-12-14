@@ -1,7 +1,6 @@
 // Set up background tilemap
 
-#include "tilemap.h"
-
+#include "screen/tilemap.h"
 
 volatile uint16_t* bg_palette = (volatile uint16_t*) 0x5000000;
 volatile uint16_t* vram       = (volatile uint16_t*) 0x6000000;
