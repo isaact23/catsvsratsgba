@@ -31,7 +31,7 @@ void rat_manager_render() {
         sprite_image_vram[i] = sprite16[i];
     }
 
-    // Update sprite attributes
+    // Update sprite attributes (TODO: ONLY UPDATE DURING VBLANK)
     for (uint32_t i = 0; i < ratCount; i++) {
         struct Rat rat = ratArray[i];
         sprite_attributes[i * 4] =
@@ -44,5 +44,10 @@ void rat_manager_render() {
         sprite_attributes[i * 4 + 2] =
             0         | // Tile index
             (1 << 12);  // Priority
+    }
+
+    // Move all unused sprites off-screen
+    for (uint32_t i = 1; i < 128; i++) {
+        sprite_attributes[i * 4] = 240;
     }
 }
