@@ -3,8 +3,8 @@
 
 #include <stdlib.h>
 
-#include "rat_manager.h"
 #include "screen/screen_manager.h"
+#include "sprites/sprite_manager.h"
 
 #define WIDTH 240
 #define HEIGHT 160
