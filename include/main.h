@@ -4,7 +4,6 @@
 #include <stdlib.h>
 
 #include "rat_manager.h"
-#include "tilemap.h"
 
 #define WIDTH 240
 #define HEIGHT 160
