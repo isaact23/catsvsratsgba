@@ -5,6 +5,7 @@ noCamelCasePlease
 CONSTANTS_LIKE_THIS
 
 * main  
+    * timer manager  
     * screen manager  
         * main menu  
         * tilemap  
@@ -12,3 +13,4 @@ CONSTANTS_LIKE_THIS
         * keeps an array of sprites and a method to copy them to memory  
         * cat manager  
         * rat manager  
+    * data
