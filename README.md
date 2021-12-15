@@ -1,5 +1,9 @@
 # Cats vs. Rats GBA Edition
 
+Convention: under_score_everything  
+noCamelCasePlease  
+CONSTANTS_LIKE_THIS
+
 main  
     screen manager  
         main menu  

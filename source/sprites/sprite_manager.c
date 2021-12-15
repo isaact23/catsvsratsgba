@@ -5,10 +5,10 @@ volatile uint16_t* sprite_image_vram = (volatile uint16_t*) 0x6010000;
 volatile uint16_t* sprite_attributes = (volatile uint16_t*) 0x7000000;
 
 struct Sprite sprites [SPRITE_LIMIT];
-uint32_t spriteCount = 0;
+uint32_t sprite_count = 0;
 
-struct Rat ratArray[RAT_LIMIT];
-uint32_t ratCount = 0;
+struct Rat rat_array[RAT_LIMIT];
+uint32_t rat_count = 0;
 
 // Initialize sprites
 void sprite_manager_init() {
@@ -46,37 +46,37 @@ void sprite_manager_update() {
 
 // Return a pointer to a new sprite
 struct Sprite* sprite_manager_new_sprite() {
-    if (spriteCount >= SPRITE_LIMIT) {
+    if (sprite_count >= SPRITE_LIMIT) {
         exit(1);
     }
-    struct Sprite* newSprite = &sprites[spriteCount];
-    newSprite -> attr1 = 0;
-    newSprite -> attr2 = 0;
-    newSprite -> attr3 = 0;
-    spriteCount++;
-    return newSprite;
+    struct Sprite* new_sprite = &sprites[sprite_count];
+    new_sprite -> attr1 = 0;
+    new_sprite -> attr2 = 0;
+    new_sprite -> attr3 = 0;
+    sprite_count++;
+    return new_sprite;
 }
 
 // Add a new rat
 void sprite_manager_add_rat() {
-    if (ratCount >= RAT_LIMIT) {
+    if (rat_count >= RAT_LIMIT) {
         exit(1);
     }
-    struct Rat newRat;
-    newRat.sprite = sprite_manager_new_sprite();
-    newRat.type = 0;
-    newRat.progress = 0;
-    newRat.x = 25;
-    newRat.y = 25;
-    ratArray[ratCount] = newRat;
-    ratCount++;
+    struct Rat new_rat;
+    new_rat.sprite = sprite_manager_new_sprite();
+    new_rat.type = 0;
+    new_rat.init_time = 0;
+    new_rat.x = 25;
+    new_rat.y = 25;
+    rat_array[rat_count] = new_rat;
+    rat_count++;
 }
 
 // Update rats
 void sprite_manager_update_rats() {
     // Send rat data to sprite attributes
-    for (uint32_t i = 0; i < ratCount; i++) {
-        struct Rat rat = ratArray[i];
+    for (uint32_t i = 0; i < rat_count; i++) {
+        struct Rat rat = rat_array[i];
         struct Sprite* sprite = rat.sprite;
         sprite -> attr1 =
             (rat.y)   |
