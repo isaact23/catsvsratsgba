@@ -10,6 +10,8 @@ uint32_t sprite_count = 0;
 struct Rat rat_array[RAT_LIMIT];
 uint32_t rat_count = 0;
 
+uint32_t time_elapsed;
+
 // Initialize sprites
 void sprite_manager_init() {
 
@@ -28,12 +30,18 @@ void sprite_manager_init() {
     for (uint32_t i = 0; i < IMAGE_RAT_DEFAULT_WALK_WIDTH * IMAGE_RAT_DEFAULT_WALK_HEIGHT * 32; i++) {
         sprite_image_vram[i] = sprite16[i];
     }
-
-    sprite_manager_update();
 }
 
-// Update sprites in memory during vblank
+// Start a round
+void sprite_manager_start_round(uint16_t round) {
+    time_elapsed = 0;
+}
+
+// Update sprites in memory every vblank
 void sprite_manager_update() {
+    sprite_manager_update_rats();
+    
+    time_elapsed++;
 
     // Update sprite attributes
     for (uint32_t i = 0; i < SPRITE_LIMIT; i++) {
@@ -74,6 +82,9 @@ void sprite_manager_add_rat() {
 
 // Update rats
 void sprite_manager_update_rats() {
+    // Move rats
+    rat_array[0].x = (uint16_t) ((time_elapsed - rat_array[0].init_time) >> 4);
+
     // Send rat data to sprite attributes
     for (uint32_t i = 0; i < rat_count; i++) {
         struct Rat rat = rat_array[i];

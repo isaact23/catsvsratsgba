@@ -1,6 +1,7 @@
 #ifndef SPRITE_MANAGER_H
 #define SPRITE_MANAGER_H
 
+#include <time.h>
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -19,13 +20,16 @@ struct Sprite {
 struct Rat {
     struct Sprite* sprite;
     uint8_t type; // 0 - default, 1 - fast, 2 - fat, 3 - robot, 4 - demon
-    uint16_t init_time;
+    uint32_t init_time;
     uint16_t x;
     uint16_t y;
 };
 
 // Initialize sprites
 void sprite_manager_init();
+
+// Start a round
+void sprite_manager_start_round(uint16_t round);
 
 // Update sprites in memory during vblank
 void sprite_manager_update();

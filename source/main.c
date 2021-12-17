@@ -1,13 +1,20 @@
 #include "main.h"
 
+volatile uint16_t* vcount = (volatile uint16_t*) 0x4000006;
+
+void vsync() {
+    while (*vcount < 160) {}
+}
+
 int main() {
     screen_manager_init();
     sprite_manager_init();
+    sprite_manager_start_round(0);
+    
     sprite_manager_add_rat();
-    sprite_manager_update_rats();
-    sprite_manager_update();
 
     while (1) {
-        
+        vsync();
+        sprite_manager_update();
     }
 }
