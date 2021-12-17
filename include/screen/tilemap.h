@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "data/tilemap_data.h"
+#include "data/data_tilemap.h"
 #include "data/image_tiles.h"
 
 // Return pointer to one of 4 character blocks

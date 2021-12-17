@@ -1,7 +1,7 @@
 // Define how tiles are arranged on the screen
 
-#ifndef TILEMAP_DATA_H
-#define TILEMAP_DATA_H
+#ifndef DATA_TILEMAP_H
+#define DATA_TILEMAP_H
 
 #include <stdint.h>
 

@@ -1,6 +1,6 @@
 // Define how tiles are arranged on the screen
 
-#include "data/tilemap_data.h"
+#include "data/data_tilemap.h"
 
 const uint16_t TILEMAP [] = {
     0x0008, 0x0009, 0x0008, 0x0009, 0x0008, 0x0009, 0x0008, 0x0009,
