@@ -111,7 +111,7 @@ void sprite_manager_update_rats() {
                 rat.path_address = DATA_PATH_COORDS2;
             }
             // Merge paths
-            } else if (rat.path_id == 1 || rat.path_id == 2) {
+            else if (rat.path_id == 1 || rat.path_id == 2) {
                 rat.path_id = 3;
                 rat.path_length = DATA_PATH_LENGTH3;
                 rat.path_address = DATA_PATH_COORDS3;
