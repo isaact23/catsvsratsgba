@@ -79,7 +79,7 @@ void sprite_manager_add_rat() {
     new_rat.path_address = DATA_PATH_COORDS0;
 
     new_rat.type = 0;
-    new_rat.slowness = 20;
+    new_rat.slowness = 4;
     new_rat.x = 25;
     new_rat.y = 25;
     rat_array[rat_count] = new_rat;
@@ -117,6 +117,8 @@ void sprite_manager_update_rats() {
                 rat.path_address = DATA_PATH_COORDS3;
             }
 
+            // Reset to beginning of path
+            rat.init_time = time_elapsed;
             pixels = 0;
             tile_no = 0;
         }

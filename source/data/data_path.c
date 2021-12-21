@@ -14,15 +14,16 @@ const int8_t DATA_PATH_COORDS0 [] =
 
 const int8_t DATA_PATH_COORDS1[] =
 {
-
+    -1, 7,  0, 7,  1, 7,  1, 6,  1, 5,  2, 5,  3, 5,  4, 5,
+     4, 6,  5, 6,  6, 6,
 };
 
 const int8_t DATA_PATH_COORDS2[] =
 {
-
+    6, -1, 6, 0,  6, 1,  6, 2,  6, 3,  6, 4,  6, 5,  6, 6
 };
 
 const int8_t DATA_PATH_COORDS3[] =
 {
-
+    6, 6,  6, 7,  6, 8,  7, 8,  8, 8,  8, 7,
 };
