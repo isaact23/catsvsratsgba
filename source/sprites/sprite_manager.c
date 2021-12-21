@@ -72,8 +72,14 @@ void sprite_manager_add_rat() {
     }
     struct Rat new_rat;
     new_rat.sprite = sprite_manager_new_sprite();
+    new_rat.init_time = time_elapsed;
+
+    new_rat.path_id = 0;
+    new_rat.path_length = DATA_PATH_LENGTH0;
+    new_rat.path_address = DATA_PATH_COORDS0;
+
     new_rat.type = 0;
-    new_rat.init_time = 0;
+    new_rat.slowness = 20;
     new_rat.x = 25;
     new_rat.y = 25;
     rat_array[rat_count] = new_rat;
@@ -85,16 +91,83 @@ void sprite_manager_update_rats() {
     // Move rats
     rat_array[0].x = (uint16_t) ((time_elapsed - rat_array[0].init_time) >> 4);
 
-    // Send rat data to sprite attributes
+    // Iterate through rats
     for (uint32_t i = 0; i < rat_count; i++) {
         struct Rat rat = rat_array[i];
+
+        // Update rat position based on time elapsed
+        uint32_t progress = time_elapsed - rat.init_time;
+        uint32_t pixels = progress / rat.slowness;
+
+        // Divide pixels by 16, the tile width, to get tile number
+        uint16_t tile_no = pixels >> 4;
+
+        // Update rat path
+        if (tile_no >= rat.path_length) {
+            // Mutant path
+            if (rat.path_id == 0) {
+                rat.path_id = 2;
+                rat.path_length = DATA_PATH_LENGTH2;
+                rat.path_address = DATA_PATH_COORDS2;
+            }
+            // Merge paths
+            } else if (rat.path_id == 1 || rat.path_id == 2) {
+                rat.path_id = 3;
+                rat.path_length = DATA_PATH_LENGTH3;
+                rat.path_address = DATA_PATH_COORDS3;
+            }
+
+            pixels = 0;
+            tile_no = 0;
+        }
+
+        const int8_t* tiles = rat.path_address;
+
+        // Get coordinates of current tile
+        int16_t tile_x = tiles[tile_no * 2] * 16;
+        int16_t tile_y = tiles[tile_no * 2 + 1] * 16;
+
+        // Get coordinates of next tile
+        int16_t tile2_x = tiles[(tile_no + 1) * 2] * 16;
+        int16_t tile2_y = tiles[(tile_no + 1) * 2 + 1] * 16;
+
+        int16_t pixel_offset = pixels % 16;
+
+        // Same x
+        if (tile_x == tile2_x) {
+            rat.x = tile_x;
+
+            // Moving down
+            if (tile2_y > tile_y) {
+                rat.y = tile_y + pixel_offset;
+            }
+            // Moving up
+            else {
+                rat.y = tile_y - pixel_offset;
+            }
+        }
+        // Same y
+        else {
+            rat.y = tile_y;
+
+            // Moving right
+            if (tile2_x > tile_x) {
+                rat.x = tile_x + pixel_offset;
+            }
+            // Moving left
+            else {
+                rat.x = tile_x - pixel_offset;
+            }
+        }
+
+        // Send rat data to sprite struct
         struct Sprite* sprite = rat.sprite;
         sprite -> attr1 =
-            (rat.y)   |
+            (rat.y & 0xff) |
             (1 << 13) | // 256 colors
             (0 << 14);  // Shape
         sprite -> attr2 =
-            (rat.x)   |
+            (rat.x & 0x1ff) |
             (1 << 14);  // Size
         sprite -> attr3 =
             0         | // Tile index

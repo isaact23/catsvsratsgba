@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#include "data/data_path.h"
 #include "data/image_rat_default_walk.h"
 
 // Statically allocate memory for objects
@@ -19,8 +20,16 @@ struct Sprite {
 
 struct Rat {
     struct Sprite* sprite;
-    uint8_t type; // 0 - default, 1 - fast, 2 - fat, 3 - robot, 4 - demon
     uint32_t init_time;
+
+    // Path properties
+    uint8_t path_id;
+    uint8_t path_length;
+    const int8_t* path_address;
+
+    // Rat properties
+    uint8_t type; // 0 - default, 1 - fast, 2 - fat, 3 - robot, 4 - demon
+    uint16_t slowness;
     uint16_t x;
     uint16_t y;
 };
