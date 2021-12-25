@@ -53,7 +53,7 @@ void sprite_manager_update() {
 }
 
 // Return a pointer to a new sprite
-struct Sprite* sprite_manager_new_sprite() {
+struct sprite* sprite_manager_new_sprite() {
     if (sprite_count >= SPRITE_LIMIT) {
         exit(1);
     }

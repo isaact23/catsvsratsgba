@@ -6,6 +6,7 @@
 #include <stdlib.h>
 
 #include "data/data_path.h"
+#include "data/data_rounds.h"
 #include "data/image_rat_default_walk.h"
 
 // Statically allocate memory for objects
@@ -19,7 +20,7 @@ struct sprite {
 };
 
 struct rat {
-    struct Sprite* sprite;
+    struct sprite* sprite;
     uint32_t init_time;
 
     // Path properties
@@ -29,7 +30,7 @@ struct rat {
 
     // Rat properties
     uint8_t type; // 0 - default, 1 - fast, 2 - fat, 3 - robot, 4 - demon
-    uint16_t slowness;
+    uint16_t slowness; // Auto-assigned based on type
     uint16_t x;
     uint16_t y;
 };
@@ -44,7 +45,7 @@ void sprite_manager_start_round(uint16_t round);
 void sprite_manager_update();
 
 // Return a pointer to a new sprite
-struct Sprite* sprite_manager_new_sprite();
+struct sprite* sprite_manager_new_sprite();
 
 // Add a new rat
 void sprite_manager_add_rat();
