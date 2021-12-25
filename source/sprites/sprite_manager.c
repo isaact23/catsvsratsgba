@@ -4,10 +4,10 @@ volatile uint16_t* sprite_palette    = (volatile uint16_t*) 0x5000200;
 volatile uint16_t* sprite_image_vram = (volatile uint16_t*) 0x6010000;
 volatile uint16_t* sprite_attributes = (volatile uint16_t*) 0x7000000;
 
-struct Sprite sprites [SPRITE_LIMIT];
+struct sprite sprites [SPRITE_LIMIT];
 uint32_t sprite_count = 0;
 
-struct Rat rat_array[RAT_LIMIT];
+struct rat rat_array[RAT_LIMIT];
 uint32_t rat_count = 0;
 
 uint32_t time_elapsed;
@@ -45,7 +45,7 @@ void sprite_manager_update() {
 
     // Update sprite attributes
     for (uint32_t i = 0; i < SPRITE_LIMIT; i++) {
-        struct Sprite sprite = sprites[i];
+        struct sprite sprite = sprites[i];
         sprite_attributes[i * 4] = sprite.attr1;
         sprite_attributes[i * 4 + 1] = sprite.attr2;
         sprite_attributes[i * 4 + 2] = sprite.attr3;
@@ -57,7 +57,7 @@ struct Sprite* sprite_manager_new_sprite() {
     if (sprite_count >= SPRITE_LIMIT) {
         exit(1);
     }
-    struct Sprite* new_sprite = &sprites[sprite_count];
+    struct sprite* new_sprite = &sprites[sprite_count];
     new_sprite -> attr1 = 0;
     new_sprite -> attr2 = 0;
     new_sprite -> attr3 = 0;
@@ -70,7 +70,7 @@ void sprite_manager_add_rat() {
     if (rat_count >= RAT_LIMIT) {
         exit(1);
     }
-    struct Rat new_rat;
+    struct rat new_rat;
     new_rat.sprite = sprite_manager_new_sprite();
     new_rat.init_time = time_elapsed;
 
@@ -79,7 +79,7 @@ void sprite_manager_add_rat() {
     new_rat.path_address = DATA_PATH_COORDS0;
 
     new_rat.type = 0;
-    new_rat.slowness = 4;
+    new_rat.slowness = 15;
     new_rat.x = 25;
     new_rat.y = 25;
     rat_array[rat_count] = new_rat;
@@ -93,7 +93,7 @@ void sprite_manager_update_rats() {
 
     // Iterate through rats
     for (uint32_t i = 0; i < rat_count; i++) {
-        struct Rat* rat = &(rat_array[i]);
+        struct rat* rat = &(rat_array[i]);
 
         // Update rat position based on time elapsed
         uint32_t progress = time_elapsed - rat -> init_time;
@@ -163,7 +163,7 @@ void sprite_manager_update_rats() {
         }
 
         // Send rat data to sprite struct
-        struct Sprite* sprite = rat -> sprite;
+        struct sprite* sprite = rat -> sprite;
         sprite -> attr1 =
             (rat -> y & 0xff) |
             (1 << 13) | // 256 colors

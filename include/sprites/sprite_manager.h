@@ -12,13 +12,13 @@
 #define SPRITE_LIMIT 128
 #define RAT_LIMIT 30
 
-struct Sprite {
+struct sprite {
     uint16_t attr1;
     uint16_t attr2;
     uint16_t attr3;
 };
 
-struct Rat {
+struct rat {
     struct Sprite* sprite;
     uint32_t init_time;
 
