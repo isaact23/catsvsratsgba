@@ -2,13 +2,12 @@
 #define DATA_ROUNDS_H
 
 #include <stdint.h>
+#include <stdlib.h>
 
-struct rat_spawn_entry {
-    uint32_t spawn_time; // Counts up every frame (60 FPS)
-    uint8_t rat_type;
-    uint8_t spawn_path;
-};
+#include "datatypes/round.h"
 
-extern const struct rat_spawn_entry ROUND0 [];
+const struct round data_rounds_get(uint16_t round);
+
+extern const struct round DATA_ROUNDS_ROUND0;
 
 #endif

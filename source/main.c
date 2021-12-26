@@ -10,8 +10,6 @@ int main() {
     screen_manager_init();
     sprite_manager_init();
     sprite_manager_start_round(0);
-    
-    sprite_manager_add_rat();
 
     while (1) {
         vsync();
