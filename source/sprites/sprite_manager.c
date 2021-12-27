@@ -14,7 +14,7 @@ struct rat rat_array [RAT_LIMIT];
 uint32_t rat_count = 0;
 
 // Rounds
-struct round curr_round;
+const struct round* curr_round;
 
 // Time elapsed since beginning of a round
 uint32_t time_elapsed = 0;
@@ -82,9 +82,9 @@ void sprite_manager_spawn_rats() {
     }
 
     // If there are still rats to spawn,
-    if (rat_count < curr_round.rat_count) {
+    if (rat_count < curr_round -> rat_count) {
         // Get rat data from round
-        struct rat_spawn_entry rat_data = curr_round.rat_spawn_entries[rat_count];
+        struct rat_spawn_entry rat_data = curr_round -> rat_spawn_entries[rat_count];
         // If it is time to spawn this rat,
         if (time_elapsed > rat_data.spawn_time) {
             // Spawn the rat
