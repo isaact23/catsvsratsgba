@@ -105,8 +105,10 @@ void sprite_manager_spawn_rats() {
             new_rat.type = rat_data.rat_type;
             if (new_rat.type == 0) {
                 new_rat.slowness = 15; // Default rat
+                new_rat.fps = 2;
             } else if (new_rat.type == 1) {
                 new_rat.slowness = 5; // Fast rat
+                new_rat.fps = 3;
             } else {
                 exit(1);
             }
@@ -125,6 +127,16 @@ void sprite_manager_update_rats() {
     for (uint32_t i = 0; i < rat_count; i++) {
         struct rat* rat = &(rat_array[i]);
 
+        // Update rat tile
+        if (rat -> type == 0) {
+            rat -> tile_id = 0;
+            //rat -> tile_id = ((time_elapsed * (rat -> fps) / 60) % 2) * 8;
+        } else if (rat -> type == 1) {
+            rat -> tile_id = 1;
+        } else {
+            exit(1);
+        }
+
         // Update rat position based on time elapsed
         uint32_t progress = time_elapsed - rat -> init_time;
         uint32_t pixels = progress / (rat -> slowness);
@@ -142,7 +154,7 @@ void sprite_manager_update_rats() {
             else if (rat -> path -> id == 1 || rat -> path -> id == 2) {
                 rat -> path = &DATA_PATH_3;
             } else {
-                exit(1); // Begin eating cheese
+                //exit(1); // Begin eating cheese
             }
 
             // Reset to beginning of path
@@ -193,14 +205,14 @@ void sprite_manager_update_rats() {
         // Send rat data to sprite struct
         struct sprite* sprite = rat -> sprite;
         sprite -> attr1 =
-            (rat -> y & 0xff) |
+            ((rat -> y) & 0xff) |
             (1 << 13) | // 256 colors
             (0 << 14);  // Shape
         sprite -> attr2 =
-            (rat -> x & 0x1ff) |
+            ((rat -> x) & 0x1ff) |
             (1 << 14);  // Size
         sprite -> attr3 =
-            0         | // Tile index
+            ((rat -> tile_id) & 0x2f) | // Tile index
             (1 << 12);  // Priority */
     }
 }

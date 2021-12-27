@@ -13,6 +13,8 @@ struct rat {
     // Rat properties
     uint8_t type; // 0 - default, 1 - fast, 2 - fat, 3 - robot, 4 - demon
     uint16_t slowness; // Auto-assigned based on type
+    uint16_t tile_id;
+    uint8_t fps;
 
     // Rat location
     const struct path* path;

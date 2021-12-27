@@ -68,6 +68,4 @@
 #define BUTTON_R (1 << 8)
 #define BUTTON_L (1 << 9)
 
-uint16_t getColor(uint8_t r, uint8_t g, uint8_t b);
-
 #endif
