@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define IMAGE_SPRITES_WIDTH 8
+#define IMAGE_SPRITES_WIDTH 32
 #define IMAGE_SPRITES_HEIGHT 4
 
 #define IMAGE_SPRITES_PALETTE_SIZE 13

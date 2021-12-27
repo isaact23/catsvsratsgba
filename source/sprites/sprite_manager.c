@@ -10,7 +10,7 @@ struct sprite sprite_array [SPRITE_LIMIT];
 uint32_t sprite_count = 0;
 
 // Rats
-struct rat rat_array[RAT_LIMIT];
+struct rat rat_array [RAT_LIMIT];
 uint32_t rat_count = 0;
 
 // Rounds
@@ -94,9 +94,9 @@ void sprite_manager_spawn_rats() {
 
             // Get path data
             if (rat_data.path_id == 0) {
-                new_rat.path = DATA_PATH_0;
+                new_rat.path = &DATA_PATH_0;
             } else if (rat_data.path_id == 1) {
-                new_rat.path = DATA_PATH_1;
+                new_rat.path = &DATA_PATH_1;
             } else {
                 exit(1);
             }
@@ -127,20 +127,22 @@ void sprite_manager_update_rats() {
 
         // Update rat position based on time elapsed
         uint32_t progress = time_elapsed - rat -> init_time;
-        uint32_t pixels = progress / rat -> slowness;
+        uint32_t pixels = progress / (rat -> slowness);
 
         // Divide pixels by 16, the tile width, to get tile number
         uint16_t tile_no = pixels >> 4;
 
         // Update rat path
-        if (tile_no >= rat -> path.length) {
+        if (tile_no + 1 >= rat -> path -> length) {
             // Mutant path
-            if (rat -> path.id == 0) {
-                rat -> path = DATA_PATH_2;
+            if (rat -> path -> id == 0) {
+                rat -> path = &DATA_PATH_2;
             }
             // Merge paths
-            else if (rat -> path.id == 1 || rat -> path.id == 2) {
-                rat -> path = DATA_PATH_3;
+            else if (rat -> path -> id == 1 || rat -> path -> id == 2) {
+                rat -> path = &DATA_PATH_3;
+            } else {
+                exit(1); // Begin eating cheese
             }
 
             // Reset to beginning of path
@@ -149,7 +151,7 @@ void sprite_manager_update_rats() {
             tile_no = 0;
         }
 
-        const int8_t* tiles = rat -> path.coords;
+        const int8_t* tiles = rat -> path -> coords;
 
         // Get coordinates of current tile
         int16_t tile_x = tiles[tile_no * 2] * 16;

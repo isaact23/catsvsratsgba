@@ -15,7 +15,7 @@ struct rat {
     uint16_t slowness; // Auto-assigned based on type
 
     // Rat location
-    struct path path;
+    const struct path* path;
     uint16_t x;
     uint16_t y;
 };

@@ -8,7 +8,7 @@ void screen_manager_init() {
     // Set up display control
     *dispcnt =
         (0 << 0)  | // Display mode 0
-        (1 << 6)  | // 1D sprite mode
+        (0 << 6)  | // 1 for 1D sprite mode, 0 for 2D sprite mode
         (1 << 8)  | // Enable background 0
         (1 << 12);  // Screen display OBJ
 
