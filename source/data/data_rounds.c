@@ -1,6 +1,6 @@
 #include "data/data_rounds.h"
 
-const struct round* data_rounds_get(uint16_t round) {
+const struct round* data_rounds_get(u16 round) {
     if (round == 0) {
         return &DATA_ROUNDS_ROUND0;
     }

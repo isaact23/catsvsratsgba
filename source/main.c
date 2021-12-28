@@ -1,6 +1,8 @@
 #include "main.h"
 
-volatile uint16_t* vcount = (volatile uint16_t*) 0x4000006;
+vu16* vcount = (vu16*) 0x4000006;
+
+// vu32* interrupt_enable = (vu32*) 
 
 void vsync() {
     while (*vcount < 160) {}

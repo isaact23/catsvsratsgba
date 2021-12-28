@@ -3,12 +3,14 @@
 
 #include <stdint.h>
 
+#include "gba_types.h"
+
 #define IMAGE_SPRITES_WIDTH 32
 #define IMAGE_SPRITES_HEIGHT 4
 
 #define IMAGE_SPRITES_PALETTE_SIZE 13
 
-extern const uint8_t IMAGE_SPRITES_DATA [];
-extern const uint16_t IMAGE_SPRITES_PALETTE [];
+extern const u8 IMAGE_SPRITES_DATA [];
+extern const u16 IMAGE_SPRITES_PALETTE [];
 
 #endif

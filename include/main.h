@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 
+#include "gba_types.h"
 #include "screen/screen_manager.h"
 #include "sprites/sprite_manager.h"
 

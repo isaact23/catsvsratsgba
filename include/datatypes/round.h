@@ -2,16 +2,17 @@
 #define ROUND_H
 
 #include "datatypes/path.h"
+#include "gba_types.h"
 
 struct rat_spawn_entry {
-    uint32_t spawn_time; // Counts up every frame (60 FPS)
-    uint8_t rat_type;
-    uint8_t path_id;
+    u32 spawn_time; // Counts up every frame (60 FPS)
+    u8 rat_type;
+    u8 path_id;
 };
 
 struct round {
-    uint16_t round_id;
-    uint16_t rat_count;
+    u16 round_id;
+    u16 rat_count;
     struct rat_spawn_entry rat_spawn_entries [];
 };
 

@@ -1,7 +1,7 @@
 #include "screen/screen_manager.h"
 
-volatile uint16_t* dispcnt = (volatile uint16_t*) 0x4000000;
-volatile uint16_t* bg0cnt  = (volatile uint16_t*) 0x4000008;
+vu16* dispcnt = (vu16*) 0x4000000;
+vu16* bg0cnt  = (vu16*) 0x4000008;
 
 // Initialize the screen.
 void screen_manager_init() {

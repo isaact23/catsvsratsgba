@@ -3,10 +3,12 @@
 
 #include <stdint.h>
 
+#include "gba_types.h"
+
 struct path {
-    uint8_t id;
-    uint16_t length;
-    int8_t coords [];
+    u8 id;
+    u16 length;
+    s8 coords [];
 };
 
 #endif

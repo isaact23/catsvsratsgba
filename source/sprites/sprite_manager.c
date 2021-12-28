@@ -1,47 +1,47 @@
 #include "sprites/sprite_manager.h"
 
 // IO maps
-volatile uint16_t* sprite_palette    = (volatile uint16_t*) 0x5000200;
-volatile uint16_t* sprite_image_vram = (volatile uint16_t*) 0x6010000;
-volatile uint16_t* sprite_attributes = (volatile uint16_t*) 0x7000000;
+vu16* sprite_palette    = (vu16*) 0x5000200;
+vu16* sprite_image_vram = (vu16*) 0x6010000;
+vu16* sprite_attributes = (vu16*) 0x7000000;
 
 // Sprites
 struct sprite sprite_array [SPRITE_LIMIT];
-uint32_t sprite_count = 0;
+u32 sprite_count = 0;
 
 // Rats
 struct rat rat_array [RAT_LIMIT];
-uint32_t rat_count = 0;
+u32 rat_count = 0;
 
 // Rounds
 const struct round* curr_round;
 
 // Time elapsed since beginning of a round
-uint32_t time_elapsed = 0;
+u32 time_elapsed = 0;
 
 
 // Initialize sprites
 void sprite_manager_init() {
 
     // Move all unused sprites off-screen
-    for (uint32_t i = 1; i < SPRITE_LIMIT; i++) {
+    for (u32 i = 1; i < SPRITE_LIMIT; i++) {
         sprite_array[i].attr1 = 240;
     }
 
     // Copy sprite palette to sprite palette memory
-    for (uint32_t i = 0; i < IMAGE_SPRITES_PALETTE_SIZE; i++) {
+    for (u32 i = 0; i < IMAGE_SPRITES_PALETTE_SIZE; i++) {
         sprite_palette[i] = IMAGE_SPRITES_PALETTE[i];
     }
 
     // Copy sprite into sprite image memory
-    uint16_t* sprite16 = (uint16_t*) IMAGE_SPRITES_DATA;
-    for (uint32_t i = 0; i < IMAGE_SPRITES_WIDTH * IMAGE_SPRITES_HEIGHT * 32; i++) {
+    u16* sprite16 = (u16*) IMAGE_SPRITES_DATA;
+    for (u32 i = 0; i < IMAGE_SPRITES_WIDTH * IMAGE_SPRITES_HEIGHT * 32; i++) {
         sprite_image_vram[i] = sprite16[i];
     }
 }
 
 // Start a round
-void sprite_manager_start_round(uint16_t round) {
+void sprite_manager_start_round(u16 round) {
     time_elapsed = 0;
     curr_round = data_rounds_get(round);
 }
@@ -54,7 +54,7 @@ void sprite_manager_update() {
     time_elapsed++;
 
     // Update sprite attributes
-    for (uint32_t i = 0; i < SPRITE_LIMIT; i++) {
+    for (u32 i = 0; i < SPRITE_LIMIT; i++) {
         struct sprite sprite = sprite_array[i];
         sprite_attributes[i * 4] = sprite.attr1;
         sprite_attributes[i * 4 + 1] = sprite.attr2;
@@ -124,7 +124,7 @@ void sprite_manager_spawn_rats() {
 void sprite_manager_update_rats() {
 
     // Iterate through rats
-    for (uint32_t i = 0; i < rat_count; i++) {
+    for (u32 i = 0; i < rat_count; i++) {
         struct rat* rat = &(rat_array[i]);
 
         // Update rat tile
@@ -138,11 +138,11 @@ void sprite_manager_update_rats() {
         }
 
         // Update rat position based on time elapsed
-        uint32_t progress = time_elapsed - rat -> init_time;
-        uint32_t pixels = progress / (rat -> slowness);
+        u32 progress = time_elapsed - rat -> init_time;
+        u32 pixels = progress / (rat -> slowness);
 
         // Divide pixels by 16, the tile width, to get tile number
-        uint16_t tile_no = pixels >> 4;
+        u16 tile_no = pixels >> 4;
 
         // Update rat path
         if (tile_no + 1 >= rat -> path -> length) {
@@ -163,17 +163,17 @@ void sprite_manager_update_rats() {
             tile_no = 0;
         }
 
-        const int8_t* tiles = rat -> path -> coords;
+        const s8* tiles = rat -> path -> coords;
 
         // Get coordinates of current tile
-        int16_t tile_x = tiles[tile_no * 2] * 16;
-        int16_t tile_y = tiles[tile_no * 2 + 1] * 16;
+        s16 tile_x = tiles[tile_no * 2] * 16;
+        s16 tile_y = tiles[tile_no * 2 + 1] * 16;
 
         // Get coordinates of next tile
-        int16_t tile2_x = tiles[(tile_no + 1) * 2] * 16;
-        int16_t tile2_y = tiles[(tile_no + 1) * 2 + 1] * 16;
+        s16 tile2_x = tiles[(tile_no + 1) * 2] * 16;
+        s16 tile2_y = tiles[(tile_no + 1) * 2 + 1] * 16;
 
-        int16_t pixel_offset = pixels % 16;
+        s16 pixel_offset = pixels % 16;
 
         // Same x
         if (tile_x == tile2_x) {

@@ -5,9 +5,11 @@
 
 #include <stdint.h>
 
+#include "gba_types.h"
+
 #define TILEMAP_WIDTH 32
 #define TILEMAP_HEIGHT 20
 
-extern const uint16_t TILEMAP [];
+extern const u16 TILEMAP [];
 
 #endif

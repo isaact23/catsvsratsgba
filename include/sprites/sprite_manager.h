@@ -11,6 +11,7 @@
 #include "datatypes/path.h"
 #include "datatypes/rat.h"
 #include "datatypes/sprite.h"
+#include "gba_types.h"
 
 // Statically allocate memory for objects
 #define SPRITE_LIMIT 128
@@ -20,7 +21,7 @@
 void sprite_manager_init();
 
 // Start a round
-void sprite_manager_start_round(uint16_t round);
+void sprite_manager_start_round(u16 round);
 
 // Update sprites in memory during vblank
 void sprite_manager_update();

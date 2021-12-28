@@ -6,7 +6,7 @@
 
 #include "datatypes/round.h"
 
-const struct round* data_rounds_get(uint16_t round);
+const struct round* data_rounds_get(u16 round);
 
 extern const struct round DATA_ROUNDS_ROUND0;
 

@@ -4,9 +4,9 @@
 #include <stdint.h>
 
 struct sprite {
-    uint16_t attr1;
-    uint16_t attr2;
-    uint16_t attr3;
+    u16 attr1;
+    u16 attr2;
+    u16 attr3;
 };
 
 #endif

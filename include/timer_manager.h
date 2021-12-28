@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+#include "gba_types.h"
+
 // Set up timer for beginning of a round
 void timer_manager_start();
 

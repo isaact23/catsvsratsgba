@@ -8,18 +8,18 @@
 
 struct rat {
     struct sprite* sprite;
-    uint32_t init_time;
+    u32 init_time;
 
     // Rat properties
-    uint8_t type; // 0 - default, 1 - fast, 2 - fat, 3 - robot, 4 - demon
-    uint16_t slowness; // Auto-assigned based on type
-    uint16_t tile_id;
-    uint8_t fps;
+    u8 type; // 0 - default, 1 - fast, 2 - fat, 3 - robot, 4 - demon
+    u16 slowness; // Auto-assigned based on type
+    u16 tile_id;
+    u8 fps;
 
     // Rat location
     const struct path* path;
-    uint16_t x;
-    uint16_t y;
+    u16 x;
+    u16 y;
 };
 
 #endif

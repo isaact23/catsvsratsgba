@@ -6,12 +6,13 @@
 
 #include "data/data_tilemap.h"
 #include "data/image_tiles.h"
+#include "gba_types.h"
 
 // Return pointer to one of 4 character blocks
-volatile uint16_t* char_block(uint16_t block);
+vu16* char_block(u16 block);
 
 // Return pointer to one of 32 screen blocks
-volatile uint16_t* screen_block(uint16_t block);
+vu16* screen_block(u16 block);
 
 // Set up tilemap
 void tilemap_init();

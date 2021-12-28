@@ -5,7 +5,8 @@
             "includePath": [
                 "/usr/include",
                 "/usr/local/include",
-                "${workspaceFolder}/include"
+                "${workspaceFolder}/include",
+                "/opt/devkitpro/libgba/include"
             ],
             "defines": [],
             "intelliSenseMode": "clang-x64",
