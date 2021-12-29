@@ -24,8 +24,11 @@ u32 time_elapsed = 0;
 void sprite_manager_init() {
 
     // Move all unused sprites off-screen
-    for (u32 i = 1; i < SPRITE_LIMIT; i++) {
-        sprite_array[i].attr1 = 240;
+    for (u32 i = 0; i < SPRITE_LIMIT; i++) {
+        sprite_array[i].attr1 = 160;
+        sprite_array[i].attr2 = 240;
+        sprite_array[i].attr3 = 0;
+        sprite_array[i].dummy = 0;
     }
 
     // Copy sprite palette to sprite palette memory
@@ -53,13 +56,8 @@ void sprite_manager_update() {
     
     time_elapsed++;
 
-    // Update sprite attributes (TODO: MOVE TO DMA)
-    for (u32 i = 0; i < sprite_count; i++) {
-        struct sprite sprite = sprite_array[i];
-        sprite_attributes[i * 4] = sprite.attr1;
-        sprite_attributes[i * 4 + 1] = sprite.attr2;
-        sprite_attributes[i * 4 + 2] = sprite.attr3;
-    }
+    // Update sprite attributes
+    dmaCopy(sprite_array, (void*) OAM, 8 * SPRITE_LIMIT);
 }
 
 // Return a pointer to a new sprite

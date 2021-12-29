@@ -11,6 +11,8 @@
 #include "datatypes/path.h"
 #include "datatypes/rat.h"
 #include "datatypes/sprite.h"
+#include "gba_dma.h"
+#include "gba_sprites.h"
 #include "gba_types.h"
 
 // Statically allocate memory for objects
