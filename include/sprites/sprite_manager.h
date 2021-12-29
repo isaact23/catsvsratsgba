@@ -15,6 +15,9 @@
 #include "gba_sprites.h"
 #include "gba_types.h"
 
+#define SPRITE_PALETTE_MEMORY 0x5000200
+#define SPRITE_IMAGE_MEMORY 0x6010000
+
 // Statically allocate memory for objects
 #define SPRITE_LIMIT 128
 #define RAT_LIMIT 30

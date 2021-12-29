@@ -1,9 +1,7 @@
 #include "sprites/sprite_manager.h"
 
 // IO maps
-vu16* sprite_palette    = (vu16*) 0x5000200;
 vu16* sprite_image_vram = (vu16*) 0x6010000;
-vu16* sprite_attributes = (vu16*) 0x7000000;
 
 // Sprites
 struct sprite sprite_array [SPRITE_LIMIT];
@@ -32,15 +30,11 @@ void sprite_manager_init() {
     }
 
     // Copy sprite palette to sprite palette memory
-    for (u32 i = 0; i < IMAGE_SPRITES_PALETTE_SIZE; i++) {
-        sprite_palette[i] = IMAGE_SPRITES_PALETTE[i];
-    }
+    dmaCopy(IMAGE_SPRITES_PALETTE, (void*) SPRITE_PALETTE_MEMORY, IMAGE_SPRITES_PALETTE_SIZE * 2);
 
     // Copy sprite into sprite image memory
     u16* sprite16 = (u16*) IMAGE_SPRITES_DATA;
-    for (u32 i = 0; i < IMAGE_SPRITES_WIDTH * IMAGE_SPRITES_HEIGHT * 32; i++) {
-        sprite_image_vram[i] = sprite16[i];
-    }
+    dmaCopy(sprite16, (void*) SPRITE_IMAGE_MEMORY, IMAGE_SPRITES_WIDTH * IMAGE_SPRITES_HEIGHT * 64);
 }
 
 // Start a round
@@ -211,6 +205,6 @@ void sprite_manager_update_rats() {
             (1 << 14);  // Size
         sprite -> attr3 =
             ((rat -> tile_id) & 0x2f) | // Tile index
-            (1 << 12);  // Priority */
+            (1 << 12);  // Priority
     }
 }
