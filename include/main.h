@@ -3,10 +3,13 @@
 
 #include <stdlib.h>
 
+#include "gba_interrupt.h"
+#include "gba_systemcalls.h"
 #include "gba_types.h"
 #include "screen/screen_manager.h"
 #include "sprites/sprite_manager.h"
 
+/*
 #define WIDTH 240
 #define HEIGHT 160
 
@@ -68,5 +71,6 @@
 #define BUTTON_DOWN (1 << 7)
 #define BUTTON_R (1 << 8)
 #define BUTTON_L (1 << 9)
+*/
 
 #endif

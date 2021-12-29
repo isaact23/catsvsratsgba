@@ -53,8 +53,8 @@ void sprite_manager_update() {
     
     time_elapsed++;
 
-    // Update sprite attributes
-    for (u32 i = 0; i < SPRITE_LIMIT; i++) {
+    // Update sprite attributes (TODO: MOVE TO DMA)
+    for (u32 i = 0; i < sprite_count; i++) {
         struct sprite sprite = sprite_array[i];
         sprite_attributes[i * 4] = sprite.attr1;
         sprite_attributes[i * 4 + 1] = sprite.attr2;
@@ -104,10 +104,10 @@ void sprite_manager_spawn_rats() {
             // Initialize rat properties
             new_rat.type = rat_data.rat_type;
             if (new_rat.type == 0) {
-                new_rat.slowness = 15; // Default rat
+                new_rat.slowness = 2; // Default rat
                 new_rat.fps = 2;
             } else if (new_rat.type == 1) {
-                new_rat.slowness = 5; // Fast rat
+                new_rat.slowness = 1; // Fast rat
                 new_rat.fps = 3;
             } else {
                 exit(1);
@@ -166,39 +166,39 @@ void sprite_manager_update_rats() {
         const s8* tiles = rat -> path -> coords;
 
         // Get coordinates of current tile
-        s16 tile_x = tiles[tile_no * 2] * 16;
-        s16 tile_y = tiles[tile_no * 2 + 1] * 16;
+        s16 tile_x = tiles[tile_no * 2];
+        s16 tile_y = tiles[tile_no * 2 + 1];
 
         // Get coordinates of next tile
-        s16 tile2_x = tiles[(tile_no + 1) * 2] * 16;
-        s16 tile2_y = tiles[(tile_no + 1) * 2 + 1] * 16;
+        s16 tile2_x = tiles[(tile_no + 1) * 2];
+        s16 tile2_y = tiles[(tile_no + 1) * 2 + 1];
 
         s16 pixel_offset = pixels % 16;
 
         // Same x
         if (tile_x == tile2_x) {
-            rat -> x = tile_x;
+            rat -> x = tile_x * 16;
 
             // Moving down
             if (tile2_y > tile_y) {
-                rat -> y = tile_y + pixel_offset;
+                rat -> y = tile_y * 16 + pixel_offset;
             }
             // Moving up
             else {
-                rat -> y = tile_y - pixel_offset;
+                rat -> y = tile_y * 16 - pixel_offset;
             }
         }
         // Same y
         else {
-            rat -> y = tile_y;
+            rat -> y = tile_y * 16;
 
             // Moving right
             if (tile2_x > tile_x) {
-                rat -> x = tile_x + pixel_offset;
+                rat -> x = tile_x * 16 + pixel_offset;
             }
             // Moving left
             else {
-                rat -> x = tile_x - pixel_offset;
+                rat -> x = tile_x * 16 - pixel_offset;
             }
         }
 
