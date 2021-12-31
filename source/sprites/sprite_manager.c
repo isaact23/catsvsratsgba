@@ -96,10 +96,10 @@ void sprite_manager_spawn_rats() {
             // Initialize rat properties
             new_rat.type = rat_data.rat_type;
             if (new_rat.type == 0) {
-                new_rat.slowness = 2; // Default rat
+                new_rat.speed = 1; // Default rat
                 new_rat.fps = 2;
             } else if (new_rat.type == 1) {
-                new_rat.slowness = 1; // Fast rat
+                new_rat.speed = 2; // Fast rat
                 new_rat.fps = 3;
             } else {
                 exit(1);
@@ -122,6 +122,7 @@ void sprite_manager_update_rats() {
         // Update rat tile
         if (rat -> type == 0) {
             rat -> tile_id = 0;
+            rat -> tile_id = ((((time_elapsed - rat -> init_time) * rat -> fps) / 60) % 2) * 8;
             //rat -> tile_id = ((time_elapsed * (rat -> fps) / 60) % 2) * 8;
         } else if (rat -> type == 1) {
             rat -> tile_id = 1;
@@ -131,7 +132,7 @@ void sprite_manager_update_rats() {
 
         // Update rat position based on time elapsed
         u32 progress = time_elapsed - rat -> init_time;
-        u32 pixels = progress / (rat -> slowness);
+        u32 pixels = (progress * rat -> speed) >> 1;
 
         // Divide pixels by 16, the tile width, to get tile number
         u16 tile_no = pixels >> 4;

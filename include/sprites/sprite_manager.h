@@ -20,7 +20,7 @@
 
 // Statically allocate memory for objects
 #define SPRITE_LIMIT 128
-#define RAT_LIMIT 30
+#define RAT_LIMIT 64
 
 // Initialize sprites
 void sprite_manager_init();
