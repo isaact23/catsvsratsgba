@@ -11,6 +11,9 @@
 #include "datatypes/path.h"
 #include "datatypes/rat.h"
 #include "datatypes/sprite.h"
+#include "sprites/cat_manager.h"
+#include "sprites/rat_manager.h"
+
 #include "gba_dma.h"
 #include "gba_sprites.h"
 #include "gba_types.h"
@@ -18,9 +21,7 @@
 #define SPRITE_PALETTE_MEMORY 0x5000200
 #define SPRITE_IMAGE_MEMORY 0x6010000
 
-// Statically allocate memory for objects
 #define SPRITE_LIMIT 128
-#define RAT_LIMIT 64
 
 // Initialize sprites
 void sprite_manager_init();
@@ -33,11 +34,5 @@ void sprite_manager_update();
 
 // Return a pointer to a new sprite
 struct sprite* sprite_manager_new_sprite();
-
-// If enough time has elapsed, spawn a new rat
-void sprite_manager_spawn_rats();
-
-// Update rats
-void sprite_manager_update_rats();
 
 #endif
