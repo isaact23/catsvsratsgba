@@ -5,6 +5,7 @@
 
 #include "datatypes/path.h"
 #include "datatypes/sprite.h"
+#include "gba_types.h"
 
 struct rat {
     struct sprite* sprite;
@@ -15,6 +16,7 @@ struct rat {
     u16 speed; // Auto-assigned based on type
     u16 tile_id;
     u8 fps;
+    s16 hp;
 
     // Rat location
     const struct path* path;
