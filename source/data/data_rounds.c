@@ -9,7 +9,7 @@ const struct round* data_rounds_get(u16 round) {
 
 const struct round DATA_ROUNDS_ROUND0 = {
     .round_id = 0,
-    .rat_count = 46,
+    .rat_count = 4,
     .rat_spawn_entries = {
         {
             .spawn_time = 0, 
@@ -17,7 +17,7 @@ const struct round DATA_ROUNDS_ROUND0 = {
             .path_id = 0
         },
         {60, 0, 0}, {120, 0, 1}, {150, 1, 1},
-        {180, 1, 1},
+        /*{180, 1, 1},
         {240, 1, 1},
         {300, 1, 1},
         {360, 1, 1},
@@ -59,6 +59,6 @@ const struct round DATA_ROUNDS_ROUND0 = {
         {1160, 1, 0},
         {1170, 1, 1},
         {1180, 1, 0},
-        {1190, 1, 1},
+        {1190, 1, 1},*/
     }
 };

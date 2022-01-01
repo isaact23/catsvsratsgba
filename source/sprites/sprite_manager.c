@@ -1,8 +1,5 @@
 #include "sprites/sprite_manager.h"
 
-// IO maps
-vu16* sprite_image_vram = (vu16*) 0x6010000;
-
 // Sprites
 struct sprite sprite_array [SPRITE_LIMIT];
 u32 sprite_count = 0;
@@ -121,11 +118,9 @@ void sprite_manager_update_rats() {
 
         // Update rat tile
         if (rat -> type == 0) {
-            rat -> tile_id = 0;
-            rat -> tile_id = ((((time_elapsed - rat -> init_time) * rat -> fps) / 60) % 2) * 8;
-            //rat -> tile_id = ((time_elapsed * (rat -> fps) / 60) % 2) * 8;
+            rat -> tile_id = ((((time_elapsed - rat -> init_time) * rat -> fps) / 60) % 2) * 64;
         } else if (rat -> type == 1) {
-            rat -> tile_id = 1;
+            rat -> tile_id = 8 + ((((time_elapsed - rat -> init_time) * rat -> fps) / 60) % 2) * 64;
         } else {
             exit(1);
         }
@@ -205,7 +200,7 @@ void sprite_manager_update_rats() {
             ((rat -> x) & 0x1ff) |
             (1 << 14);  // Size
         sprite -> attr3 =
-            ((rat -> tile_id) & 0x2f) | // Tile index
+            ((rat -> tile_id) & 0x3ff) | // Tile index
             (1 << 12);  // Priority
     }
 }

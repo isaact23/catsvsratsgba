@@ -5,7 +5,7 @@
 
 #include "gba_types.h"
 
-#define IMAGE_SPRITES_WIDTH 32
+#define IMAGE_SPRITES_WIDTH 16
 #define IMAGE_SPRITES_HEIGHT 4
 
 #define IMAGE_SPRITES_PALETTE_SIZE 13
