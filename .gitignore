@@ -1,3 +1,8 @@
+.vscode
 build
 catsvsrats.*
 install.sh
+resources
+screenshots
+
+ignore
