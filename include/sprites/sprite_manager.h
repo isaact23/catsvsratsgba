@@ -11,8 +11,8 @@
 #include "datatypes/path.h"
 #include "datatypes/rat.h"
 #include "datatypes/sprite.h"
-#include "sprites/cat_manager.h"
-#include "sprites/rat_manager.h"
+#include "game/cat_manager.h"
+#include "game/rat_manager.h"
 
 #include "gba_dma.h"
 #include "gba_sprites.h"
@@ -25,9 +25,6 @@
 
 // Initialize sprites
 void sprite_manager_init();
-
-// Start a round
-void sprite_manager_start_round(u16 round);
 
 // Update sprites in memory during vblank
 void sprite_manager_update();

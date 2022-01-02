@@ -1,11 +1,8 @@
 #include "main.h"
 
 int main() {
-
     // Initialize game
-    screen_manager_init();
-    sprite_manager_init();
-    sprite_manager_start_round(0);
+    game_manager_init();
 
     // Initialize vblank interrupt
     irqInit();
@@ -13,6 +10,6 @@ int main() {
 
     while (1) {
         VBlankIntrWait();
-        sprite_manager_update();
+        game_manager_update();
     }
 }

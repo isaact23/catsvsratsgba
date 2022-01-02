@@ -4,12 +4,6 @@
 struct sprite sprite_array [SPRITE_LIMIT];
 u32 sprite_count = 0;
 
-// Rounds
-const struct round* curr_round;
-
-// Time elapsed since beginning of a round
-u32 time_elapsed = 0;
-
 // Initialize sprites
 void sprite_manager_init() {
 
@@ -29,20 +23,8 @@ void sprite_manager_init() {
     dmaCopy(sprite16, (void*) SPRITE_IMAGE_MEMORY, IMAGE_SPRITES_WIDTH * IMAGE_SPRITES_HEIGHT * 64);
 }
 
-// Start a round
-void sprite_manager_start_round(u16 round) {
-    time_elapsed = 0;
-    curr_round = data_rounds_get(round);
-}
-
 // Update sprites in memory every vblank
 void sprite_manager_update() {
-    rat_manager_spawn(curr_round, time_elapsed);
-    rat_manager_update(time_elapsed);
-
-    cat_manager_update(time_elapsed);
-    
-    time_elapsed++;
 
     // Update sprite attributes
     dmaCopy(sprite_array, (void*) OAM, 8 * SPRITE_LIMIT);

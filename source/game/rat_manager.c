@@ -1,4 +1,4 @@
-#include "sprites/rat_manager.h"
+#include "game/rat_manager.h"
 
 // Rats
 struct rat rat_array [RAT_LIMIT];
