@@ -10,7 +10,8 @@ u32 channel_b_vblanks_remaining = 0;
 
 // Initialize audio manager
 void audio_manager_init() {
-    audio_manager_play_sound(MUSIC_BETWEEN_ROUNDS_DATA, MUSIC_BETWEEN_ROUNDS_SAMPLES, MUSIC_BETWEEN_ROUNDS_RATE, 'A');
+    //audio_manager_play_sound(MUSIC_BETWEEN_ROUNDS_DATA, MUSIC_BETWEEN_ROUNDS_SAMPLES, MUSIC_BETWEEN_ROUNDS_RATE, 'A');
+    audio_manager_play_sound(MUSIC_TITLE_DATA, MUSIC_TITLE_SAMPLES, MUSIC_TITLE_RATE, 'A');
 }
 
 // Update audio manager once per frame

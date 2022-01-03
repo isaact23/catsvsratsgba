@@ -2,6 +2,11 @@
 #define AUDIO_MANAGER_H
 
 #include "data/music_between_rounds.h"
+#include "data/music_during_rounds.h"
+#include "data/music_lose.h"
+#include "data/music_title.h"
+#include "data/music_win.h"
+
 #include "gba_dma.h"
 #include "gba_sound.h"
 #include "gba_timers.h"
