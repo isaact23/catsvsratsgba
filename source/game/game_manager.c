@@ -8,6 +8,7 @@ const struct round* curr_round;
 
 // Initialize game manager
 void game_manager_init() {
+    audio_manager_init();
     screen_manager_init();
     sprite_manager_init();
 
@@ -16,6 +17,7 @@ void game_manager_init() {
 
 // Update game manager every frame
 void game_manager_update() {
+    audio_manager_update();
     sprite_manager_update();
 
     rat_manager_spawn(curr_round, time_elapsed);

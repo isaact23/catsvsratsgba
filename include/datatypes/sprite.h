@@ -1,7 +1,7 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-#include <stdint.h>
+#include "gba_types.h"
 
 struct sprite {
     u16 attr1;

@@ -1,0 +1,11 @@
+#ifndef MUSIC_BETWEEN_ROUNDS_H
+#define MUSIC_BETWEEN_ROUNDS_H
+
+#include "gba_types.h"
+
+#define MUSIC_BETWEEN_ROUNDS_SAMPLES 384151
+#define MUSIC_BETWEEN_ROUNDS_RATE 16000
+
+extern const s8 MUSIC_BETWEEN_ROUNDS_DATA [];
+
+#endif

@@ -1,6 +1,7 @@
 #ifndef GAME_MANAGER_H
 #define GAME_MANAGER_H
 
+#include "audio/audio_manager.h"
 #include "screen/screen_manager.h"
 #include "sprites/sprite_manager.h"
 
