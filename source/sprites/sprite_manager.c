@@ -37,15 +37,6 @@ struct sprite* sprite_manager_new_sprite() {
     if (sprite_count >= SPRITE_LIMIT) {
         exit(1);
     }
-    // Use the spot from the deleted sprite stack if possible
-    u8 sprite_index;
-    if (deleted_sprite_count > 0) {
-        deleted_sprite_count--;
-        sprite_index = deleted_sprite_indices[deleted_sprite_count];
-    } else {
-        sprite_index = sprite_count;
-    }
-    struct sprite* new_sprite = &sprite_array[sprite_index];
 
     // Zero out attributes and return pointer to sprite
     new_sprite -> attr1 = 0;
