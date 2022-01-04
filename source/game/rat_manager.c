@@ -2,7 +2,7 @@
 
 // Rats
 struct rat rat_array [RAT_LIMIT];
-u32 rat_count = 0;
+u8 rat_count = 0;
 
 // If enough time has elapsed, spawn a new rat
 void rat_manager_spawn(const struct round* curr_round, u32 time_elapsed) {
@@ -18,7 +18,7 @@ void rat_manager_spawn(const struct round* curr_round, u32 time_elapsed) {
         if (time_elapsed > rat_data.spawn_time) {
             // Spawn the rat
             struct rat new_rat;
-            new_rat.sprite = sprite_manager_new_sprite();
+            new_rat.sprite = game_manager_new_sprite();
             new_rat.init_time = time_elapsed;
 
             // Get path data
@@ -82,7 +82,9 @@ void rat_manager_update(u32 time_elapsed) {
             else if (rat -> path -> id == 1 || rat -> path -> id == 2) {
                 rat -> path = &DATA_PATH_3;
             } else {
-                //exit(1); // Begin eating cheese
+                // Begin eating cheese
+                exit(1);
+                //game_manager_delete_rat(rat);
             }
 
             // Reset to beginning of path

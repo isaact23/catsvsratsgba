@@ -32,4 +32,7 @@ void sprite_manager_update();
 // Return a pointer to a new sprite
 struct sprite* sprite_manager_new_sprite();
 
+// Delete a sprite
+void sprite_manager_delete_sprite(struct sprite* sprite);
+
 #endif

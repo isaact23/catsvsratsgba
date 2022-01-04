@@ -7,17 +7,18 @@ u32 time_elapsed = 0;
 const struct round* curr_round;
 
 // Lives and money
-u32 catnip;
-u32 cheese;
+u32 health;
+u32 money;
 
 // Initialize game manager
 void game_manager_init() {
-    catnip = 30;
-    cheese = 100;
+    health = 100;
+    money = 30;
 
     audio_manager_init();
     screen_manager_init();
     sprite_manager_init();
+    text_manager_update(health, money);
 
     game_manager_start_round(0);
 }
@@ -29,8 +30,9 @@ void game_manager_update() {
 
     rat_manager_spawn(curr_round, time_elapsed);
     rat_manager_update(time_elapsed);
-
     cat_manager_update(time_elapsed);
+
+    text_manager_update(health, money);
     
     time_elapsed++;
 }
@@ -39,4 +41,14 @@ void game_manager_update() {
 void game_manager_start_round(u16 round) {
     time_elapsed = 0;
     curr_round = data_rounds_get(round);
+}
+
+// Get a sprite from the sprite manager
+struct sprite* game_manager_new_sprite() {
+    return sprite_manager_new_sprite();
+}
+
+// Delete a sprite from the sprite manager
+void game_manager_delete_sprite(struct sprite* sprite) {
+    sprite_manager_delete_sprite(sprite);
 }
