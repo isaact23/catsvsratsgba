@@ -58,9 +58,9 @@ void rat_manager_update(u32 time_elapsed) {
 
         // Update rat tile
         if (rat -> type == 0) {
-            rat -> tile_id = ((((time_elapsed - rat -> init_time) * rat -> fps) / 60) % 2) * 64;
+            rat -> tile_id = ((((time_elapsed - rat -> init_time) * rat -> fps) / 60) % 2) * 4;
         } else if (rat -> type == 1) {
-            rat -> tile_id = 8 + ((((time_elapsed - rat -> init_time) * rat -> fps) / 60) % 2) * 64;
+            rat -> tile_id = 16 + ((((time_elapsed - rat -> init_time) * rat -> fps) / 60) % 2) * 4;
         } else {
             exit(1);
         }

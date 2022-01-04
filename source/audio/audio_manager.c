@@ -11,7 +11,10 @@ u32 channel_b_vblanks_remaining = 0;
 // Initialize audio manager
 void audio_manager_init() {
     //audio_manager_play_sound(MUSIC_BETWEEN_ROUNDS_DATA, MUSIC_BETWEEN_ROUNDS_SAMPLES, MUSIC_BETWEEN_ROUNDS_RATE, 'A');
-    audio_manager_play_sound(MUSIC_TITLE_DATA, MUSIC_TITLE_SAMPLES, MUSIC_TITLE_RATE, 'A');
+    audio_manager_play_sound(MUSIC_DURING_ROUNDS_DATA, MUSIC_DURING_ROUNDS_SAMPLES, MUSIC_DURING_ROUNDS_RATE, 'A');
+    //audio_manager_play_sound(MUSIC_TITLE_DATA, MUSIC_TITLE_SAMPLES, MUSIC_TITLE_RATE, 'A');
+    //audio_manager_play_sound(MUSIC_WIN_DATA, MUSIC_WIN_SAMPLES, MUSIC_WIN_RATE, 'B');
+    //audio_manager_play_sound(MUSIC_LOSE_DATA, MUSIC_LOSE_SAMPLES, MUSIC_LOSE_RATE, 'B');
 }
 
 // Update audio manager once per frame

@@ -6,8 +6,15 @@ u32 time_elapsed = 0;
 // Rounds
 const struct round* curr_round;
 
+// Lives and money
+u32 catnip;
+u32 cheese;
+
 // Initialize game manager
 void game_manager_init() {
+    catnip = 30;
+    cheese = 100;
+
     audio_manager_init();
     screen_manager_init();
     sprite_manager_init();

@@ -3,8 +3,8 @@
 
 #include "gba_types.h"
 
-#define MUSIC_LOSE_SAMPLES x
-#define MUSIC_LOSE_RATE x
+#define MUSIC_LOSE_SAMPLES 47761
+#define MUSIC_LOSE_RATE 16000
 
 extern const s8 MUSIC_LOSE_DATA [];
 
