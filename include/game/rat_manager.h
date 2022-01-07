@@ -21,7 +21,4 @@ void rat_manager_update(u32 time_elapsed);
 // Add a rat
 void rat_manager_spawn_rat(struct rat* rat);
 
-// Delete a rat
-void rat_manager_delete_rat(struct rat* rat);
-
 #endif

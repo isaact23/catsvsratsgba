@@ -10,9 +10,6 @@
 void cat_manager_update(u32 time_elapsed);
 
 // Add a cat
-//void cat_manager_spawn_cat(struct rat* rat);
-
-// Delete a cat
-//void cat_manager_delete_cat(struct rat* rat);
+//void cat_manager_spawn_cat(struct cat* cat);
 
 #endif

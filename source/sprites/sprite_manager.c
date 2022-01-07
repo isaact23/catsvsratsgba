@@ -4,10 +4,6 @@
 struct sprite sprite_array [SPRITE_LIMIT];
 u8 sprite_count = 0;
 
-// Maintain deleted sprite indices to be used for future sprite spawns
-u8 deleted_sprite_indices [SPRITE_LIMIT];
-u8 deleted_sprite_count = 0;
-
 // Initialize sprites
 void sprite_manager_init() {
     // Move all unused sprites off-screen
@@ -37,6 +33,7 @@ struct sprite* sprite_manager_new_sprite() {
     if (sprite_count >= SPRITE_LIMIT) {
         exit(1);
     }
+    struct sprite* new_sprite = &sprite_array[sprite_count];
 
     // Zero out attributes and return pointer to sprite
     new_sprite -> attr1 = 0;
@@ -44,14 +41,4 @@ struct sprite* sprite_manager_new_sprite() {
     new_sprite -> attr3 = 0;
     sprite_count++;
     return new_sprite;
-}
-
-// Delete a sprite
-void sprite_manager_delete_sprite(struct sprite* sprite) {
-    if (sprite_count < 1 || deleted_sprite_count >= SPRITE_LIMIT) {
-        exit(1);
-    }
-
-    deleted_sprite_indices[deleted_sprite_count] = (u8) ((sprite - sprite_array) / sizeof(struct sprite));
-    deleted_sprite_count++;
 }

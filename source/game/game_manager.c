@@ -47,8 +47,3 @@ void game_manager_start_round(u16 round) {
 struct sprite* game_manager_new_sprite() {
     return sprite_manager_new_sprite();
 }
-
-// Delete a sprite from the sprite manager
-void game_manager_delete_sprite(struct sprite* sprite) {
-    sprite_manager_delete_sprite(sprite);
-}

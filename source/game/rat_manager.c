@@ -84,7 +84,6 @@ void rat_manager_update(u32 time_elapsed) {
             } else {
                 // Begin eating cheese
                 exit(1);
-                //game_manager_delete_rat(rat);
             }
 
             // Reset to beginning of path
