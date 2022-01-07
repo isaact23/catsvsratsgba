@@ -3,6 +3,7 @@
 // Rats
 struct rat rat_array [RAT_LIMIT];
 u8 rat_count = 0;
+u8 next_eat_pos = 0; // Next position to place a rat to consume cheese, ranges from 0 to 3
 
 // If enough time has elapsed, spawn a new rat
 void rat_manager_spawn(const struct round* curr_round, u32 time_elapsed) {
@@ -30,19 +31,26 @@ void rat_manager_spawn(const struct round* curr_round, u32 time_elapsed) {
                 exit(1);
             }
 
-            // Initialize rat properties
+            // Initialize rat based on type
             new_rat.type = rat_data.rat_type;
-            if (new_rat.type == 0) {
-                new_rat.speed = 1; // Default rat
+            if (new_rat.type == DEFAULT) {
+                new_rat.speed = 1;
                 new_rat.fps = 2;
-            } else if (new_rat.type == 1) {
-                new_rat.speed = 2; // Fast rat
+                new_rat.hp = 10;
+            } else if (new_rat.type == FAST) {
+                new_rat.speed = 2;
                 new_rat.fps = 3;
+                new_rat.hp = 10;
             } else {
                 exit(1);
             }
+
+            // Initialize all rats with these values
             new_rat.x = 240;
             new_rat.y = 0;
+            new_rat.eating = -1;
+
+            // Copy rat to rat array
             rat_array[rat_count] = new_rat;
             rat_count++;
         }
@@ -56,78 +64,97 @@ void rat_manager_update(u32 time_elapsed) {
     for (u32 i = 0; i < rat_count; i++) {
         struct rat* rat = &(rat_array[i]);
 
-        // Update rat tile
-        if (rat -> type == 0) {
-            rat -> tile_id = ((((time_elapsed - rat -> init_time) * rat -> fps) / 60) % 2) * 4;
-        } else if (rat -> type == 1) {
-            rat -> tile_id = 16 + ((((time_elapsed - rat -> init_time) * rat -> fps) / 60) % 2) * 4;
-        } else {
-            exit(1);
-        }
-
-        // Update rat position based on time elapsed
-        u32 progress = time_elapsed - rat -> init_time;
-        u32 pixels = (progress * rat -> speed) >> 1;
-
-        // Divide pixels by 16, the tile width, to get tile number
-        u16 tile_no = pixels >> 4;
-
-        // Update rat path
-        if (tile_no + 1 >= rat -> path -> length) {
-            // Mutant path
-            if (rat -> path -> id == 0) {
-                rat -> path = &DATA_PATH_2;
-            }
-            // Merge paths
-            else if (rat -> path -> id == 1 || rat -> path -> id == 2) {
-                rat -> path = &DATA_PATH_3;
+        // Update rat sprite
+        u16 sprite_tile;
+        u16 frame_counter = ((time_elapsed - rat -> init_time) * rat -> fps) / 60;
+        if (rat -> eating < 0) {
+            if (rat -> type == 0) {
+                sprite_tile = (frame_counter % 2) * 4;
+            } else if (rat -> type == 1) {
+                sprite_tile = 16 + (frame_counter % 2) * 4;
             } else {
-                // Begin eating cheese
                 exit(1);
             }
-
-            // Reset to beginning of path
-            rat -> init_time = time_elapsed;
-            pixels = 0;
-            tile_no = 0;
-        }
-
-        const s8* tiles = rat -> path -> coords;
-
-        // Get coordinates of current tile
-        s16 tile_x = tiles[tile_no * 2];
-        s16 tile_y = tiles[tile_no * 2 + 1];
-
-        // Get coordinates of next tile
-        s16 tile2_x = tiles[(tile_no + 1) * 2];
-        s16 tile2_y = tiles[(tile_no + 1) * 2 + 1];
-
-        s16 pixel_offset = pixels % 16;
-
-        // Same x
-        if (tile_x == tile2_x) {
-            rat -> x = tile_x * 16;
-
-            // Moving down
-            if (tile2_y > tile_y) {
-                rat -> y = tile_y * 16 + pixel_offset;
-            }
-            // Moving up
-            else {
-                rat -> y = tile_y * 16 - pixel_offset;
+        } else {
+            if (rat -> type == 0) {
+                sprite_tile = 8 + (frame_counter % 2) * 4;
+            } else if (rat -> type == 1) {
+                sprite_tile = 24 + (frame_counter % 2) * 4;
+            } else {
+                exit(1);
             }
         }
-        // Same y
-        else {
-            rat -> y = tile_y * 16;
+        rat -> tile_id = sprite_tile;
 
-            // Moving right
-            if (tile2_x > tile_x) {
-                rat -> x = tile_x * 16 + pixel_offset;
+        if (rat -> eating < 0) {
+            // Update rat position based on time elapsed
+            u32 progress = time_elapsed - rat -> init_time;
+            u32 pixels = (progress * rat -> speed) >> 1;
+
+            // Divide pixels by 16, the tile width, to get tile number
+            u16 tile_no = pixels >> 4;
+
+            // Update rat path
+            if (tile_no + 1 >= rat -> path -> length) {
+                // Mutant path
+                if (rat -> path -> id == 0) {
+                    rat -> path = &DATA_PATH_2;
+                }
+                // Merge paths
+                else if (rat -> path -> id == 1 || rat -> path -> id == 2) {
+                    rat -> path = &DATA_PATH_3;
+                } else {
+                    // Begin eating cheese
+                    rat -> eating = next_eat_pos;
+                    next_eat_pos++;
+                    if (next_eat_pos > 3) {
+                        next_eat_pos = 0;
+                    }
+                }
+
+                // Reset to beginning of path
+                rat -> init_time = time_elapsed;
+                pixels = 0;
+                tile_no = 0;
             }
-            // Moving left
+
+            const s8* tiles = rat -> path -> coords;
+
+            // Get coordinates of current tile
+            s16 tile_x = tiles[tile_no * 2];
+            s16 tile_y = tiles[tile_no * 2 + 1];
+
+            // Get coordinates of next tile
+            s16 tile2_x = tiles[(tile_no + 1) * 2];
+            s16 tile2_y = tiles[(tile_no + 1) * 2 + 1];
+
+            s16 pixel_offset = pixels % 16;
+
+            // Same x
+            if (tile_x == tile2_x) {
+                rat -> x = tile_x * 16;
+
+                // Moving down
+                if (tile2_y > tile_y) {
+                    rat -> y = tile_y * 16 + pixel_offset;
+                }
+                // Moving up
+                else {
+                    rat -> y = tile_y * 16 - pixel_offset;
+                }
+            }
+            // Same y
             else {
-                rat -> x = tile_x * 16 - pixel_offset;
+                rat -> y = tile_y * 16;
+
+                // Moving right
+                if (tile2_x > tile_x) {
+                    rat -> x = tile_x * 16 + pixel_offset;
+                }
+                // Moving left
+                else {
+                    rat -> x = tile_x * 16 - pixel_offset;
+                }
             }
         }
 

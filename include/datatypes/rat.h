@@ -7,21 +7,31 @@
 #include "datatypes/sprite.h"
 #include "gba_types.h"
 
+enum rat_type {
+    DEFAULT = 0,
+    FAST,
+    FAT,
+    ROBOT,
+    DEMON
+};
+
 struct rat {
     struct sprite* sprite;
     u32 init_time;
 
-    // Rat properties
-    u8 type; // 0 - default, 1 - fast, 2 - fat, 3 - robot, 4 - demon
+    // Rat long-term properties
+    enum rat_type type;
     u16 speed; // Auto-assigned based on type
-    u16 tile_id;
-    u8 fps;
-    s16 hp;
+    u8 fps; // Sprite frames per second
+    u8 hps; // Health damage per second while eating cheese
 
-    // Rat location
+    // Rat status
     const struct path* path;
+    u16 tile_id;
     u16 x;
     u16 y;
+    s16 hp;
+    s8 eating; // -1 for not eating, or 0, 1, 2 or 3 for eating location
 };
 
 #endif
