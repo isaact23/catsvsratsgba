@@ -32,6 +32,7 @@ struct rat {
     u16 y;
     s16 hp;
     s8 eating; // -1 for not eating, or 0, 1, 2 or 3 for eating location
+    s16 time_until_next_bite;
 };
 
 #endif

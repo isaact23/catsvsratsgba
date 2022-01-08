@@ -12,13 +12,13 @@
 
 #define RAT_LIMIT 64
 
-// If enough time has elapsed, spawn a new rat
-void rat_manager_spawn(const struct round* curr_round, u32 time_elapsed);
-
 // Update rats
-void rat_manager_update(u32 time_elapsed);
+void rat_manager_update(const struct round* curr_round, u32 time_elapsed);
 
-// Add a rat
-void rat_manager_spawn_rat(struct rat* rat);
+// If enough time has elapsed, spawn a new rat
+void _rat_manager_spawn(const struct round* curr_round, u32 time_elapsed);
+
+// Update path position of a rat
+void _rat_manager_update_rat_position(struct rat* rat, u32 time_elapsed);
 
 #endif

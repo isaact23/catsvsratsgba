@@ -7,8 +7,8 @@ u32 time_elapsed = 0;
 const struct round* curr_round;
 
 // Lives and money
-u32 health;
-u32 money;
+s32 health;
+s32 money;
 
 // Initialize game manager
 void game_manager_init() {
@@ -28,8 +28,7 @@ void game_manager_update() {
     audio_manager_update();
     sprite_manager_update();
 
-    rat_manager_spawn(curr_round, time_elapsed);
-    rat_manager_update(time_elapsed);
+    rat_manager_update(curr_round, time_elapsed);
     cat_manager_update(time_elapsed);
 
     text_manager_update(health, money);
@@ -46,4 +45,13 @@ void game_manager_start_round(u16 round) {
 // Get a sprite from the sprite manager
 struct sprite* game_manager_new_sprite() {
     return sprite_manager_new_sprite();
+}
+
+// Decrease health (cheese) by 1
+void game_manager_decrease_health() {
+    health--;
+    if (health <= 0) {
+        health = 0;
+        exit(1);
+    }
 }

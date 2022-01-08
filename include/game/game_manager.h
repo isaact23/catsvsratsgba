@@ -1,6 +1,8 @@
 #ifndef GAME_MANAGER_H
 #define GAME_MANAGER_H
 
+#include <stdlib.h>
+
 #include "audio/audio_manager.h"
 #include "screen/screen_manager.h"
 #include "screen/text_manager.h"
@@ -19,5 +21,8 @@ void game_manager_start_round(u16 round);
 
 // Get a sprite from the sprite manager
 struct sprite* game_manager_new_sprite();
+
+// Decrease health (cheese) by 1
+void game_manager_decrease_health();
 
 #endif
