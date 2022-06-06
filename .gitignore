@@ -1,5 +1,5 @@
-.vscode
+# .vscode
 build
-catsvsrats.*
-*.sh
+catsvsratsgba.*
+# *.sh
 opt

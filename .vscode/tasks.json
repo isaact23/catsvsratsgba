@@ -1,0 +1,28 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Make",
+            "type": "shell",
+            "command": "make",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Make Clean",
+            "type": "shell",
+            "command": "make clean"
+        },
+        {
+            "label": "Run",
+            "type": "shell",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "command": "/usr/games/mgba-qt -g catsvsratsgba.gba"
+        },
+    ]
+}
