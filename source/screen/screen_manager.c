@@ -20,6 +20,9 @@ void screen_manager_init() {
 
     // Initialize tilemap
     tilemap_init();
+
+    // Initialize text
+    text_manager_init();
 }
 
 // Update the screen.
