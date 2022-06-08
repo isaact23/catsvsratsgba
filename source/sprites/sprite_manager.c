@@ -28,10 +28,10 @@ void sprite_manager_update() {
     dmaCopy(sprite_array, (void*) OAM, 8 * SPRITE_LIMIT);
 }
 
-// Return a pointer to a new sprite.
+// Return a pointer to a new sprite, or NULL if unavailable.
 struct sprite* sprite_manager_new_sprite() {
     if (sprite_count >= SPRITE_LIMIT) {
-        exit(1);
+        return NULL;
     }
     struct sprite* new_sprite = &sprite_array[sprite_count];
 

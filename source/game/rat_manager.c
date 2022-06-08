@@ -82,6 +82,9 @@ void _rat_manager_spawn(const struct round* curr_round, u32 time_elapsed) {
             // Spawn the rat
             struct rat new_rat;
             new_rat.sprite = game_manager_new_sprite();
+            if (new_rat.sprite == NULL) {
+                exit(1);
+            }
             new_rat.init_time = time_elapsed;
 
             // Get path data
