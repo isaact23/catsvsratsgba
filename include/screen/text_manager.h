@@ -7,6 +7,6 @@
 void text_manager_init();
 
 // Update numbers for health and money
-void text_manager_update(u32 health, u32 money);
+void text_manager_update(s32 health, s32 money);
 
 #endif

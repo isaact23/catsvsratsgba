@@ -5,7 +5,6 @@
 
 #include "audio/audio_manager.h"
 #include "screen/screen_manager.h"
-#include "screen/text_manager.h"
 #include "sprites/sprite_manager.h"
 
 #include "gba_types.h"

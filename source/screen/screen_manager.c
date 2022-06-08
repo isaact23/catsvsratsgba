@@ -21,3 +21,8 @@ void screen_manager_init() {
     // Initialize tilemap
     tilemap_init();
 }
+
+// Update the screen.
+void screen_manager_update(s32 health, s32 money) {
+    text_manager_update(health, money);
+}

@@ -31,7 +31,7 @@ void game_manager_update() {
     rat_manager_update(curr_round, time_elapsed);
     cat_manager_update(time_elapsed);
 
-    text_manager_update(health, money);
+    screen_manager_update(health, money);
     
     time_elapsed++;
 }
