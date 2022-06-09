@@ -16,6 +16,7 @@ void game_manager_init() {
     money = 30;
 
     audio_manager_init();
+    interact_manager_init();
     screen_manager_init();
     sprite_manager_init();
     text_manager_update(health, money);
@@ -26,6 +27,7 @@ void game_manager_init() {
 // Update game manager every frame
 void game_manager_update() {
     audio_manager_update();
+    interact_manager_update();
     sprite_manager_update();
 
     rat_manager_update(curr_round, time_elapsed);

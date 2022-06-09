@@ -79,7 +79,7 @@ s8 _get_digit(s32 num, u8 digit) {
     for (u8 i = 0; i < digit; i++) {
         reduced_num = reduced_num / 10;
     }
-    if (reduced_num <= 0) {
+    if (reduced_num <= 0 && digit > 0) {
         return -1;
     }
     return reduced_num % 10;

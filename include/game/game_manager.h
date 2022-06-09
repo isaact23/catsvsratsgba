@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #include "audio/audio_manager.h"
+#include "interact/interact_manager.h"
 #include "screen/screen_manager.h"
 #include "sprites/sprite_manager.h"
 

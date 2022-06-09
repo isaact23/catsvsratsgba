@@ -2,6 +2,7 @@
 #define GRID_SELECT_H
 
 #include "datatypes/sprite.h"
+#include "sprites/sprite_manager.h"
 #include "gba_types.h"
 
 // Initialize grid selector
