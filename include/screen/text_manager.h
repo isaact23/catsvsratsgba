@@ -17,4 +17,7 @@ void text_manager_init();
 // Update numbers for health and money
 void text_manager_update(s32 health, s32 money);
 
+// Get a digit of a number
+u8 _get_digit(s32 num, u8 digit);
+
 #endif
