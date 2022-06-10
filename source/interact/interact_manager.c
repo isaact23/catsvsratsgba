@@ -7,5 +7,9 @@ void interact_manager_init() {
 
 // Update iteract manager
 void interact_manager_update() {
-    grid_selector_update();
+    // Get input
+    scanKeys();
+    u16 pressedKeys = keysDown();
+
+    grid_selector_update(pressedKeys);
 }
