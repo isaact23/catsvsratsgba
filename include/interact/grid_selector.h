@@ -11,8 +11,10 @@
 #define BUTTON_SIZE 14
 #define BUTTON_OFFSET 130
 
+#include "datatypes/cat.h"
 #include "datatypes/sprite.h"
 #include "sprites/sprite_manager.h"
+
 #include "gba_types.h"
 
 // Initialize grid selector

@@ -1,8 +1,13 @@
 #include "interact/grid_selector.h"
 
 struct sprite* cursor;
+struct sprite* cursor_entity;
 
+// Status of selection
 bool selecting = true;
+bool erasing = false;
+bool placing = false;
+enum cat_type selected_cat_type = normal;
 
 // Store coordinates of cursor.
 // Grid is 13 x 10. If x = 13, cursor is on navbar.
@@ -12,11 +17,13 @@ u8 cursor_y = 0;
 // Initialize grid selector
 void grid_selector_init() {
     cursor = sprite_manager_new_sprite();
+    cursor_entity = sprite_manager_new_sprite();
 }
 
 // Update grid selector every frame
 void grid_selector_update(u16 pressedKeys) {
     if (selecting) {
+
         // Respond to user input
         if ((pressedKeys & KEY_RIGHT) == KEY_RIGHT) {
             cursor_x++;
@@ -42,6 +49,42 @@ void grid_selector_update(u16 pressedKeys) {
             if (cursor_y > 0) {
                 cursor_y--;
             }
+        }
+
+        if ((pressedKeys & KEY_A) == KEY_A) {
+            if (cursor_x < 13) {
+                if (placing) {
+                    // TODO: Place cat
+                    grid_selector_disable_select();
+                }
+            } else if (cursor_x == 13) {
+                if (cursor_y < 4) {
+                    placing = true;
+                    erasing = false;
+                    switch (cursor_y) {
+                        case 0: { selected_cat_type = normal; }
+                        case 1: { selected_cat_type = archer; }
+                        case 2: { selected_cat_type = bomb; }
+                        case 3: { selected_cat_type = wizard; }
+                    }
+                } else if (cursor_y == 4) {
+                    erasing = true;
+                    placing = false;
+                } else if (cursor_y == 5) {
+                    // TOOD: Start round
+                }
+            }
+        } else if ((pressedKeys & KEY_B) == KEY_B) {
+            if (erasing) {
+                // TODO: Erase cat
+                grid_selector_disable_select();
+            }
+        } else if ((pressedKeys & KEY_L) == KEY_L) {
+            cursor_x = 2;
+            cursor_y = 4;
+        } else if ((pressedKeys & KEY_R) == KEY_R) {
+            cursor_x = 13;
+            cursor_y = 2;
         }
 
         // Calculate on-screen coordinates for cursor
@@ -91,6 +134,8 @@ void grid_selector_enable_select() {
 // Disable selection mode
 void grid_selector_disable_select() {
     selecting = false;
+    erasing = false;
+    placing = false;
     cursor_x = 14;
     cursor_y = 10;
 }
