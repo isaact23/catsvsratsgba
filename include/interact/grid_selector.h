@@ -3,10 +3,6 @@
 
 #define SELECTOR_TILE_1 216
 #define SELECTOR_TILE_2 220
-#define TILE_CAT_NORMAL 128
-#define TILE_CAT_ARCHER 256
-#define TILE_CAT_BOMB 192
-#define TILE_CAT_WIZARD 320
 
 #define TILE_SIZE 16
 #define ICON_X_OFFSET 210
@@ -17,6 +13,7 @@
 
 #include "datatypes/cat.h"
 #include "datatypes/sprite.h"
+#include "game/cat_manager.h"
 #include "sprites/sprite_manager.h"
 
 #include "gba_types.h"

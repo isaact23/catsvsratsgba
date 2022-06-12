@@ -55,35 +55,22 @@ void grid_selector_update(u16 pressedKeys) {
         if ((pressedKeys & KEY_A) == KEY_A) {
             if (cursor_x < 13) {
                 if (placing) {
-                    // TODO: Place cat
-                    grid_selector_disable_select();
+                    bool success = cat_manager_add_cat(cursor_x, cursor_y, selected_cat_type);
+                    if (success) {
+                        grid_selector_disable_select();
+                    }
                 }
             } else if (cursor_x == 13) {
                 if (cursor_y < 4) {
                     placing = true;
                     erasing = false;
                     switch (cursor_y) {
-                        case 1: {
-                            selected_cat_type = archer;
-                            selected_cat_tile = TILE_CAT_ARCHER;
-                            break;
-                        }
-                        case 2: {
-                            selected_cat_type = bomb;
-                            selected_cat_tile = TILE_CAT_BOMB;
-                            break;
-                        }
-                        case 3: {
-                            selected_cat_type = wizard;
-                            selected_cat_tile = TILE_CAT_WIZARD;
-                            break;
-                        }
-                        default: {
-                            selected_cat_type = normal;
-                            selected_cat_tile = TILE_CAT_NORMAL;
-                            break;
-                        }
+                        case 1:  { selected_cat_type = archer; break; }
+                        case 2:  { selected_cat_type = bomb; break; }
+                        case 3:  { selected_cat_type = wizard; break; }
+                        default: { selected_cat_type = normal; break; }
                     }
+                    selected_cat_tile = cat_manager_get_tile(selected_cat_type);
                 } else if (cursor_y == 4) {
                     erasing = true;
                     placing = false;
@@ -93,8 +80,10 @@ void grid_selector_update(u16 pressedKeys) {
             }
         } else if ((pressedKeys & KEY_B) == KEY_B) {
             if (erasing) {
-                // TODO: Erase cat
-                grid_selector_disable_select();
+                bool success = cat_manager_remove_cat(cursor_x, cursor_y);
+                if (success) {
+                    grid_selector_disable_select();
+                }
             }
         } else if ((pressedKeys & KEY_L) == KEY_L) {
             cursor_x = 2;

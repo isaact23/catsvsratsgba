@@ -15,11 +15,9 @@ struct cat {
     u32 last_attack_time;
 
     // Cat long-term properties
+    enum cat_type type;
     u8 x;
     u8 y;
-
-    // Cat status
-    u16 tile_id;
 };
 
 #endif
