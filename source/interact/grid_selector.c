@@ -8,6 +8,7 @@ bool selecting = true;
 bool erasing = false;
 bool placing = false;
 enum cat_type selected_cat_type = normal;
+u16 selected_cat_tile = 0;
 
 // Store coordinates of cursor.
 // Grid is 13 x 10. If x = 13, cursor is on navbar.
@@ -62,10 +63,26 @@ void grid_selector_update(u16 pressedKeys) {
                     placing = true;
                     erasing = false;
                     switch (cursor_y) {
-                        case 0: { selected_cat_type = normal; }
-                        case 1: { selected_cat_type = archer; }
-                        case 2: { selected_cat_type = bomb; }
-                        case 3: { selected_cat_type = wizard; }
+                        case 1: {
+                            selected_cat_type = archer;
+                            selected_cat_tile = TILE_CAT_ARCHER;
+                            break;
+                        }
+                        case 2: {
+                            selected_cat_type = bomb;
+                            selected_cat_tile = TILE_CAT_BOMB;
+                            break;
+                        }
+                        case 3: {
+                            selected_cat_type = wizard;
+                            selected_cat_tile = TILE_CAT_WIZARD;
+                            break;
+                        }
+                        default: {
+                            selected_cat_type = normal;
+                            selected_cat_tile = TILE_CAT_NORMAL;
+                            break;
+                        }
                     }
                 } else if (cursor_y == 4) {
                     erasing = true;
@@ -120,6 +137,20 @@ void grid_selector_update(u16 pressedKeys) {
             (1 << 14);  // Size
         cursor -> attr3 =
             (SELECTOR_TILE_2 & 0x3ff) | // Tile index
+            (1 << 12);  // Priority
+        
+        if (!placing) {
+            x = 240;
+        }
+        cursor_entity -> attr1 =
+            (y & 0xff) | // y position
+            (1 << 13) | // 256 colors
+            (0 << 14);  // Shape
+        cursor_entity -> attr2 =
+            (x & 0x1ff) | // x position
+            (1 << 14);  // Size
+        cursor_entity -> attr3 =
+            (selected_cat_tile & 0x3ff) | // Tile index
             (1 << 12);  // Priority
     }
 }
