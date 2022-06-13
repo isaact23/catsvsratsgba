@@ -14,6 +14,25 @@ void cat_manager_init() {
 // Update cat manager
 void cat_manager_update(u32 time_elapsed) {
 
+    // Iterate through cats
+    for (u8 i = 0; i < (cat_storage.cat_count); i++) {
+        struct cat cat = cat_storage.cat_array[i];
+
+        // Determine tile
+        u16 tile = TILE_CAT_NORMAL;
+
+        // Update cat sprite
+        struct sprite* sprite = cat.sprite;
+        sprite -> attr1 =
+            (cat.pixel_y & 0xff) | // y position
+            (1 << 13) | // 256 colors
+            (0 << 14);  // Shape
+        sprite -> attr2 =
+            (cat.pixel_x & 0x1ff) | // x position
+            (1 << 14);  // Size
+        sprite -> attr3 =
+            (tile & 0x3ff); // Tile index
+    }
 }
 
 // Add a cat - return true if successful.

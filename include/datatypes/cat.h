@@ -16,8 +16,10 @@ struct cat {
 
     // Cat long-term properties
     enum cat_type type;
-    u8 x;
-    u8 y;
+    u8 grid_x;
+    u8 grid_y;
+    u8 pixel_x;
+    u8 pixel_y;
 };
 
 #endif

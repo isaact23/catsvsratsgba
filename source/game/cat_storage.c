@@ -20,8 +20,10 @@ bool cat_storage_add_cat(struct cat_storage* cat_storage, u8 x, u8 y, enum cat_t
     new_cat.sprite = sprite_manager_new_sprite();
     new_cat.type = type;
     new_cat.last_attack_time = 0;
-    new_cat.x = x;
-    new_cat.y = y;
+    new_cat.grid_x = x;
+    new_cat.grid_y = y;
+    new_cat.pixel_x = x << 4;
+    new_cat.pixel_y = y << 4;
 
     // Add cat to array
     cat_storage -> cat_array[cat_storage -> cat_count] = new_cat;
@@ -40,7 +42,7 @@ bool cat_storage_remove_cat(struct cat_storage* cat_storage, u8 x, u8 y) {
     // Find cat with desired coordinates.
     for (u8 i = 0; i < (cat_storage -> cat_count); i++) {
         struct cat target = cat_storage -> cat_array[i];
-        if (target.x == x && target.y == y) {
+        if (target.grid_x == x && target.grid_y == y) {
 
             // Move cat at end of array to slot of cat being removed
             cat_storage -> cat_array[i] = cat_storage -> cat_array[cat_storage -> cat_count - 1];

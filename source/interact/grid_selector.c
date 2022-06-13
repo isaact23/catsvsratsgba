@@ -125,8 +125,7 @@ void grid_selector_update(u16 pressedKeys) {
             (x & 0x1ff) | // x position
             (1 << 14);  // Size
         cursor -> attr3 =
-            (SELECTOR_TILE_2 & 0x3ff) | // Tile index
-            (1 << 12);  // Priority
+            (SELECTOR_TILE_2 & 0x3ff); // Tile index
         
         if (!placing) {
             x = 240;
@@ -139,8 +138,7 @@ void grid_selector_update(u16 pressedKeys) {
             (x & 0x1ff) | // x position
             (1 << 14);  // Size
         cursor_entity -> attr3 =
-            (selected_cat_tile & 0x3ff) | // Tile index
-            (1 << 12);  // Priority
+            (selected_cat_tile & 0x3ff); // Tile index
     }
 }
 
