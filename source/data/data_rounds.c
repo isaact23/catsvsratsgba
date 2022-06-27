@@ -13,16 +13,16 @@ const struct round DATA_ROUNDS_ROUND0 = {
     .rat_spawn_entries = {
         {
             .spawn_time = 0, 
-            .rat_type = DEFAULT,
+            .rat_type = RAT_NORMAL,
             .path_id = 0
         },
-        {60, DEFAULT, 0}, {120, DEFAULT, 1}, {150, DEFAULT, 1},
-        {180, FAST, 1},
-        {240, FAST, 1},
-        {300, FAST, 1},
-        // {360, FAST, 1},
-        // {420, FAST, 1},
-        // {480, FAST, 1},
+        {60, RAT_NORMAL, 0}, {120, RAT_NORMAL, 1}, {150, RAT_NORMAL, 1},
+        {180, RAT_FAST, 1},
+        {240, RAT_FAST, 1},
+        {300, RAT_FAST, 1},
+        // {360, RAT_FAST, 1},
+        // {420, RAT_FAST, 1},
+        // {480, RAT_FAST, 1},
 
         // {500, 1, 0},
         // {510, 1, 1},

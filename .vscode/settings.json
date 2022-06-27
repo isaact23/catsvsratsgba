@@ -2,6 +2,8 @@
     "files.associations": {
         "path.h": "c",
         "interact_manager.h": "c",
-        "cat_manager.h": "c"
+        "cat_manager.h": "c",
+        "cat.h": "c",
+        "sprite.h": "c"
     }
 }

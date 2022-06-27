@@ -9,7 +9,6 @@ struct cat_storage cat_storage_new() {
 
 // Add a cat - return true if successful.
 bool cat_storage_add_cat(struct cat_storage* cat_storage, u8 x, u8 y, enum cat_type type) {
-
     // If cat storage is full, we cannot add this cat.
     if (cat_storage -> cat_count > CAT_LIMIT) {
         return false;
@@ -18,8 +17,17 @@ bool cat_storage_add_cat(struct cat_storage* cat_storage, u8 x, u8 y, enum cat_t
     // Initialize cat
     struct cat new_cat;
     new_cat.sprite = sprite_manager_new_sprite();
+    new_cat.attacking = false;
     new_cat.type = type;
-    new_cat.last_attack_time = 0;
+    switch (new_cat.type) {
+        case CAT_ARCHER: { new_cat.time_per_frame = 35; break; }
+        case CAT_BOMB:   { new_cat.time_per_frame = 25; break; }
+        case CAT_WIZARD: { new_cat.time_per_frame = 45; break; }
+        default:         { new_cat.time_per_frame = 30; break; }
+    }
+    new_cat.time_per_frame = 1;
+    new_cat.time_elapsed = 0;
+    new_cat.base_tile = cat_manager_get_tile(type);
     new_cat.grid_x = x;
     new_cat.grid_y = y;
     new_cat.pixel_x = x << 4;
