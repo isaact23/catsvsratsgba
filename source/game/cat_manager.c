@@ -12,15 +12,16 @@ void cat_manager_init() {
 }
 
 // Update cat manager
-void cat_manager_update(u32 time_elapsed) {
+void cat_manager_update() {
 
     // Iterate through cats
     for (u8 i = 0; i < cat_storage.cat_count; i++) {
         struct cat cat = cat_storage.cat_array[i];
-        cat.time_elapsed = cat.time_elapsed + 1;
+        cat.time_elapsed = (cat.time_elapsed + 5);
 
         // Determine tile
         u16 tile = cat.base_tile + (((cat.time_elapsed / cat.time_per_frame) % 2) * 4);
+        tile = cat.time_elapsed;
 
         // Update cat sprite
         struct sprite* sprite = cat.sprite;
@@ -49,7 +50,7 @@ bool cat_manager_add_cat(u8 x, u8 y, enum cat_type type) {
         case CAT_WIZARD: { new_cat.time_per_frame = 45; break; }
         default:         { new_cat.time_per_frame = 30; break; }
     }
-    new_cat.time_per_frame = 1;
+    new_cat.time_per_frame = 10;
     new_cat.time_elapsed = 0;
     new_cat.base_tile = cat_manager_get_tile(type);
     new_cat.grid_x = x;
