@@ -5,6 +5,11 @@ struct rat rat_array [RAT_LIMIT];
 u8 rat_count = 0;
 u8 next_eat_pos = 0; // Next position to place a rat to consume cheese, ranges from 0 to 3
 
+// Initialize rat manager
+void rat_manager_init() {
+    
+}
+
 // Update rats
 void rat_manager_update(const struct round* curr_round, u32 time_elapsed) {
     _rat_manager_spawn(curr_round, time_elapsed);

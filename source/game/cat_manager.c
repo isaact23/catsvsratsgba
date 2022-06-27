@@ -8,14 +8,14 @@ void cat_manager_init() {
     cat_storage = cat_storage_new();
 
     cat_storage_add_cat(&cat_storage, 0, 0, normal);
-    cat_storage_add_cat(&cat_storage, 1, 1, wizard);
+    cat_storage_add_cat(&cat_storage, 1, 2, wizard);
 }
 
 // Update cat manager
 void cat_manager_update(u32 time_elapsed) {
 
     // Iterate through cats
-    for (u8 i = 0; i < (cat_storage.cat_count); i++) {
+    for (u8 i = 0; i < cat_storage.cat_count; i++) {
         struct cat cat = cat_storage.cat_array[i];
 
         // Determine tile

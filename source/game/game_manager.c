@@ -20,6 +20,9 @@ void game_manager_init() {
     screen_manager_init();
     sprite_manager_init();
 
+    rat_manager_init();
+    cat_manager_init();
+
     game_manager_start_round(0);
 }
 
