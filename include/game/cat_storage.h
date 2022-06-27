@@ -20,7 +20,7 @@ struct cat_storage {
 struct cat_storage cat_storage_new();
 
 // Add a cat - return true if successful.
-bool cat_storage_add_cat(struct cat_storage* cat_storage, u8 x, u8 y, enum cat_type type);
+bool cat_storage_add_cat(struct cat_storage* cat_storage, struct cat new_cat);
 
 // Remove a cat - return true if successful.
 bool cat_storage_remove_cat(struct cat_storage* cat_storage, u8 x, u8 y);
