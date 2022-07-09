@@ -11,8 +11,8 @@
 #include "datatypes/path.h"
 #include "datatypes/rat.h"
 #include "datatypes/sprite.h"
-#include "game/cat_manager.h"
-#include "game/rat_manager.h"
+#include "cats/cat_manager.h"
+#include "rats/rat_manager.h"
 
 #include "gba_dma.h"
 #include "gba_sprites.h"

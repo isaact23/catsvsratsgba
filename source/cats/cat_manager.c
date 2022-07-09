@@ -1,4 +1,4 @@
-#include "game/cat_manager.h"
+#include "cats/cat_manager.h"
 
 // Cats
 struct cat_storage cat_storage;

@@ -1,4 +1,4 @@
-#include "game/cat_storage.h"
+#include "cats/cat_storage.h"
 
 // Initialize cat array
 struct cat_storage cat_storage_new() {

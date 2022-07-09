@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 #include "datatypes/cat.h"
-#include "game/cat_storage.h"
+#include "cats/cat_storage.h"
 #include "sprites/sprite_manager.h"
 #include "gba_types.h"
 

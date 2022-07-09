@@ -1,5 +1,7 @@
 # Cats vs. Rats GBA Edition
 
+Current project: Allow us to select and place multiple cats only if we can afford them.
+
 Convention: under_score_everything  
 noCamelCasePlease  
 CONSTANTS_LIKE_THIS

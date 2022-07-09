@@ -13,7 +13,7 @@
 
 #include "datatypes/cat.h"
 #include "datatypes/sprite.h"
-#include "game/cat_manager.h"
+#include "cats/cat_manager.h"
 #include "sprites/sprite_manager.h"
 
 #include "gba_types.h"
