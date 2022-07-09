@@ -20,6 +20,9 @@ void game_manager_init() {
     screen_manager_init();
     sprite_manager_init();
 
+    rat_manager_init();
+    cat_manager_init();
+
     game_manager_start_round(0);
 }
 
@@ -30,7 +33,7 @@ void game_manager_update() {
     sprite_manager_update();
 
     rat_manager_update(curr_round, time_elapsed);
-    cat_manager_update(time_elapsed);
+    cat_manager_update();
 
     screen_manager_update(health, money);
     

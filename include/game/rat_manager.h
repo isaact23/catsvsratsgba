@@ -12,6 +12,9 @@
 
 #define RAT_LIMIT 64
 
+// Initialize rat manager
+void rat_manager_init();
+
 // Update rats
 void rat_manager_update(const struct round* curr_round, u32 time_elapsed);
 

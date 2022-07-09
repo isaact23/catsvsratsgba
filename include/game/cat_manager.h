@@ -16,7 +16,7 @@
 void cat_manager_init();
 
 // Update cat manager
-void cat_manager_update(u32 time_elapsed);
+void cat_manager_update();
 
 // Add a cat - return true if successful.
 bool cat_manager_add_cat(u8 x, u8 y, enum cat_type type);

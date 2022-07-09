@@ -7,7 +7,7 @@ struct sprite* cursor_entity;
 bool selecting = true;
 bool erasing = false;
 bool placing = false;
-enum cat_type selected_cat_type = normal;
+enum cat_type selected_cat_type = CAT_NORMAL;
 u16 selected_cat_tile = 0;
 
 // Store coordinates of cursor.
@@ -65,10 +65,10 @@ void grid_selector_update(u16 pressedKeys) {
                     placing = true;
                     erasing = false;
                     switch (cursor_y) {
-                        case 1:  { selected_cat_type = archer; break; }
-                        case 2:  { selected_cat_type = bomb; break; }
-                        case 3:  { selected_cat_type = wizard; break; }
-                        default: { selected_cat_type = normal; break; }
+                        case 1:  { selected_cat_type = CAT_ARCHER; break; }
+                        case 2:  { selected_cat_type = CAT_BOMB; break; }
+                        case 3:  { selected_cat_type = CAT_WIZARD; break; }
+                        default: { selected_cat_type = CAT_NORMAL; break; }
                     }
                     selected_cat_tile = cat_manager_get_tile(selected_cat_type);
                 } else if (cursor_y == 4) {
@@ -125,8 +125,7 @@ void grid_selector_update(u16 pressedKeys) {
             (x & 0x1ff) | // x position
             (1 << 14);  // Size
         cursor -> attr3 =
-            (SELECTOR_TILE_2 & 0x3ff) | // Tile index
-            (1 << 12);  // Priority
+            (SELECTOR_TILE_2 & 0x3ff); // Tile index
         
         if (!placing) {
             x = 240;
@@ -139,8 +138,7 @@ void grid_selector_update(u16 pressedKeys) {
             (x & 0x1ff) | // x position
             (1 << 14);  // Size
         cursor_entity -> attr3 =
-            (selected_cat_tile & 0x3ff) | // Tile index
-            (1 << 12);  // Priority
+            (selected_cat_tile & 0x3ff); // Tile index
     }
 }
 

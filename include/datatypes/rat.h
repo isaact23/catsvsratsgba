@@ -8,11 +8,11 @@
 #include "gba_types.h"
 
 enum rat_type {
-    DEFAULT = 0,
-    FAST,
-    FAT,
-    ROBOT,
-    DEMON
+    RAT_NORMAL = 0,
+    RAT_FAST,
+    RAT_FAT,
+    RAT_ROBOT,
+    RAT_DEMON
 };
 
 struct rat {

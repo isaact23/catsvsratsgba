@@ -4,20 +4,25 @@
 #include "gba_types.h"
 
 enum cat_type {
-    normal = 0,
-    archer,
-    bomb,
-    wizard
+    CAT_NORMAL = 0,
+    CAT_ARCHER,
+    CAT_BOMB,
+    CAT_WIZARD
 };
 
 struct cat {
     struct sprite* sprite;
-    u32 last_attack_time;
+    bool attacking;
+    u32 time_elapsed;
 
     // Cat long-term properties
     enum cat_type type;
-    u8 x;
-    u8 y;
+    u16 time_per_frame;
+    u16 base_tile;
+    u8 grid_x;
+    u8 grid_y;
+    u8 pixel_x;
+    u8 pixel_y;
 };
 
 #endif

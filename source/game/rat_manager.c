@@ -5,6 +5,11 @@ struct rat rat_array [RAT_LIMIT];
 u8 rat_count = 0;
 u8 next_eat_pos = 0; // Next position to place a rat to consume cheese, ranges from 0 to 3
 
+// Initialize rat manager
+void rat_manager_init() {
+    
+}
+
 // Update rats
 void rat_manager_update(const struct round* curr_round, u32 time_elapsed) {
     _rat_manager_spawn(curr_round, time_elapsed);
@@ -98,12 +103,12 @@ void _rat_manager_spawn(const struct round* curr_round, u32 time_elapsed) {
 
             // Initialize rat based on type
             new_rat.type = rat_data.rat_type;
-            if (new_rat.type == DEFAULT) {
+            if (new_rat.type == RAT_NORMAL) {
                 new_rat.speed = 1;
                 new_rat.fps = 2;
                 new_rat.hps = 1;
                 new_rat.hp = 10;
-            } else if (new_rat.type == FAST) {
+            } else if (new_rat.type == RAT_FAST) {
                 new_rat.speed = 2;
                 new_rat.fps = 3;
                 new_rat.hps = 1;
