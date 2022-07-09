@@ -16,21 +16,20 @@ void cat_manager_update() {
 
     // Iterate through cats
     for (u8 i = 0; i < cat_storage.cat_count; i++) {
-        struct cat cat = cat_storage.cat_array[i];
-        cat.time_elapsed = (cat.time_elapsed + 5);
+        struct cat* cat = &cat_storage.cat_array[i];
+        cat -> time_elapsed = cat -> time_elapsed + 1;
 
         // Determine tile
-        u16 tile = cat.base_tile + (((cat.time_elapsed / cat.time_per_frame) % 2) * 4);
-        tile = cat.time_elapsed;
+        u16 tile = (cat -> base_tile) + (((cat -> time_elapsed) / (cat -> time_per_frame) % 2) * 4);
 
         // Update cat sprite
-        struct sprite* sprite = cat.sprite;
+        struct sprite* sprite = cat -> sprite;
         sprite -> attr1 =
-            (cat.pixel_y & 0xff) | // y position
+            ((cat -> pixel_y) & 0xff) | // y position
             (1 << 13) | // 256 colors
             (0 << 14);  // Shape
         sprite -> attr2 =
-            (cat.pixel_x & 0x1ff) | // x position
+            ((cat -> pixel_x) & 0x1ff) | // x position
             (1 << 14);  // Size
         sprite -> attr3 =
             (tile & 0x3ff); // Tile index
@@ -50,7 +49,6 @@ bool cat_manager_add_cat(u8 x, u8 y, enum cat_type type) {
         case CAT_WIZARD: { new_cat.time_per_frame = 45; break; }
         default:         { new_cat.time_per_frame = 30; break; }
     }
-    new_cat.time_per_frame = 10;
     new_cat.time_elapsed = 0;
     new_cat.base_tile = cat_manager_get_tile(type);
     new_cat.grid_x = x;
