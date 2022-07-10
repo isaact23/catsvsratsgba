@@ -59,3 +59,18 @@ void game_manager_decrease_health() {
         exit(1);
     }
 }
+
+// Change money, or return false if money would become negative.
+bool game_manager_add_money(s32 amount) {
+    s32 sum = money + amount;
+    if (sum < 0) {
+        return false;
+    }
+    money = sum;
+    return true;
+}
+
+// Get current amount of money.
+s32 game_manager_get_money() {
+    return money;
+}

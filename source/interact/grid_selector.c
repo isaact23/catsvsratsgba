@@ -8,6 +8,7 @@ bool selecting = true;
 bool erasing = false;
 bool placing = false;
 enum cat_type selected_cat_type = CAT_NORMAL;
+s32 selected_cat_price;
 u16 selected_cat_tile = 0;
 
 // Store coordinates of cursor.
@@ -62,6 +63,7 @@ void grid_selector_update(u16 pressedKeys) {
                 if (placing) {
                     bool success = cat_manager_add_cat(cursor_x, cursor_y, selected_cat_type);
                     if (success) {
+                        game_manager_add_money(-selected_cat_price);
                         grid_selector_disable_select();
                         placing = false;
                     }
@@ -78,15 +80,18 @@ void grid_selector_update(u16 pressedKeys) {
 
                 // Select a cat to place
                 if (cursor_y < 4) {
-                    placing = true;
-                    erasing = false;
                     switch (cursor_y) {
-                        case 1:  { selected_cat_type = CAT_ARCHER; break; }
-                        case 2:  { selected_cat_type = CAT_BOMB; break; }
-                        case 3:  { selected_cat_type = CAT_WIZARD; break; }
-                        default: { selected_cat_type = CAT_NORMAL; break; }
+                        case 1:  { selected_cat_type = CAT_ARCHER; selected_cat_price = CAT_ARCHER_PRICE; break; }
+                        case 2:  { selected_cat_type = CAT_BOMB;   selected_cat_price = CAT_BOMB_PRICE;   break; }
+                        case 3:  { selected_cat_type = CAT_WIZARD; selected_cat_price = CAT_WIZARD_PRICE; break; }
+                        default: { selected_cat_type = CAT_NORMAL; selected_cat_price = CAT_NORMAL_PRICE; break; }
                     }
-                    selected_cat_tile = cat_manager_get_tile(selected_cat_type);
+                    // If we can afford this cat, select it.
+                    if (selected_cat_price <= game_manager_get_money()) {
+                        placing = true;
+                        erasing = false;
+                        selected_cat_tile = cat_manager_get_tile(selected_cat_type);
+                    }
 
                 // Select eraser
                 } else if (cursor_y == 4) {
