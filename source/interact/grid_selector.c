@@ -34,6 +34,7 @@ void grid_selector_update(u16 pressedKeys) {
             if (cursor_x > 13) {
                 cursor_x = 13;
             }
+
         } else if ((pressedKeys & KEY_DOWN) == KEY_DOWN) {
             cursor_y++;
             if (cursor_y > 9) {
@@ -42,10 +43,12 @@ void grid_selector_update(u16 pressedKeys) {
             if (cursor_x > 12 && cursor_y > 5) {
                 cursor_y = 5;
             }
+
         } else if ((pressedKeys & KEY_LEFT) == KEY_LEFT) {
             if (cursor_x > 0) {
                 cursor_x--;
             }
+
         } else if ((pressedKeys & KEY_UP) == KEY_UP) {
             if (cursor_y > 0) {
                 cursor_y--;
@@ -53,14 +56,27 @@ void grid_selector_update(u16 pressedKeys) {
         }
 
         if ((pressedKeys & KEY_A) == KEY_A) {
+
+            // Press A on grid
             if (cursor_x < 13) {
                 if (placing) {
                     bool success = cat_manager_add_cat(cursor_x, cursor_y, selected_cat_type);
                     if (success) {
                         grid_selector_disable_select();
+                        placing = false;
+                    }
+                } else if (erasing) {
+                    bool success = cat_manager_remove_cat(cursor_x, cursor_y);
+                    if (success) {
+                        grid_selector_disable_select();
+                        erasing = false;
                     }
                 }
+
+            // Press A on navbar
             } else if (cursor_x == 13) {
+
+                // Select a cat to place
                 if (cursor_y < 4) {
                     placing = true;
                     erasing = false;
@@ -71,23 +87,36 @@ void grid_selector_update(u16 pressedKeys) {
                         default: { selected_cat_type = CAT_NORMAL; break; }
                     }
                     selected_cat_tile = cat_manager_get_tile(selected_cat_type);
+
+                // Select eraser
                 } else if (cursor_y == 4) {
                     erasing = true;
                     placing = false;
+                
+                // Start round
                 } else if (cursor_y == 5) {
                     // TOOD: Start round
                 }
             }
+
+        // Press B to cancel operation
         } else if ((pressedKeys & KEY_B) == KEY_B) {
-            if (erasing) {
-                bool success = cat_manager_remove_cat(cursor_x, cursor_y);
-                if (success) {
-                    grid_selector_disable_select();
-                }
+
+            // Cancel placement
+            if (placing) {
+                placing = false;
+                grid_selector_disable_select();
+
+            // Cancel erasing
+            } else if (erasing) {
+                erasing = false;
+                grid_selector_disable_select();
             }
+
         } else if ((pressedKeys & KEY_L) == KEY_L) {
             cursor_x = 2;
             cursor_y = 4;
+
         } else if ((pressedKeys & KEY_R) == KEY_R) {
             cursor_x = 13;
             cursor_y = 2;
