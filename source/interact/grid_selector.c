@@ -4,7 +4,7 @@ struct sprite* cursor;
 struct sprite* cursor_entity;
 
 // Status of selection
-bool selecting = true;
+bool selecting = false;
 bool erasing = false;
 bool placing = false;
 enum cat_type selected_cat_type = CAT_NORMAL;
@@ -24,37 +24,52 @@ void grid_selector_init() {
 
 // Update grid selector every frame
 void grid_selector_update(u16 pressedKeys) {
-    if (selecting) {
 
-        // Respond to user input
-        if ((pressedKeys & KEY_RIGHT) == KEY_RIGHT) {
-            cursor_x++;
-            if (cursor_x > 12 && cursor_y > 5) {
-                cursor_y = 5;
-            }
-            if (cursor_x > 13) {
-                cursor_x = 13;
-            }
-
-        } else if ((pressedKeys & KEY_DOWN) == KEY_DOWN) {
-            cursor_y++;
-            if (cursor_y > 9) {
-                cursor_y = 9;
-            }
-            if (cursor_x > 12 && cursor_y > 5) {
-                cursor_y = 5;
-            }
-
-        } else if ((pressedKeys & KEY_LEFT) == KEY_LEFT) {
-            if (cursor_x > 0) {
-                cursor_x--;
-            }
-
-        } else if ((pressedKeys & KEY_UP) == KEY_UP) {
-            if (cursor_y > 0) {
-                cursor_y--;
-            }
+    // Respond to user input
+    if ((pressedKeys & KEY_RIGHT) == KEY_RIGHT) {
+        selecting = true;
+        cursor_x++;
+        if (cursor_x > 12 && cursor_y > 5) {
+            cursor_y = 5;
         }
+        if (cursor_x > 13) {
+            cursor_x = 13;
+        }
+
+    } else if ((pressedKeys & KEY_DOWN) == KEY_DOWN) {
+        selecting = true;
+        cursor_y++;
+        if (cursor_y > 9) {
+            cursor_y = 9;
+        }
+        if (cursor_x > 12 && cursor_y > 5) {
+            cursor_y = 5;
+        }
+
+    } else if ((pressedKeys & KEY_LEFT) == KEY_LEFT) {
+        selecting = true;
+        if (cursor_x > 0) {
+            cursor_x--;
+        }
+
+    } else if ((pressedKeys & KEY_UP) == KEY_UP) {
+        selecting = true;
+        if (cursor_y > 0) {
+            cursor_y--;
+        }
+
+    } else if ((pressedKeys & KEY_L) == KEY_L) {
+        selecting = true;
+        cursor_x = 2;
+        cursor_y = 4;
+
+    } else if ((pressedKeys & KEY_R) == KEY_R) {
+        selecting = true;
+        cursor_x = 13;
+        cursor_y = 2;
+    }
+
+    if (selecting) {
 
         if ((pressedKeys & KEY_A) == KEY_A) {
 
@@ -117,14 +132,6 @@ void grid_selector_update(u16 pressedKeys) {
                 erasing = false;
                 grid_selector_disable_select();
             }
-
-        } else if ((pressedKeys & KEY_L) == KEY_L) {
-            cursor_x = 2;
-            cursor_y = 4;
-
-        } else if ((pressedKeys & KEY_R) == KEY_R) {
-            cursor_x = 13;
-            cursor_y = 2;
         }
 
         // Calculate on-screen coordinates for cursor
