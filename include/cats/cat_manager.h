@@ -12,6 +12,11 @@
 #define TILE_CAT_BOMB 192
 #define TILE_CAT_WIZARD 320
 
+#define CAT_NORMAL_PRICE 10
+#define CAT_ARCHER_PRICE 20
+#define CAT_BOMB_PRICE 30
+#define CAT_WIZARD_PRICE 40
+
 // Initialize cat manager
 void cat_manager_init();
 
