@@ -3,6 +3,7 @@
 
 #include "gba_types.h"
 #include "cat.h"
+#include "sprite.h"
 
 enum projectile_type {
     PAW,
@@ -13,7 +14,8 @@ enum projectile_type {
 struct projectile {
     u8 x;
     u8 y;
-    struct cat target;
+    struct sprite* sprite;
+    struct cat* target;
     enum projectile_type type;
 };
 
