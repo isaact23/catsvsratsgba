@@ -1,6 +1,6 @@
 #!/bin/bash
 (
-    sleep 0.1
+    sleep 2
     echo "started"
 )&
 
