@@ -1,8 +1,6 @@
 #ifndef PATH_H
 #define PATH_H
 
-#include <stdint.h>
-
 #include "gba_types.h"
 
 struct path {
