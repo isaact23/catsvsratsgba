@@ -2,6 +2,7 @@
 #define PROJECTILE_MANAGER_H
 
 #include "datatypes/projectile.h"
+#include "datatypes/rat.h"
 
 #define PROJECTILE_LIMIT 10
 

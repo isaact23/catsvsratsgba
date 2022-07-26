@@ -1,6 +1,6 @@
 #include "cats/projectile_manager.h"
 
-// TODO: Merge with cat_storage in a generic array
+// TODO: Change target when target dies, or remove projectile when target dies
 
 u8 projectile_count = 0;
 struct projectile projectiles [PROJECTILE_LIMIT];
@@ -13,6 +13,50 @@ void projectile_manager_init() {
 // Update all projectiles and sprites
 void projectile_manager_update() {
 
+    // Iterate through projectiles.
+    for (u8 i = 0; i < projectile_count; i++) {
+        struct projectile* projectile = &projectiles[i];
+
+        // Get coordinates of projectile and target
+        struct rat* target = projectile -> target;
+        u16 target_x = target -> x;
+        u16 target_y = target -> y;
+        u16 proj_x = projectile -> x;
+        u16 proj_y = projectile -> y;
+
+        // Move projectile toward target
+        if (target_x > proj_x) {
+            proj_x += (projectile -> speed);
+        } else if (target_x < proj_x) {
+            proj_x -= (projectile -> speed);
+        }
+        if (target_y > proj_y) {
+            proj_y += (projectile -> speed);
+        } else if (target_y < proj_y) {
+            proj_y -= (projectile -> speed);
+        }
+
+        // Hit target
+        if ((abs(target_x - proj_x) <= (projectile -> hit_radius)) &&
+            (abs(target_y - proj_y) <= (projectile -> hit_radius)))
+        {
+            proj_x = 240;
+            proj_y = 160;
+        }
+
+        // Update x/y position
+        struct sprite* sprite = projectile -> sprite;
+        sprite -> attr1 = 
+            (proj_y & 0xff);
+        sprite -> attr2 =
+            (proj_x & 0x1ff);
+        sprite -> attr3 =
+            (1 & 0x3ff); // Tile index
+        
+        // Update projectile position
+        projectile -> x = proj_x;
+        projectile -> y = proj_y;
+    }
 }
 
 // Add a new projectile
@@ -26,6 +70,3 @@ bool projectile_manager_add_projectile(struct projectile projectile) {
     projectiles[projectile_count] = projectile;
     return true;
 }
-
-// Remove a projectile.
-
