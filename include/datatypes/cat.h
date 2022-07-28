@@ -14,9 +14,11 @@ struct cat {
     struct sprite* sprite;
     bool attacking;
     u32 time_elapsed;
+    u16 time_since_last_fire;
 
     // Cat long-term properties
     enum cat_type type;
+    u16 attack_range; // Stored in pixels
     u16 frames_per_sprite;
     u16 frames_per_fire;
     u16 base_tile;

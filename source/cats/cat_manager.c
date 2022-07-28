@@ -23,7 +23,11 @@ void cat_manager_update() {
         // Determine tile
         u16 tile = (cat -> base_tile) + (((cat -> time_elapsed) / (cat -> frames_per_sprite) % 2) * 4);
 
+        // Find rats in range
+
+
         // Shoot projectiles
+        // if (closest_rat exists && cat.time_since_last_fire == 0)
 
         //projectile_manager_add_projectile();
 
@@ -54,26 +58,31 @@ bool cat_manager_add_cat(u8 x, u8 y, enum cat_type type) {
         case CAT_ARCHER: {
             new_cat.frames_per_sprite = 35;
             new_cat.frames_per_fire = 30;
+            new_cat.attack_range = 64;
             break;
         }
         case CAT_BOMB: {
             new_cat.frames_per_sprite = 25;
             new_cat.frames_per_fire = 120;
+            new_cat.attack_range = 16;
             break;
         }
         case CAT_WIZARD: {
             new_cat.frames_per_sprite = 45;
             new_cat.frames_per_fire = 40;
+            new_cat.attack_range = 32;
             break;
         }
         default: {
             new_cat.frames_per_sprite = 30;
             new_cat.frames_per_fire = 20;
+            new_cat.attack_range = 32;
             break;
         }
     }
-    
+
     new_cat.time_elapsed = 0;
+    new_cat.time_since_last_fire = 0;
     new_cat.base_tile = cat_manager_get_tile(type);
     new_cat.grid_x = x;
     new_cat.grid_y = y;
