@@ -1,9 +1,5 @@
 #include "cats/projectile_manager.h"
 
-// TODO: Change target when target dies, or remove projectile when target dies
-// TODO: Call function in game manager -> rat manager to damage targeted rat
-// TODO: Have cat manager create projectiles
-
 u8 projectile_count = 0;
 struct projectile projectiles [PROJECTILE_LIMIT];
 
