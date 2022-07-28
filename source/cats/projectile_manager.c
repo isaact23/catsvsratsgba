@@ -1,6 +1,8 @@
 #include "cats/projectile_manager.h"
 
 // TODO: Change target when target dies, or remove projectile when target dies
+// TODO: Call function in game manager -> rat manager to damage targeted rat
+// TODO: Have cat manager create projectiles
 
 u8 projectile_count = 0;
 struct projectile projectiles [PROJECTILE_LIMIT];
@@ -37,8 +39,8 @@ void projectile_manager_update() {
         }
 
         // Hit target
-        if ((abs(target_x - proj_x) <= (projectile -> hit_radius)) &&
-            (abs(target_y - proj_y) <= (projectile -> hit_radius)))
+        if ((abs(target_x - proj_x) <= HIT_RADIUS) &&
+            (abs(target_y - proj_y) <= HIT_RADIUS))
         {
             proj_x = 240;
             proj_y = 160;
@@ -60,13 +62,44 @@ void projectile_manager_update() {
 }
 
 // Add a new projectile
-bool projectile_manager_add_projectile(struct projectile projectile) {
+bool projectile_manager_add_projectile
+    (enum projectile_type type, u16 x, u16 y, struct sprite* sprite, struct rat* target)
+{
 
     // If projectile array is full, we cannot add a new projectile.
     if (projectile_count >= PROJECTILE_LIMIT) {
         return false;
     }
 
-    projectiles[projectile_count] = projectile;
+    // Initialize new projectile
+    struct projectile proj;
+    proj.type = type;
+    proj.x = x;
+    proj.y = y;
+    proj.sprite = sprite;
+    proj.target = target;
+
+    switch (type) {
+        case PAW: {
+            proj.speed  = PROJECTILE_PAW_SPEED;
+            proj.damage = PROJECTILE_PAW_DAMAGE;
+            proj.tile   = PROJECTILE_PAW_TILE;
+            break;
+        };
+        case ARROW: {
+            proj.speed  = PROJECTILE_ARROW_SPEED;
+            proj.damage = PROJECTILE_ARROW_DAMAGE;
+            proj.tile   = PROJECTILE_ARROW_TILE;
+            break;
+        }
+        case MAGIC: {
+            proj.speed  = PROJECTILE_MAGIC_SPEED;
+            proj.damage = PROJECTILE_MAGIC_DAMAGE;
+            proj.tile   = PROJECTILE_MAGIC_TILE;
+            break;
+        }
+    }
+
+    projectiles[projectile_count] = proj;
     return true;
 }
