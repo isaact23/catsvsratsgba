@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "image_tiles.h": "c"
+        "image_tiles.h": "c",
+        "rat.h": "c"
     }
 }

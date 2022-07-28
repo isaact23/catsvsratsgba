@@ -21,7 +21,11 @@ void cat_manager_update() {
         cat -> time_elapsed = cat -> time_elapsed + 1;
 
         // Determine tile
-        u16 tile = (cat -> base_tile) + (((cat -> time_elapsed) / (cat -> time_per_frame) % 2) * 4);
+        u16 tile = (cat -> base_tile) + (((cat -> time_elapsed) / (cat -> frames_per_sprite) % 2) * 4);
+
+        // Shoot projectiles
+
+        //projectile_manager_add_projectile();
 
         // Update cat sprite
         struct sprite* sprite = cat -> sprite;
@@ -39,17 +43,36 @@ void cat_manager_update() {
 
 // Add a cat - return true if successful.
 bool cat_manager_add_cat(u8 x, u8 y, enum cat_type type) {
+
     // Initialize cat
     struct cat new_cat;
     new_cat.sprite = sprite_manager_new_sprite();
     new_cat.attacking = false;
     new_cat.type = type;
+
     switch (new_cat.type) {
-        case CAT_ARCHER: { new_cat.time_per_frame = 35; break; }
-        case CAT_BOMB:   { new_cat.time_per_frame = 25; break; }
-        case CAT_WIZARD: { new_cat.time_per_frame = 45; break; }
-        default:         { new_cat.time_per_frame = 30; break; }
+        case CAT_ARCHER: {
+            new_cat.frames_per_sprite = 35;
+            new_cat.frames_per_fire = 30;
+            break;
+        }
+        case CAT_BOMB: {
+            new_cat.frames_per_sprite = 25;
+            new_cat.frames_per_fire = 120;
+            break;
+        }
+        case CAT_WIZARD: {
+            new_cat.frames_per_sprite = 45;
+            new_cat.frames_per_fire = 40;
+            break;
+        }
+        default: {
+            new_cat.frames_per_sprite = 30;
+            new_cat.frames_per_fire = 20;
+            break;
+        }
     }
+    
     new_cat.time_elapsed = 0;
     new_cat.base_tile = cat_manager_get_tile(type);
     new_cat.grid_x = x;

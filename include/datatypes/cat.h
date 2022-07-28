@@ -17,7 +17,8 @@ struct cat {
 
     // Cat long-term properties
     enum cat_type type;
-    u16 time_per_frame;
+    u16 frames_per_sprite;
+    u16 frames_per_fire;
     u16 base_tile;
     u8 grid_x;
     u8 grid_y;
