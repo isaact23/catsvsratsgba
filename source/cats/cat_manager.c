@@ -15,6 +15,10 @@ void cat_manager_init() {
 // Update cat manager
 void cat_manager_update() {
 
+    // Get reference to rats
+    struct rat* rats = game_manager_get_rats();
+    u8 rat_count = game_manager_get_rat_count();
+
     // Iterate through cats
     for (u8 i = 0; i < cat_storage.cat_count; i++) {
         struct cat* cat = &cat_storage.cat_array[i];
@@ -24,7 +28,15 @@ void cat_manager_update() {
         u16 tile = (cat -> base_tile) + (((cat -> time_elapsed) / (cat -> frames_per_sprite) % 2) * 4);
 
         // Find rats in range
+        for (u8 i = 0; i < rat_count; i++) {
+            struct rat rat = rats[i];
+            u16 attack_range = cat -> attack_range;
 
+            u16 dist = abs((cat -> pixel_x) - rat.x) + abs((cat -> pixel_y) - rat.y);
+            if (dist <= attack_range) {
+                // Add rat to rats in range
+            }
+        }
 
         // Shoot projectiles
         // if (closest_rat exists && cat.time_since_last_fire == 0)
