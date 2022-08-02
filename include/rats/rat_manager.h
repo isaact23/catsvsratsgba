@@ -18,6 +18,12 @@ void rat_manager_init();
 // Update rats
 void rat_manager_update(const struct round* curr_round, u32 time_elapsed);
 
+// Get array of rats
+struct rat* rat_manager_get_rats();
+
+// Get rat count
+u8 rat_manager_get_rat_count();
+
 // If enough time has elapsed, spawn a new rat
 void _rat_manager_spawn(const struct round* curr_round, u32 time_elapsed);
 
