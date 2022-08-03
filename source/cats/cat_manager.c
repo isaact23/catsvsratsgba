@@ -23,23 +23,59 @@ void cat_manager_update() {
     for (u8 i = 0; i < cat_storage.cat_count; i++) {
         struct cat* cat = &cat_storage.cat_array[i];
         cat -> time_elapsed = cat -> time_elapsed + 1;
+        cat -> time_since_last_fire = cat -> time_since_last_fire + 1;
 
         // Determine tile
         u16 tile = (cat -> base_tile) + (((cat -> time_elapsed) / (cat -> frames_per_sprite) % 2) * 4);
 
-        // Find rats in range
-        for (u8 i = 0; i < rat_count; i++) {
-            struct rat rat = rats[i];
-            u16 attack_range = cat -> attack_range;
+        // Attack rats
+        if ((cat -> time_since_last_fire) >= (cat -> frames_per_fire)) {
 
-            u16 dist = abs((cat -> pixel_x) - rat.x) + abs((cat -> pixel_y) - rat.y);
-            if (dist <= attack_range) {
-                // Add rat to rats in range
+            // Find rats in range
+            struct rat* closest_rat = NULL;
+            u16 closest_rat_dist = 1000;
+            for (u8 i = 0; i < rat_count; i++) {
+                struct rat* rat = &rats[i];
+                u16 attack_range = cat -> attack_range;
+
+                u16 dist = abs((cat -> pixel_x) - (rat -> x)) + abs((cat -> pixel_y) - (rat -> y));
+                if (dist <= attack_range && dist <= closest_rat_dist) {
+                    closest_rat = rat;
+                    closest_rat_dist = dist;
+                }
+            }
+
+            // Shoot projectiles
+            if (closest_rat != NULL) {
+                cat -> time_since_last_fire = 0;
+
+                enum projectile_type projectile_type;
+                switch (cat -> type) {
+                    case CAT_NORMAL: {
+                        projectile_type = PROJECTILE_PAW;
+                        break;
+                    }
+                    case CAT_ARCHER: {
+                        projectile_type = PROJECTILE_ARROW;
+                        break;
+                    }
+                    case CAT_BOMB: {
+                        break;
+                    }
+                    case CAT_WIZARD: {
+                        projectile_type = PROJECTILE_MAGIC;
+                        break;
+                    }
+
+                    struct sprite* proj_sprite = game_manager_new_sprite();
+                    if (proj_sprite == NULL) {
+                        exit(1);
+                    }
+                    projectile_manager_add_projectile(
+                        projectile_type, cat -> pixel_x, cat -> pixel_y, proj_sprite, closest_rat);
+                }
             }
         }
-
-        // Shoot projectiles
-        // if (closest_rat exists && cat.time_since_last_fire == 0)
 
         //projectile_manager_add_projectile();
 

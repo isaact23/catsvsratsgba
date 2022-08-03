@@ -76,19 +76,19 @@ bool projectile_manager_add_projectile
     proj.target = target;
 
     switch (type) {
-        case PAW: {
+        case PROJECTILE_PAW: {
             proj.speed  = PROJECTILE_PAW_SPEED;
             proj.damage = PROJECTILE_PAW_DAMAGE;
             proj.tile   = PROJECTILE_PAW_TILE;
             break;
         };
-        case ARROW: {
+        case PROJECTILE_ARROW: {
             proj.speed  = PROJECTILE_ARROW_SPEED;
             proj.damage = PROJECTILE_ARROW_DAMAGE;
             proj.tile   = PROJECTILE_ARROW_TILE;
             break;
         }
-        case MAGIC: {
+        case PROJECTILE_MAGIC: {
             proj.speed  = PROJECTILE_MAGIC_SPEED;
             proj.damage = PROJECTILE_MAGIC_DAMAGE;
             proj.tile   = PROJECTILE_MAGIC_TILE;

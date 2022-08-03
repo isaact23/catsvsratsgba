@@ -14,7 +14,7 @@ struct cat {
     struct sprite* sprite;
     bool attacking;
     u32 time_elapsed;
-    u16 time_since_last_fire;
+    u32 time_since_last_fire;
 
     // Cat long-term properties
     enum cat_type type;

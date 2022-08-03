@@ -20,9 +20,9 @@
 #define PROJECTILE_MAGIC_DAMAGE 3
 
 enum projectile_type {
-    PAW,
-    ARROW,
-    MAGIC
+    PROJECTILE_PAW,
+    PROJECTILE_ARROW,
+    PROJECTILE_MAGIC
 };
 
 struct projectile {
