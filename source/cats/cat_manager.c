@@ -14,6 +14,7 @@ void cat_manager_init() {
 
 // Update cat manager
 void cat_manager_update() {
+    projectile_manager_update();
 
     // Get reference to rats
     struct rat* rats = game_manager_get_rats();
@@ -51,33 +52,32 @@ void cat_manager_update() {
 
                 enum projectile_type projectile_type;
                 switch (cat -> type) {
-                    case CAT_NORMAL: {
-                        projectile_type = PROJECTILE_PAW;
-                        break;
-                    }
                     case CAT_ARCHER: {
                         projectile_type = PROJECTILE_ARROW;
                         break;
                     }
                     case CAT_BOMB: {
+                        projectile_type = PROJECTILE_PAW;
                         break;
                     }
                     case CAT_WIZARD: {
                         projectile_type = PROJECTILE_MAGIC;
                         break;
                     }
-
-                    struct sprite* proj_sprite = game_manager_new_sprite();
-                    if (proj_sprite == NULL) {
-                        exit(1);
+                    default: {
+                        projectile_type = PROJECTILE_PAW;
+                        break;
                     }
-                    projectile_manager_add_projectile(
-                        projectile_type, cat -> pixel_x, cat -> pixel_y, proj_sprite, closest_rat);
                 }
+
+                struct sprite* proj_sprite = game_manager_new_sprite();
+                if (proj_sprite == NULL) {
+                    exit(1);
+                }
+                projectile_manager_add_projectile(
+                    projectile_type, cat -> pixel_x, cat -> pixel_y, proj_sprite, closest_rat);
             }
         }
-
-        //projectile_manager_add_projectile();
 
         // Update cat sprite
         struct sprite* sprite = cat -> sprite;

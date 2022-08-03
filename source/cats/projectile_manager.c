@@ -42,14 +42,36 @@ void projectile_manager_update() {
             proj_y = 160;
         }
 
+        u16 tile;
+        u8 shape;
+        switch (projectile -> type) {
+            case PROJECTILE_ARROW: {
+                tile = PROJECTILE_ARROW_TILE;
+                shape = 1; // 16x8
+                break;
+            }
+            case PROJECTILE_MAGIC: {
+                tile = PROJECTILE_MAGIC_TILE;
+                shape = 0; // 8x8
+                break;
+            }
+            default: {
+                tile = PROJECTILE_PAW_TILE;
+                shape = 0; // 8x8
+                break;
+            }
+        }
+
         // Update x/y position
         struct sprite* sprite = projectile -> sprite;
         sprite -> attr1 = 
-            (proj_y & 0xff);
+            (proj_y & 0xff) |
+            (1 << 13) | // Palette mode
+            (shape << 14);
         sprite -> attr2 =
             (proj_x & 0x1ff);
         sprite -> attr3 =
-            (1 & 0x3ff); // Tile index
+            (tile & 0x3ff); // Tile index
         
         // Update projectile position
         projectile -> x = proj_x;
@@ -97,5 +119,6 @@ bool projectile_manager_add_projectile
     }
 
     projectiles[projectile_count] = proj;
+    projectile_count++;
     return true;
 }
