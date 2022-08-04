@@ -75,6 +75,11 @@ struct sprite* game_manager_new_sprite() {
     return sprite_manager_new_sprite();
 }
 
+// Delete a sprite. Return true if successful.
+bool game_manager_delete_sprite(struct sprite* sprite) {
+    return sprite_manager_delete_sprite(sprite);
+}
+
 // Get array of rats from rat manager
 struct rat* game_manager_get_rats() {
     return rat_manager_get_rats();
