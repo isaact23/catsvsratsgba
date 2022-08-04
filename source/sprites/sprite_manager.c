@@ -41,10 +41,10 @@ struct sprite* sprite_manager_new_sprite() {
     // Find an open spot for a new sprite.
     u32 index = 0;
     struct sprite* new_sprite;
-    while (sprite_array_occupied[index] && index < sprite_count) {
+    while (sprite_array_occupied[index] && index < SPRITE_LIMIT) {
         index++;
     }
-    if (index >= sprite_count) { // No spot found.
+    if (index >= SPRITE_LIMIT) { // No spot found.
         return NULL;
     } else {
         new_sprite = &sprite_array[index];
