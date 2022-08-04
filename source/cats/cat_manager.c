@@ -8,8 +8,8 @@ void cat_manager_init() {
     projectile_manager_init();
     cat_storage = cat_storage_new();
 
-    cat_manager_add_cat(0, 0, CAT_NORMAL);
-    cat_manager_add_cat(1, 2, CAT_WIZARD);
+    //cat_manager_add_cat(0, 0, CAT_NORMAL);
+    //cat_manager_add_cat(1, 2, CAT_WIZARD);
 }
 
 // Update cat manager
