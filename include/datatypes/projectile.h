@@ -31,6 +31,7 @@ struct projectile {
     u16 speed;
     u16 damage;
     u16 tile;
+    u8 shape;
     struct sprite* sprite;
     struct rat* target;
     enum projectile_type type;

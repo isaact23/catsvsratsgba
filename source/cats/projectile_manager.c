@@ -34,32 +34,18 @@ void projectile_manager_update() {
             proj_y -= (projectile -> speed);
         }
 
-        // Hit target
+        // Hit target and remove projectile
         if ((abs(target_x - proj_x) <= HIT_RADIUS) &&
             (abs(target_y - proj_y) <= HIT_RADIUS))
         {
+            // Inflict damage on rat
+            target -> hp -= projectile -> damage;
+
+            // Remove projectile
             proj_x = 240;
             proj_y = 160;
-        }
-
-        u16 tile;
-        u8 shape;
-        switch (projectile -> type) {
-            case PROJECTILE_ARROW: {
-                tile = PROJECTILE_ARROW_TILE;
-                shape = 1; // 16x8
-                break;
-            }
-            case PROJECTILE_MAGIC: {
-                tile = PROJECTILE_MAGIC_TILE;
-                shape = 0; // 8x8
-                break;
-            }
-            default: {
-                tile = PROJECTILE_PAW_TILE;
-                shape = 0; // 8x8
-                break;
-            }
+            projectile_count--;
+            // TODO - REMOVE SPRITE AND PROJECTILE COMPLETELY
         }
 
         // Update x/y position
@@ -67,11 +53,11 @@ void projectile_manager_update() {
         sprite -> attr1 = 
             (proj_y & 0xff) |
             (1 << 13) | // Palette mode
-            (shape << 14);
+            ((projectile -> shape) << 14);
         sprite -> attr2 =
             (proj_x & 0x1ff);
         sprite -> attr3 =
-            (tile & 0x3ff); // Tile index
+            ((projectile -> tile) & 0x3ff); // Tile index
         
         // Update projectile position
         projectile -> x = proj_x;
@@ -102,18 +88,21 @@ bool projectile_manager_add_projectile
             proj.speed  = PROJECTILE_PAW_SPEED;
             proj.damage = PROJECTILE_PAW_DAMAGE;
             proj.tile   = PROJECTILE_PAW_TILE;
+            proj.shape = 0;
             break;
         };
         case PROJECTILE_ARROW: {
             proj.speed  = PROJECTILE_ARROW_SPEED;
             proj.damage = PROJECTILE_ARROW_DAMAGE;
             proj.tile   = PROJECTILE_ARROW_TILE;
+            proj.shape = 1; // 16 x 8
             break;
         }
         case PROJECTILE_MAGIC: {
             proj.speed  = PROJECTILE_MAGIC_SPEED;
             proj.damage = PROJECTILE_MAGIC_DAMAGE;
             proj.tile   = PROJECTILE_MAGIC_TILE;
+            proj.shape = 0;
             break;
         }
     }
