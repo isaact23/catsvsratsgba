@@ -60,7 +60,7 @@ struct sprite* sprite_manager_new_sprite() {
 }
 
 // Delete a sprite. Return true if successful.
-bool sprite_manager_delete_sprite(struct sprite* sprite) {
+bool sprite_manager_remove_sprite(struct sprite* sprite) {
 
     // If there are no sprites to delete, we cannot delete a sprite.
     if (sprite_count < 1) {
@@ -75,4 +75,5 @@ bool sprite_manager_delete_sprite(struct sprite* sprite) {
     u32 index = (sprite - sprite_array) / 8; // Use pointer arithmetic to get sprite index
     sprite_array_occupied[index] = false;
     sprite_count--;
+    return true;
 }

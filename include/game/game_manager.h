@@ -32,7 +32,7 @@ s32 game_manager_get_money();
 struct sprite* game_manager_new_sprite();
 
 // Delete a sprite. Return true if successful.
-bool game_manager_delete_sprite(struct sprite* sprite);
+bool game_manager_remove_sprite(struct sprite* sprite);
 
 // Get array of rats from rat manager
 struct rat* game_manager_get_rats();

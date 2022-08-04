@@ -34,30 +34,34 @@ void projectile_manager_update() {
             proj_y -= (projectile -> speed);
         }
 
-        // Hit target and remove projectile
+        // If target is hit, remove projectile
         if ((abs(target_x - proj_x) <= HIT_RADIUS) &&
             (abs(target_y - proj_y) <= HIT_RADIUS))
         {
             // Inflict damage on rat
             target -> hp -= projectile -> damage;
 
-            // Remove projectile
-            proj_x = 240;
-            proj_y = 160;
+            // Remove projectile and sprite
+            cat_manager_remove_sprite(projectile -> sprite);
+            *projectile = projectiles[projectile_count - 1];
             projectile_count--;
+            i--;
             // TODO - REMOVE SPRITE AND PROJECTILE COMPLETELY
-        }
 
-        // Update x/y position
-        struct sprite* sprite = projectile -> sprite;
-        sprite -> attr1 = 
-            (proj_y & 0xff) |
-            (1 << 13) | // Palette mode
-            ((projectile -> shape) << 14);
-        sprite -> attr2 =
-            (proj_x & 0x1ff);
-        sprite -> attr3 =
-            ((projectile -> tile) & 0x3ff); // Tile index
+        } else {
+
+            // Update projectile sprite OAM 
+            struct sprite* sprite = projectile -> sprite;
+            sprite -> attr1 = 
+                (proj_y & 0xff) |
+                (1 << 13) | // Palette mode
+                ((projectile -> shape) << 14);
+            sprite -> attr2 =
+                (proj_x & 0x1ff);
+            sprite -> attr3 =
+                ((projectile -> tile) & 0x3ff); // Tile index
+
+        }
         
         // Update projectile position
         projectile -> x = proj_x;

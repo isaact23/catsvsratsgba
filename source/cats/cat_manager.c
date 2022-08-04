@@ -154,3 +154,8 @@ u16 cat_manager_get_tile(enum cat_type type) {
         default:         { return TILE_CAT_NORMAL; }
     }
 }
+
+// Delete a sprite. Return true if successful.
+bool cat_manager_remove_sprite(struct sprite* sprite) {
+    return game_manager_remove_sprite(sprite);
+}

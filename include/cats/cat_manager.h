@@ -33,4 +33,7 @@ bool cat_manager_remove_cat(u8 x, u8 y);
 // Get tile corresponding to cat type
 u16 cat_manager_get_tile(enum cat_type type);
 
+// Delete a sprite. Return true if successful.
+bool cat_manager_remove_sprite(struct sprite* sprite);
+
 #endif

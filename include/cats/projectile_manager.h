@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 
+#include "cats/cat_manager.h"
 #include "datatypes/projectile.h"
 #include "datatypes/rat.h"
 

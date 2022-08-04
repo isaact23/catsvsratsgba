@@ -33,6 +33,6 @@ void sprite_manager_update();
 struct sprite* sprite_manager_new_sprite();
 
 // Delete a sprite. Return true if successful.
-bool sprite_manager_delete_sprite(struct sprite* sprite);
+bool sprite_manager_remove_sprite(struct sprite* sprite);
 
 #endif
