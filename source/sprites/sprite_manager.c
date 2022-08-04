@@ -2,6 +2,7 @@
 
 // Sprites
 struct sprite sprite_array [SPRITE_LIMIT];
+bool sprite_array_occupied [SPRITE_LIMIT];
 u8 sprite_count = 0;
 
 // Initialize sprites
@@ -12,6 +13,7 @@ void sprite_manager_init() {
         sprite_array[i].attr2 = 240;
         sprite_array[i].attr3 = 0;
         sprite_array[i].dummy = 0;
+        sprite_array_occupied[i] = false;
     }
 
     // Copy sprite palette to sprite palette memory
@@ -30,10 +32,24 @@ void sprite_manager_update() {
 
 // Return a pointer to a new sprite, or NULL if unavailable.
 struct sprite* sprite_manager_new_sprite() {
+
+    // If there are no more spaces for sprites, return NULL.
     if (sprite_count >= SPRITE_LIMIT) {
         return NULL;
     }
-    struct sprite* new_sprite = &sprite_array[sprite_count];
+
+    // Find an open spot for a new sprite.
+    u32 index = 0;
+    struct sprite* new_sprite;
+    while (sprite_array_occupied[index] && index < sprite_count) {
+        index++;
+    }
+    if (index >= sprite_count) { // No spot found.
+        return NULL;
+    } else {
+        new_sprite = &sprite_array[index];
+        sprite_array_occupied[index] = true;
+    }
 
     // Zero out attributes and return pointer to sprite
     new_sprite -> attr1 = 0;
@@ -41,4 +57,22 @@ struct sprite* sprite_manager_new_sprite() {
     new_sprite -> attr3 = 0;
     sprite_count++;
     return new_sprite;
+}
+
+// Delete a sprite. Return true if successful.
+bool sprite_manager_delete_sprite(struct sprite* sprite) {
+
+    // If there are no sprites to delete, we cannot delete a sprite.
+    if (sprite_count < 1) {
+        return false;
+    }
+
+    // Move sprite off-screen
+    sprite -> attr1 = 160;
+    sprite -> attr2 = 240;
+
+    // Free up space for new sprites
+    u32 index = (sprite - sprite_array) / 8; // Use pointer arithmetic to get sprite index
+    sprite_array_occupied[index] = false;
+    sprite_count--;
 }

@@ -29,10 +29,10 @@ void sprite_manager_init();
 // Update sprites in memory during vblank
 void sprite_manager_update();
 
-// Return a pointer to a new sprite
+// Return a pointer to a new sprite, or NULL if unavailable.
 struct sprite* sprite_manager_new_sprite();
 
-// Delete a sprite
-void sprite_manager_delete_sprite(struct sprite* sprite);
+// Delete a sprite. Return true if successful.
+bool sprite_manager_delete_sprite(struct sprite* sprite);
 
 #endif
