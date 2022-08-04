@@ -12,6 +12,9 @@
 
 #define RAT_LIMIT 64
 
+#define HP_TILE 64
+#define HP_TILE_COUNT 14 // minus 1
+
 // Initialize rat manager
 void rat_manager_init();
 

@@ -69,6 +69,24 @@ void rat_manager_update(const struct round* curr_round, u32 time_elapsed) {
         sprite -> attr3 =
             ((rat -> tile_id) & 0x3ff) | // Tile index
             (1 << 12);  // Priority
+        
+        // Update HP bar
+        // hp = 10, tile_no = 64
+        // hp = 0, tile_no = higher
+        // Move something from range 0 to MAX_HP to range 14 to 0, then pick tile
+        u8 adjusted_hp = (rat -> hp) * HP_TILE_COUNT / (rat -> hp_max);
+        u8 adjusted_hp_flipped = 14 - adjusted_hp;
+        u8 tile = (adjusted_hp_flipped * 4) + HP_TILE;
+
+        struct sprite* hp_bar = rat -> hp_bar;
+        hp_bar -> attr1 =
+            (((rat -> y) - 6) & 0xff) |
+            (1 << 13) |
+            (1 << 14); // Horizontal shape
+        hp_bar -> attr2 =
+            ((rat -> x) & 0x1ff);
+        hp_bar -> attr3 =
+            tile & 0x3ff;
     }
 }
 
@@ -97,7 +115,8 @@ void _rat_manager_spawn(const struct round* curr_round, u32 time_elapsed) {
             // Spawn the rat
             struct rat new_rat;
             new_rat.sprite = game_manager_new_sprite();
-            if (new_rat.sprite == NULL) {
+            new_rat.hp_bar = game_manager_new_sprite();
+            if (new_rat.sprite == NULL || new_rat.hp_bar == NULL) {
                 exit(1);
             }
             new_rat.init_time = time_elapsed;
@@ -117,15 +136,16 @@ void _rat_manager_spawn(const struct round* curr_round, u32 time_elapsed) {
                 new_rat.speed = 1;
                 new_rat.fps = 2;
                 new_rat.hps = 1;
-                new_rat.hp = 10;
+                new_rat.hp_max = 10;
             } else if (new_rat.type == RAT_FAST) {
                 new_rat.speed = 2;
                 new_rat.fps = 3;
                 new_rat.hps = 1;
-                new_rat.hp = 10;
+                new_rat.hp_max = 10;
             } else {
                 exit(1);
             }
+            new_rat.hp = new_rat.hp_max;
 
             // Initialize all rats with these values
             new_rat.x = 240;

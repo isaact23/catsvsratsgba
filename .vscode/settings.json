@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "image_tiles.h": "c",
-        "rat.h": "c"
+        "rat.h": "c",
+        "data_path.h": "c",
+        "stdlib.h": "c"
     }
 }

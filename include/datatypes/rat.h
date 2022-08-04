@@ -17,6 +17,7 @@ enum rat_type {
 
 struct rat {
     struct sprite* sprite;
+    struct sprite* hp_bar;
     u32 init_time;
 
     // Rat long-term properties
@@ -31,6 +32,7 @@ struct rat {
     u16 x;
     u16 y;
     s16 hp;
+    s16 hp_max;
     s8 eating; // -1 for not eating, or 0, 1, 2 or 3 for eating location
     s16 time_until_next_bite;
 };
