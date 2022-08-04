@@ -46,7 +46,6 @@ void projectile_manager_update() {
             *projectile = projectiles[projectile_count - 1];
             projectile_count--;
             i--;
-            // TODO - REMOVE SPRITE AND PROJECTILE COMPLETELY
 
         } else {
 
