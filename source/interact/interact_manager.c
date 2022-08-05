@@ -1,8 +1,8 @@
 #include "interact/interact_manager.h"
 
 // Initialize interact manager
-void interact_manager_init() {
-    grid_selector_init();
+void interact_manager_init(struct sprite* (*sprite_manager_new_sprite)()) {
+    grid_selector_init(sprite_manager_new_sprite);
 }
 
 // Update iteract manager

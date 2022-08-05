@@ -12,7 +12,7 @@
 #include "sprites/sprite_manager.h"
 
 // Initialize text manager
-void text_manager_init();
+void text_manager_init(struct sprite* (*new_sprite)());
 
 // Update numbers for health and money
 void text_manager_update(s32 health, s32 money);

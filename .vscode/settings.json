@@ -3,6 +3,7 @@
         "image_tiles.h": "c",
         "rat.h": "c",
         "data_path.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "interact_manager.h": "c"
     }
 }

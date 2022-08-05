@@ -28,13 +28,4 @@ bool game_manager_add_money(s32 amount);
 // Get current amount of money.
 s32 game_manager_get_money();
 
-// Delete a sprite. Return true if successful.
-bool game_manager_remove_sprite(struct sprite* sprite);
-
-// Get array of rats from rat manager
-struct rat* game_manager_get_rats();
-
-// Get rat count from rat manager
-u8 game_manager_get_rat_count();
-
 #endif

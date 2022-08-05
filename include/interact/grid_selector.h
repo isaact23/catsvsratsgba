@@ -13,9 +13,8 @@
 
 #include "datatypes/cat.h"
 #include "datatypes/sprite.h"
-#include "cats/cat_manager.h"
-#include "sprites/sprite_manager.h"
 
+#include "gba_input.h"
 #include "gba_types.h"
 
 // Initialize grid selector

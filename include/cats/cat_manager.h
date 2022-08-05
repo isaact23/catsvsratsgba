@@ -18,7 +18,7 @@
 #define CAT_WIZARD_PRICE 40
 
 // Initialize cat manager
-void cat_manager_init();
+void cat_manager_init(struct sprite* (*sprite_manager_new_sprite)());
 
 // Update cat manager
 void cat_manager_update();

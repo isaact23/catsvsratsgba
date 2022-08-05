@@ -16,9 +16,10 @@ void game_manager_init() {
     money = 30;
 
     audio_manager_init();
-    interact_manager_init();
     sprite_manager_init();
-    screen_manager_init();
+
+    screen_manager_init(&sprite_manager_new_sprite);
+    interact_manager_init(&sprite_manager_new_sprite);
 
     rat_manager_init(&sprite_manager_new_sprite);
     cat_manager_init(&sprite_manager_new_sprite);
@@ -68,19 +69,4 @@ bool game_manager_add_money(s32 amount) {
 // Get current amount of money.
 s32 game_manager_get_money() {
     return money;
-}
-
-// Delete a sprite. Return true if successful.
-bool game_manager_remove_sprite(struct sprite* sprite) {
-    return sprite_manager_remove_sprite(sprite);
-}
-
-// Get array of rats from rat manager
-struct rat* game_manager_get_rats() {
-    return rat_manager_get_rats();
-}
-
-// Get rat count from rat manager
-u8 game_manager_get_rat_count() {
-    return rat_manager_get_rat_count();
 }

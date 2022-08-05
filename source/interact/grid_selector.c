@@ -3,6 +3,9 @@
 struct sprite* cursor;
 struct sprite* cursor_entity;
 
+// Function pointers
+struct sprite* (*new_sprite)();
+
 // Status of selection
 bool selecting = false;
 bool erasing = false;
@@ -17,9 +20,12 @@ u8 cursor_x = 2;
 u8 cursor_y = 0;
 
 // Initialize grid selector
-void grid_selector_init() {
+void grid_selector_init(struct sprite* (*sprite_manager_new_sprite)()) {
     cursor = sprite_manager_new_sprite();
     cursor_entity = sprite_manager_new_sprite();
+
+    // Function pointer to sprite manager's new sprite
+    new_sprite = sprite_manager_new_sprite;
 }
 
 // Update grid selector every frame
