@@ -6,7 +6,6 @@
 #include "data/data_path.h"
 #include "datatypes/rat.h"
 #include "datatypes/round.h"
-#include "game/game_manager.h"
 
 #include "gba_types.h"
 

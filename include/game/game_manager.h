@@ -28,9 +28,6 @@ bool game_manager_add_money(s32 amount);
 // Get current amount of money.
 s32 game_manager_get_money();
 
-// Get a sprite from the sprite manager, or return NULL if unavailable.
-struct sprite* game_manager_new_sprite();
-
 // Delete a sprite. Return true if successful.
 bool game_manager_remove_sprite(struct sprite* sprite);
 

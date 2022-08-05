@@ -5,7 +5,6 @@
 #include "datatypes/cat.h"
 #include "cats/cat_storage.h"
 #include "cats/projectile_manager.h"
-#include "sprites/sprite_manager.h"
 #include "gba_types.h"
 
 #define TILE_CAT_NORMAL 128

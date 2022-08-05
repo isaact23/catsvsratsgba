@@ -3,10 +3,16 @@
 // Cats
 struct cat_storage cat_storage;
 
+// Function pointers
+struct sprite* (*new_sprite)();
+
 // Initialize cat manager
-void cat_manager_init() {
+void cat_manager_init(struct sprite* (*sprite_manager_new_sprite)()) {
     projectile_manager_init();
     cat_storage = cat_storage_new();
+
+    // Function pointer to sprite manager's new sprite
+    new_sprite = sprite_manager_new_sprite;
 
     //cat_manager_add_cat(0, 0, CAT_NORMAL);
     //cat_manager_add_cat(1, 2, CAT_WIZARD);
@@ -70,7 +76,7 @@ void cat_manager_update() {
                     }
                 }
 
-                struct sprite* proj_sprite = game_manager_new_sprite();
+                struct sprite* proj_sprite = new_sprite();
                 if (proj_sprite == NULL) {
                     exit(1);
                 }

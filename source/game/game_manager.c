@@ -20,8 +20,8 @@ void game_manager_init() {
     sprite_manager_init();
     screen_manager_init();
 
-    rat_manager_init();
-    cat_manager_init();
+    rat_manager_init(&sprite_manager_new_sprite);
+    cat_manager_init(&sprite_manager_new_sprite);
 
     game_manager_start_round(0);
 }
@@ -68,11 +68,6 @@ bool game_manager_add_money(s32 amount) {
 // Get current amount of money.
 s32 game_manager_get_money() {
     return money;
-}
-
-// Get a sprite from the sprite manager
-struct sprite* game_manager_new_sprite() {
-    return sprite_manager_new_sprite();
 }
 
 // Delete a sprite. Return true if successful.
