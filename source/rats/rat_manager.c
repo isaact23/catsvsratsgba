@@ -43,10 +43,9 @@ void rat_manager_update(const struct round* curr_round, u32 time_elapsed) {
         // If the rat is not eating, update path position.
         if (rat -> eating < 0) {
             _rat_manager_update_rat_position(rat, time_elapsed);
-        }
 
         // If the rat is eating, handle cheese consumption.
-        if (rat -> eating >= 0) {
+        } else {
             if (rat -> time_until_next_bite <= 0) {
                 game_manager_decrease_health();
                 if (rat -> hps <= 0) {
