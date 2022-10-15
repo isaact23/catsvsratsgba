@@ -30,13 +30,13 @@ void game_manager_init() {
 // Update game manager every frame
 void game_manager_update() {
     audio_manager_update();
-    interact_manager_update();
     sprite_manager_update();
+
+    screen_manager_update(health, money);
+    interact_manager_update();
 
     rat_manager_update(curr_round, time_elapsed);
     cat_manager_update();
-
-    screen_manager_update(health, money);
     
     time_elapsed++;
 }
@@ -56,14 +56,12 @@ void game_manager_decrease_health() {
     }
 }
 
-// Change money, or return false if money would become negative.
-bool game_manager_add_money(s32 amount) {
+// Add money.
+void game_manager_add_money(s32 amount) {
     s32 sum = money + amount;
     if (sum < 0) {
-        return false;
+        sum = 0;
     }
-    money = sum;
-    return true;
 }
 
 // Get current amount of money.

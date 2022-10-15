@@ -151,6 +151,16 @@ bool cat_manager_remove_cat(u8 x, u8 y) {
     return cat_storage_remove_cat(&cat_storage, x, y);
 }
 
+// Get the price of a cat type
+u16 cat_manager_get_price(enum cat_type type) {
+    switch (type) {
+        case CAT_ARCHER: { return CAT_ARCHER_PRICE; }
+        case CAT_BOMB:   { return CAT_BOMB_PRICE;   }
+        case CAT_WIZARD: { return CAT_WIZARD_PRICE; }
+        default:         { return CAT_NORMAL_PRICE; }
+    }
+}
+
 // Get tile corresponding to cat type
 u16 cat_manager_get_tile(enum cat_type type) {
     switch (type) {

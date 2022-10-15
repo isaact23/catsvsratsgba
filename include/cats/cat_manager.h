@@ -29,6 +29,9 @@ bool cat_manager_add_cat(u8 x, u8 y, enum cat_type type);
 // Remove a cat - return true if successful.
 bool cat_manager_remove_cat(u8 x, u8 y);
 
+// Get the price of a cat type
+u16 cat_manager_get_price(enum cat_type type);
+
 // Get tile corresponding to cat type
 u16 cat_manager_get_tile(enum cat_type type);
 
