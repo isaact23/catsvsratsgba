@@ -8,6 +8,9 @@ struct sprite* (*new_sprite)();
 bool (*add_cat)(u8 x, u8 y, enum cat_type type);
 bool (*remove_cat)(u8 x, u8 y);
 u16 (*get_cat_price)(enum cat_type type);
+void (*add_money)(s32 amount);
+s32 (*get_money)();
+u16 (*get_cat_tile)(enum cat_type type);
 
 // Status of selection
 bool selecting = false;
@@ -27,7 +30,10 @@ void grid_selector_init(
     struct sprite* (*sprite_manager_new_sprite)(),
     bool (*cat_manager_add_cat)(u8 x, u8 y, enum cat_type type),
     bool (*cat_manager_remove_cat)(u8 x, u8 y),
-    u16 (*cat_manager_get_price)(enum cat_type type))
+    u16 (*cat_manager_get_price)(enum cat_type type),
+    void (*game_manager_add_money)(s32 amount),
+    s32 (*game_manager_get_money)(),
+    u16 (*cat_manager_get_tile)(enum cat_type type))
 {
     cursor = sprite_manager_new_sprite();
     cursor_entity = sprite_manager_new_sprite();
@@ -37,6 +43,9 @@ void grid_selector_init(
     add_cat = cat_manager_add_cat;
     remove_cat = cat_manager_remove_cat;
     get_cat_price = cat_manager_get_price;
+    add_money = game_manager_add_money;
+    get_money = game_manager_get_money;
+    get_cat_tile = cat_manager_get_tile;
 }
 
 // Update grid selector every frame
@@ -95,7 +104,7 @@ void grid_selector_update(u16 pressedKeys) {
                 if (placing) {
                     bool success = add_cat(cursor_x, cursor_y, selected_cat_type);
                     if (success) {
-                        game_manager_add_money(-selected_cat_price);
+                        add_money(-selected_cat_price);
                         grid_selector_disable_select();
                         placing = false;
                     }
@@ -121,10 +130,10 @@ void grid_selector_update(u16 pressedKeys) {
                     selected_cat_price = get_cat_price(selected_cat_type);
                     
                     // If we can afford this cat, select it.
-                    if (selected_cat_price <= game_manager_get_money()) {
+                    if (selected_cat_price <= get_money()) {
                         placing = true;
                         erasing = false;
-                        selected_cat_tile = cat_manager_get_tile(selected_cat_type);
+                        selected_cat_tile = get_cat_tile(selected_cat_type);
                     }
 
                 // Select eraser
