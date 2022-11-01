@@ -22,7 +22,8 @@ void game_manager_init() {
     interact_manager_init(&sprite_manager_new_sprite);
 
     rat_manager_init(&sprite_manager_new_sprite);
-    cat_manager_init(&sprite_manager_new_sprite);
+    cat_manager_init(&sprite_manager_new_sprite, &sprite_manager_remove_sprite,
+        &rat_manager_get_rats, &rat_manager_get_rat_count);
 
     game_manager_start_round(0);
 }

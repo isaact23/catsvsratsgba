@@ -5,14 +5,24 @@ struct cat_storage cat_storage;
 
 // Function pointers
 struct sprite* (*new_sprite)();
+bool (*remove_sprite)();
+struct rat* (*get_rats)();
+u8 (*get_rat_count)();
 
 // Initialize cat manager
-void cat_manager_init(struct sprite* (*sprite_manager_new_sprite)()) {
+void cat_manager_init
+(
+    struct sprite* (*sprite_manager_new_sprite)(), bool (*sprite_manager_remove_sprite)(),
+    struct rat* (*rat_manager_get_rats)(), u8 (*rat_manager_get_rat_count)()
+) {
     projectile_manager_init();
     cat_storage = cat_storage_new();
 
-    // Function pointer to sprite manager's new sprite
+    // Function pointers
     new_sprite = sprite_manager_new_sprite;
+    remove_sprite = sprite_manager_remove_sprite;
+    get_rats = rat_manager_get_rats;
+    get_rat_count = rat_manager_get_rat_count;
 
     //cat_manager_add_cat(0, 0, CAT_NORMAL);
     //cat_manager_add_cat(1, 2, CAT_WIZARD);
@@ -23,8 +33,8 @@ void cat_manager_update() {
     projectile_manager_update();
 
     // Get reference to rats
-    struct rat* rats = game_manager_get_rats();
-    u8 rat_count = game_manager_get_rat_count();
+    struct rat* rats = get_rats();
+    u8 rat_count = get_rat_count();
 
     // Iterate through cats
     for (u8 i = 0; i < cat_storage.cat_count; i++) {
@@ -173,5 +183,5 @@ u16 cat_manager_get_tile(enum cat_type type) {
 
 // Delete a sprite. Return true if successful.
 bool cat_manager_remove_sprite(struct sprite* sprite) {
-    return game_manager_remove_sprite(sprite);
+    return remove_sprite(sprite);
 }
