@@ -22,7 +22,7 @@ void game_manager_init() {
     interact_manager_init(&sprite_manager_new_sprite, &cat_manager_add_cat, &cat_manager_remove_cat,
         &cat_manager_get_price, &game_manager_add_money, &game_manager_get_money, &cat_manager_get_tile);
 
-    rat_manager_init(&sprite_manager_new_sprite);
+    rat_manager_init(&sprite_manager_new_sprite, &game_manager_decrease_health);
     cat_manager_init(&sprite_manager_new_sprite, &sprite_manager_remove_sprite,
         &rat_manager_get_rats, &rat_manager_get_rat_count);
 

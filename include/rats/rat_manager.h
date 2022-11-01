@@ -15,7 +15,10 @@
 #define HP_TILE_COUNT 14 // minus 1
 
 // Initialize rat manager
-void rat_manager_init(struct sprite* (*sprite_manager_new_sprite)());
+void rat_manager_init(
+    struct sprite* (*sprite_manager_new_sprite)(),
+    void (*game_manager_decrease_health)()
+);
 
 // Update rats
 void rat_manager_update(const struct round* curr_round, u32 time_elapsed);
