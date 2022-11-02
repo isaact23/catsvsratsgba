@@ -47,6 +47,10 @@ void game_manager_update() {
 void game_manager_start_round(u16 round) {
     time_elapsed = 0;
     curr_round = data_rounds_get(round);
+
+    if (health <= 0) {
+        exit(1); // GAME OVER SCREEN
+    }
 }
 
 // Decrease health (cheese) by 1
@@ -54,7 +58,6 @@ void game_manager_decrease_health() {
     health--;
     if (health <= 0) {
         health = 0;
-        exit(1);
     }
 }
 
