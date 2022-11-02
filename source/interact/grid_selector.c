@@ -4,7 +4,7 @@ struct sprite* cursor;
 struct sprite* cursor_entity;
 
 // Function pointers
-struct sprite* (*new_sprite)();
+static struct sprite* (*new_sprite)();
 bool (*add_cat)(u8 x, u8 y, enum cat_type type);
 bool (*remove_cat)(u8 x, u8 y);
 u16 (*get_cat_price)(enum cat_type type);

@@ -6,7 +6,7 @@ u8 rat_count = 0;
 u8 next_eat_pos = 0; // Next position to place a rat to consume cheese, ranges from 0 to 3
 
 // Function pointers
-struct sprite* (*new_sprite)();
+static struct sprite* (*new_sprite)();
 void (*decrease_health)();
 
 // Initialize rat manager

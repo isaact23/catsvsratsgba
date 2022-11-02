@@ -3,9 +3,6 @@
 struct sprite* money_num_array [NUM_CNT];
 struct sprite* health_num_array [NUM_CNT];
 
-// Function pointers
-struct sprite* (*new_sprite)();
-
 // Initialize text manager
 void text_manager_init(struct sprite* (*new_sprite)()) {
 
