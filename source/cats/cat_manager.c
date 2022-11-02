@@ -120,27 +120,27 @@ bool cat_manager_add_cat(u8 x, u8 y, enum cat_type type) {
 
     switch (new_cat.type) {
         case CAT_ARCHER: {
-            new_cat.frames_per_sprite = 35;
-            new_cat.frames_per_fire = 30;
-            new_cat.attack_range = 64;
+            new_cat.frames_per_sprite = CAT_ARCHER_FRAMES_PER_SPRITE;
+            new_cat.frames_per_fire = CAT_ARCHER_FRAMES_PER_FIRE;
+            new_cat.attack_range = CAT_ARCHER_ATTACK_RANGE;
             break;
         }
         case CAT_BOMB: {
-            new_cat.frames_per_sprite = 25;
-            new_cat.frames_per_fire = 120;
-            new_cat.attack_range = 16;
+            new_cat.frames_per_sprite = CAT_BOMB_FRAMES_PER_SPRITE;
+            new_cat.frames_per_fire = CAT_BOMB_FRAMES_PER_FIRE;
+            new_cat.attack_range = CAT_BOMB_ATTACK_RANGE;
             break;
         }
         case CAT_WIZARD: {
-            new_cat.frames_per_sprite = 45;
-            new_cat.frames_per_fire = 40;
-            new_cat.attack_range = 32;
+            new_cat.frames_per_sprite = CAT_WIZARD_FRAMES_PER_SPRITE;
+            new_cat.frames_per_fire = CAT_WIZARD_FRAMES_PER_FIRE;
+            new_cat.attack_range = CAT_WIZARD_ATTACK_RANGE;
             break;
         }
         default: {
-            new_cat.frames_per_sprite = 30;
-            new_cat.frames_per_fire = 20;
-            new_cat.attack_range = 32;
+            new_cat.frames_per_sprite = CAT_NORMAL_FRAMES_PER_SPRITE;
+            new_cat.frames_per_fire = CAT_NORMAL_FRAMES_PER_FIRE;
+            new_cat.attack_range = CAT_NORMAL_ATTACK_RANGE;
             break;
         }
     }
