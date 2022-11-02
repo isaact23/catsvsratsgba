@@ -40,6 +40,9 @@ void projectile_manager_update() {
         {
             // Inflict damage on rat
             target -> hp -= projectile -> damage;
+            if (target -> hp <= 0) {
+                target -> hp = 0;
+            }
 
             // Remove projectile and sprite
             cat_manager_remove_sprite(projectile -> sprite);
