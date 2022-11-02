@@ -12,5 +12,3 @@ See https://github.com/walkingeyerobot/pokeemerald/wiki/wsl2-and-vscode-setup fo
 // TODO: Add 'begin' button functionality, adding in-between rounds  
 // TODO: Add win/lose screens  
 // TODO: Add main menu  
-
-// TODO: Use delegate functions instead of callbacks  
