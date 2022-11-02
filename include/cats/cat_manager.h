@@ -5,7 +5,6 @@
 #include "datatypes/cat.h"
 #include "cats/cat_storage.h"
 #include "cats/projectile_manager.h"
-#include "sprites/sprite_manager.h"
 #include "gba_types.h"
 
 #define TILE_CAT_NORMAL 128
@@ -19,7 +18,10 @@
 #define CAT_WIZARD_PRICE 40
 
 // Initialize cat manager
-void cat_manager_init();
+void cat_manager_init(
+    struct sprite* (*sprite_manager_new_sprite)(), bool (*sprite_manager_remove_sprite)(),
+    struct rat* (*rat_manager_get_rats)(), u8 (*rat_manager_get_rat_count)()
+);
 
 // Update cat manager
 void cat_manager_update();
@@ -29,6 +31,9 @@ bool cat_manager_add_cat(u8 x, u8 y, enum cat_type type);
 
 // Remove a cat - return true if successful.
 bool cat_manager_remove_cat(u8 x, u8 y);
+
+// Get the price of a cat type
+u16 cat_manager_get_price(enum cat_type type);
 
 // Get tile corresponding to cat type
 u16 cat_manager_get_tile(enum cat_type type);

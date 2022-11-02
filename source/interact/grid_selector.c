@@ -3,6 +3,15 @@
 struct sprite* cursor;
 struct sprite* cursor_entity;
 
+// Function pointers
+static struct sprite* (*new_sprite)();
+bool (*add_cat)(u8 x, u8 y, enum cat_type type);
+bool (*remove_cat)(u8 x, u8 y);
+u16 (*get_cat_price)(enum cat_type type);
+void (*add_money)(s32 amount);
+s32 (*get_money)();
+u16 (*get_cat_tile)(enum cat_type type);
+
 // Status of selection
 bool selecting = false;
 bool erasing = false;
@@ -17,9 +26,26 @@ u8 cursor_x = 2;
 u8 cursor_y = 0;
 
 // Initialize grid selector
-void grid_selector_init() {
+void grid_selector_init(
+    struct sprite* (*sprite_manager_new_sprite)(),
+    bool (*cat_manager_add_cat)(u8 x, u8 y, enum cat_type type),
+    bool (*cat_manager_remove_cat)(u8 x, u8 y),
+    u16 (*cat_manager_get_price)(enum cat_type type),
+    void (*game_manager_add_money)(s32 amount),
+    s32 (*game_manager_get_money)(),
+    u16 (*cat_manager_get_tile)(enum cat_type type))
+{
     cursor = sprite_manager_new_sprite();
     cursor_entity = sprite_manager_new_sprite();
+
+    // Function pointers to sprite manager and cat manager
+    new_sprite = sprite_manager_new_sprite;
+    add_cat = cat_manager_add_cat;
+    remove_cat = cat_manager_remove_cat;
+    get_cat_price = cat_manager_get_price;
+    add_money = game_manager_add_money;
+    get_money = game_manager_get_money;
+    get_cat_tile = cat_manager_get_tile;
 }
 
 // Update grid selector every frame
@@ -76,14 +102,14 @@ void grid_selector_update(u16 pressedKeys) {
             // Press A on grid
             if (cursor_x < 13) {
                 if (placing) {
-                    bool success = cat_manager_add_cat(cursor_x, cursor_y, selected_cat_type);
+                    bool success = add_cat(cursor_x, cursor_y, selected_cat_type);
                     if (success) {
-                        game_manager_add_money(-selected_cat_price);
+                        add_money(-selected_cat_price);
                         grid_selector_disable_select();
                         placing = false;
                     }
                 } else if (erasing) {
-                    bool success = cat_manager_remove_cat(cursor_x, cursor_y);
+                    bool success = remove_cat(cursor_x, cursor_y);
                     if (success) {
                         grid_selector_disable_select();
                         erasing = false;
@@ -96,16 +122,18 @@ void grid_selector_update(u16 pressedKeys) {
                 // Select a cat to place
                 if (cursor_y < 4) {
                     switch (cursor_y) {
-                        case 1:  { selected_cat_type = CAT_ARCHER; selected_cat_price = CAT_ARCHER_PRICE; break; }
-                        case 2:  { selected_cat_type = CAT_BOMB;   selected_cat_price = CAT_BOMB_PRICE;   break; }
-                        case 3:  { selected_cat_type = CAT_WIZARD; selected_cat_price = CAT_WIZARD_PRICE; break; }
-                        default: { selected_cat_type = CAT_NORMAL; selected_cat_price = CAT_NORMAL_PRICE; break; }
+                        case 1:  { selected_cat_type = CAT_ARCHER; break; }
+                        case 2:  { selected_cat_type = CAT_BOMB;   break; }
+                        case 3:  { selected_cat_type = CAT_WIZARD; break; }
+                        default: { selected_cat_type = CAT_NORMAL; break; }
                     }
+                    selected_cat_price = get_cat_price(selected_cat_type);
+                    
                     // If we can afford this cat, select it.
-                    if (selected_cat_price <= game_manager_get_money()) {
+                    if (selected_cat_price <= get_money()) {
                         placing = true;
                         erasing = false;
-                        selected_cat_tile = cat_manager_get_tile(selected_cat_type);
+                        selected_cat_tile = get_cat_tile(selected_cat_type);
                     }
 
                 // Select eraser

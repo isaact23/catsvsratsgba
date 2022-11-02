@@ -16,12 +16,15 @@ void game_manager_init() {
     money = 30;
 
     audio_manager_init();
-    interact_manager_init();
     sprite_manager_init();
-    screen_manager_init();
 
-    rat_manager_init();
-    cat_manager_init();
+    screen_manager_init(&sprite_manager_new_sprite);
+    interact_manager_init(&sprite_manager_new_sprite, &cat_manager_add_cat, &cat_manager_remove_cat,
+        &cat_manager_get_price, &game_manager_add_money, &game_manager_get_money, &cat_manager_get_tile);
+
+    rat_manager_init(&sprite_manager_new_sprite, &game_manager_decrease_health);
+    cat_manager_init(&sprite_manager_new_sprite, &sprite_manager_remove_sprite,
+        &rat_manager_get_rats, &rat_manager_get_rat_count);
 
     game_manager_start_round(0);
 }
@@ -29,13 +32,13 @@ void game_manager_init() {
 // Update game manager every frame
 void game_manager_update() {
     audio_manager_update();
-    interact_manager_update();
     sprite_manager_update();
+
+    screen_manager_update(health, money);
+    interact_manager_update();
 
     rat_manager_update(curr_round, time_elapsed);
     cat_manager_update();
-
-    screen_manager_update(health, money);
     
     time_elapsed++;
 }
@@ -44,6 +47,10 @@ void game_manager_update() {
 void game_manager_start_round(u16 round) {
     time_elapsed = 0;
     curr_round = data_rounds_get(round);
+
+    if (health <= 0) {
+        exit(1); // GAME OVER SCREEN
+    }
 }
 
 // Decrease health (cheese) by 1
@@ -51,41 +58,18 @@ void game_manager_decrease_health() {
     health--;
     if (health <= 0) {
         health = 0;
-        exit(1);
     }
 }
 
-// Change money, or return false if money would become negative.
-bool game_manager_add_money(s32 amount) {
+// Add money.
+void game_manager_add_money(s32 amount) {
     s32 sum = money + amount;
     if (sum < 0) {
-        return false;
+        sum = 0;
     }
-    money = sum;
-    return true;
 }
 
 // Get current amount of money.
 s32 game_manager_get_money() {
     return money;
-}
-
-// Get a sprite from the sprite manager
-struct sprite* game_manager_new_sprite() {
-    return sprite_manager_new_sprite();
-}
-
-// Delete a sprite. Return true if successful.
-bool game_manager_remove_sprite(struct sprite* sprite) {
-    return sprite_manager_remove_sprite(sprite);
-}
-
-// Get array of rats from rat manager
-struct rat* game_manager_get_rats() {
-    return rat_manager_get_rats();
-}
-
-// Get rat count from rat manager
-u8 game_manager_get_rat_count() {
-    return rat_manager_get_rat_count();
 }

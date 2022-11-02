@@ -5,7 +5,7 @@
 #include "screen/text_manager.h"
 
 // Initialize the screen.
-void screen_manager_init();
+void screen_manager_init(struct sprite* (*sprite_manager_new_sprite)());
 
 // Update the screen.
 void screen_manager_update(s32 health, s32 money);

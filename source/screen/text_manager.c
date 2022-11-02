@@ -4,11 +4,12 @@ struct sprite* money_num_array [NUM_CNT];
 struct sprite* health_num_array [NUM_CNT];
 
 // Initialize text manager
-void text_manager_init() {
+void text_manager_init(struct sprite* (*new_sprite)()) {
+
     for (u8 i = 0; i < NUM_CNT; i++) {
         // Initialize sprites for each number
-        struct sprite* money_num = sprite_manager_new_sprite();
-        struct sprite* health_num = sprite_manager_new_sprite();
+        struct sprite* money_num = new_sprite();
+        struct sprite* health_num = new_sprite();
         if (money_num == NULL || health_num == NULL) {
             exit(1);
         }

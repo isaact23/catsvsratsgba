@@ -3,8 +3,9 @@
 vu16* dispcnt = (vu16*) 0x4000000;
 vu16* bg0cnt  = (vu16*) 0x4000008;
 
+
 // Initialize the screen.
-void screen_manager_init() {
+void screen_manager_init(struct sprite* (*sprite_manager_new_sprite)()) {
     // Set up display control
     *dispcnt =
         (0 << 0)  | // Display mode 0
@@ -22,7 +23,7 @@ void screen_manager_init() {
     tilemap_init();
 
     // Initialize text
-    text_manager_init();
+    text_manager_init(sprite_manager_new_sprite);
 }
 
 // Update the screen.

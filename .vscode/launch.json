@@ -9,7 +9,7 @@
             "args": [
                 "target remote localhost:2345"
             ],
-            "stopAtEntry": false,
+            "stopAtEntry": true,
             "cwd": "${workspaceRoot}",
             "environment": [],
             "externalConsole": false,

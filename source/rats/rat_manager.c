@@ -5,9 +5,18 @@ struct rat rat_array [RAT_LIMIT];
 u8 rat_count = 0;
 u8 next_eat_pos = 0; // Next position to place a rat to consume cheese, ranges from 0 to 3
 
+// Function pointers
+static struct sprite* (*new_sprite)();
+void (*decrease_health)();
+
 // Initialize rat manager
-void rat_manager_init() {
-    
+void rat_manager_init(
+    struct sprite* (*sprite_manager_new_sprite)(),
+    void (*game_manager_decrease_health)()
+) {
+    // Function pointer to sprite manager's new sprite
+    new_sprite = sprite_manager_new_sprite;
+    decrease_health = game_manager_decrease_health;
 }
 
 // Update rats
@@ -47,7 +56,7 @@ void rat_manager_update(const struct round* curr_round, u32 time_elapsed) {
         // If the rat is eating, handle cheese consumption.
         } else {
             if (rat -> time_until_next_bite <= 0) {
-                game_manager_decrease_health();
+                decrease_health();
                 if (rat -> hps <= 0) {
                     exit(1);
                 }
@@ -113,8 +122,8 @@ void _rat_manager_spawn(const struct round* curr_round, u32 time_elapsed) {
         if (time_elapsed > rat_data.spawn_time) {
             // Spawn the rat
             struct rat new_rat;
-            new_rat.sprite = game_manager_new_sprite();
-            new_rat.hp_bar = game_manager_new_sprite();
+            new_rat.sprite = new_sprite();
+            new_rat.hp_bar = new_sprite();
             if (new_rat.sprite == NULL || new_rat.hp_bar == NULL) {
                 exit(1);
             }

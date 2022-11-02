@@ -3,10 +3,26 @@
 // Cats
 struct cat_storage cat_storage;
 
+// Function pointers
+static struct sprite* (*new_sprite)();
+bool (*remove_sprite)();
+struct rat* (*get_rats)();
+u8 (*get_rat_count)();
+
 // Initialize cat manager
-void cat_manager_init() {
+void cat_manager_init
+(
+    struct sprite* (*sprite_manager_new_sprite)(), bool (*sprite_manager_remove_sprite)(),
+    struct rat* (*rat_manager_get_rats)(), u8 (*rat_manager_get_rat_count)()
+) {
     projectile_manager_init();
     cat_storage = cat_storage_new();
+
+    // Function pointers
+    new_sprite = sprite_manager_new_sprite;
+    remove_sprite = sprite_manager_remove_sprite;
+    get_rats = rat_manager_get_rats;
+    get_rat_count = rat_manager_get_rat_count;
 
     //cat_manager_add_cat(0, 0, CAT_NORMAL);
     //cat_manager_add_cat(1, 2, CAT_WIZARD);
@@ -17,8 +33,8 @@ void cat_manager_update() {
     projectile_manager_update();
 
     // Get reference to rats
-    struct rat* rats = game_manager_get_rats();
-    u8 rat_count = game_manager_get_rat_count();
+    struct rat* rats = get_rats();
+    u8 rat_count = get_rat_count();
 
     // Iterate through cats
     for (u8 i = 0; i < cat_storage.cat_count; i++) {
@@ -70,7 +86,7 @@ void cat_manager_update() {
                     }
                 }
 
-                struct sprite* proj_sprite = game_manager_new_sprite();
+                struct sprite* proj_sprite = new_sprite();
                 if (proj_sprite == NULL) {
                     exit(1);
                 }
@@ -145,6 +161,16 @@ bool cat_manager_remove_cat(u8 x, u8 y) {
     return cat_storage_remove_cat(&cat_storage, x, y);
 }
 
+// Get the price of a cat type
+u16 cat_manager_get_price(enum cat_type type) {
+    switch (type) {
+        case CAT_ARCHER: { return CAT_ARCHER_PRICE; }
+        case CAT_BOMB:   { return CAT_BOMB_PRICE;   }
+        case CAT_WIZARD: { return CAT_WIZARD_PRICE; }
+        default:         { return CAT_NORMAL_PRICE; }
+    }
+}
+
 // Get tile corresponding to cat type
 u16 cat_manager_get_tile(enum cat_type type) {
     switch (type) {
@@ -157,5 +183,5 @@ u16 cat_manager_get_tile(enum cat_type type) {
 
 // Delete a sprite. Return true if successful.
 bool cat_manager_remove_sprite(struct sprite* sprite) {
-    return game_manager_remove_sprite(sprite);
+    return remove_sprite(sprite);
 }
