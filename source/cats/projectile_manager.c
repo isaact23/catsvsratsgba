@@ -3,9 +3,12 @@
 u8 projectile_count = 0;
 struct projectile projectiles [PROJECTILE_LIMIT];
 
-// Initialize projectile manager
-void projectile_manager_init() {
+// Function pointers
+static bool (*remove_sprite)(struct sprite* sprite);
 
+// Initialize projectile manager
+void projectile_manager_init(bool (*sprite_manager_remove_sprite)(struct sprite* sprite)) {
+    remove_sprite = sprite_manager_remove_sprite;
 }
 
 // Update all projectiles and sprites
@@ -45,7 +48,7 @@ void projectile_manager_update() {
             }
 
             // Remove projectile and sprite
-            cat_manager_remove_sprite(projectile -> sprite);
+            remove_sprite(projectile -> sprite);
             *projectile = projectiles[projectile_count - 1];
             projectile_count--;
             i--;

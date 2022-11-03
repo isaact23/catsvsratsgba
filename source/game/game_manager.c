@@ -13,7 +13,7 @@ s32 money;
 // Initialize game manager
 void game_manager_init() {
     health = 100;
-    money = 30;
+    money = 100;
 
     audio_manager_init();
     sprite_manager_init();

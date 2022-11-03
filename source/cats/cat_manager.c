@@ -5,17 +5,17 @@ struct cat_storage cat_storage;
 
 // Function pointers
 static struct sprite* (*new_sprite)();
-bool (*remove_sprite)();
+static bool (*remove_sprite)();
 struct rat* (*get_rats)();
 u8 (*get_rat_count)();
 
 // Initialize cat manager
 void cat_manager_init
 (
-    struct sprite* (*sprite_manager_new_sprite)(), bool (*sprite_manager_remove_sprite)(),
+    struct sprite* (*sprite_manager_new_sprite)(), bool (*sprite_manager_remove_sprite)(struct sprite* sprite),
     struct rat* (*rat_manager_get_rats)(), u8 (*rat_manager_get_rat_count)()
 ) {
-    projectile_manager_init();
+    projectile_manager_init(sprite_manager_remove_sprite);
     cat_storage = cat_storage_new();
 
     // Function pointers
@@ -179,9 +179,4 @@ u16 cat_manager_get_tile(enum cat_type type) {
         case CAT_WIZARD: { return TILE_CAT_WIZARD; }
         default:         { return TILE_CAT_NORMAL; }
     }
-}
-
-// Delete a sprite. Return true if successful.
-bool cat_manager_remove_sprite(struct sprite* sprite) {
-    return remove_sprite(sprite);
 }

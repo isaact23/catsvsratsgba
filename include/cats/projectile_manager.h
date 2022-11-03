@@ -3,7 +3,6 @@
 
 #include <stdlib.h>
 
-#include "cats/cat_manager.h"
 #include "datatypes/projectile.h"
 #include "datatypes/rat.h"
 
@@ -24,7 +23,7 @@
 #define PROJECTILE_MAGIC_DAMAGE 3
 
 // Initialize projectile manager
-void projectile_manager_init();
+void projectile_manager_init(bool (*sprite_manager_remove_sprite)(struct sprite* sprite));
 
 // Update all projectiles and sprites
 void projectile_manager_update();
