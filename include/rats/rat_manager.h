@@ -27,10 +27,4 @@ void rat_manager_update(const struct round* curr_round, u32 time_elapsed);
 // Get array of rats
 struct rat* rat_manager_get_rats();
 
-// If enough time has elapsed, spawn a new rat. Return true if successful.
-bool _rat_manager_spawn(const struct round* curr_round, u32 time_elapsed);
-
-// Update path position of a rat
-void _rat_manager_update_rat_position(struct rat* rat, u32 time_elapsed);
-
 #endif

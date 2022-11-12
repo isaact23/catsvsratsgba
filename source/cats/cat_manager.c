@@ -13,7 +13,7 @@ u8 (*get_rat_count)();
 void cat_manager_init
 (
     struct sprite* (*sprite_manager_new_sprite)(), bool (*sprite_manager_remove_sprite)(struct sprite* sprite),
-    struct rat* (*rat_manager_get_rats)(), u8 (*rat_manager_get_rat_count)()
+    struct rat* (*rat_manager_get_rats)()
 ) {
     projectile_manager_init(sprite_manager_remove_sprite);
     cat_storage = cat_storage_new();
@@ -22,7 +22,6 @@ void cat_manager_init
     new_sprite = sprite_manager_new_sprite;
     remove_sprite = sprite_manager_remove_sprite;
     get_rats = rat_manager_get_rats;
-    get_rat_count = rat_manager_get_rat_count;
 
     //cat_manager_add_cat(0, 0, CAT_NORMAL);
     //cat_manager_add_cat(1, 2, CAT_WIZARD);
@@ -34,7 +33,6 @@ void cat_manager_update() {
 
     // Get reference to rats
     struct rat* rats = get_rats();
-    u8 rat_count = get_rat_count();
 
     // Iterate through cats
     for (u8 i = 0; i < cat_storage.cat_count; i++) {
@@ -51,10 +49,17 @@ void cat_manager_update() {
             // Find rats in range
             struct rat* closest_rat = NULL;
             u16 closest_rat_dist = 1000;
-            for (u8 i = 0; i < rat_count; i++) {
+            for (u8 i = 0; i < RAT_LIMIT; i++) {
                 struct rat* rat = &rats[i];
+
+                // Skip disabled rats
+                if (!rat -> active) {
+                    continue;
+                }
+
                 u16 attack_range = cat -> attack_range;
 
+                // Calculate distances and target the closest rat
                 u16 dist = abs((cat -> pixel_x) - (rat -> x)) + abs((cat -> pixel_y) - (rat -> y));
                 if (dist <= attack_range && dist <= closest_rat_dist) {
                     closest_rat = rat;
