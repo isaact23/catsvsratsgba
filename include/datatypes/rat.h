@@ -16,9 +16,12 @@ enum rat_type {
 };
 
 struct rat {
+    bool active; // Set to false to disable this entry.
+
     struct sprite* sprite;
     struct sprite* hp_bar;
     u32 init_time;
+    u16 index; // Where this rat is stored in rat manager's rat_array
 
     // Rat long-term properties
     enum rat_type type;

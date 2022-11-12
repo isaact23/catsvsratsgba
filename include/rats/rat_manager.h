@@ -17,6 +17,7 @@
 // Initialize rat manager
 void rat_manager_init(
     struct sprite* (*sprite_manager_new_sprite)(),
+    bool (*sprite_manager_remove_sprite)(struct sprite* sprite),
     void (*game_manager_decrease_health)()
 );
 
@@ -25,14 +26,5 @@ void rat_manager_update(const struct round* curr_round, u32 time_elapsed);
 
 // Get array of rats
 struct rat* rat_manager_get_rats();
-
-// Get rat count
-u8 rat_manager_get_rat_count();
-
-// If enough time has elapsed, spawn a new rat
-void _rat_manager_spawn(const struct round* curr_round, u32 time_elapsed);
-
-// Update path position of a rat
-void _rat_manager_update_rat_position(struct rat* rat, u32 time_elapsed);
 
 #endif
