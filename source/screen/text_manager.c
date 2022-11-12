@@ -3,6 +3,9 @@
 struct sprite* money_num_array [NUM_CNT];
 struct sprite* health_num_array [NUM_CNT];
 
+// Get a digit of a number - return -1 if digit should be hidden
+static s8 _get_digit(s32 num, u8 digit);
+
 // Initialize text manager
 void text_manager_init(struct sprite* (*new_sprite)()) {
 
@@ -75,7 +78,7 @@ void text_manager_update(s32 health, s32 money) {
 }
 
 // Get a digit of a number - return -1 if digit should be hidden
-s8 _get_digit(s32 num, u8 digit) {
+static s8 _get_digit(s32 num, u8 digit) {
     s32 reduced_num = num;
     for (u8 i = 0; i < digit; i++) {
         reduced_num = reduced_num / 10;

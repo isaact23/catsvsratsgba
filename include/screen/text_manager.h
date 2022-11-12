@@ -17,7 +17,4 @@ void text_manager_init(struct sprite* (*new_sprite)());
 // Update numbers for health and money
 void text_manager_update(s32 health, s32 money);
 
-// Get a digit of a number - return -1 if digit should be hidden
-s8 _get_digit(s32 num, u8 digit);
-
 #endif
