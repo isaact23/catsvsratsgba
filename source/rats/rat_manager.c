@@ -2,29 +2,39 @@
 
 // Rats
 struct rat rat_array [RAT_LIMIT];
-u8 rat_count = 0;
+bool rat_array_occupied [RAT_LIMIT];
+u16 rats_spawned = 0;
+u16 rats_alive = 0;
 u8 next_eat_pos = 0; // Next position to place a rat to consume cheese, ranges from 0 to 3
 
 // Function pointers
 static struct sprite* (*new_sprite)();
+bool (*remove_sprite)(struct sprite* sprite);
 void (*decrease_health)();
 
 // Initialize rat manager
 void rat_manager_init(
     struct sprite* (*sprite_manager_new_sprite)(),
-    void (*game_manager_decrease_health)()
+    bool (*sprite_manager_remove_sprite)(struct sprite* sprite),
+    void (*game_manager_decrease_health)(),
 ) {
     // Function pointer to sprite manager's new sprite
     new_sprite = sprite_manager_new_sprite;
+    remove_sprite = sprite_manager_remove_sprite;
     decrease_health = game_manager_decrease_health;
 }
 
 // Update rats
 void rat_manager_update(const struct round* curr_round, u32 time_elapsed) {
-    _rat_manager_spawn(curr_round, time_elapsed);
+    bool spawn_successful = _rat_manager_spawn(curr_round, time_elapsed);
 
     // Iterate through rats
-    for (u32 i = 0; i < rat_count; i++) {
+    for (u32 i = 0; i < RAT_LIMIT; i++) {
+        // Skip empty rat entries
+        if (!rat_array_occupied[i]) {
+            continue;
+        }
+
         struct rat* rat = &(rat_array[i]);
 
         // Update rat sprite
@@ -79,8 +89,6 @@ void rat_manager_update(const struct round* curr_round, u32 time_elapsed) {
             (1 << 12);  // Priority
         
         // Update HP bar
-        // hp = 10, tile_no = 64
-        // hp = 0, tile_no = higher
         // Move something from range 0 to MAX_HP to range 14 to 0, then pick tile
         u8 adjusted_hp = (rat -> hp) * HP_TILE_COUNT / (rat -> hp_max);
         u8 adjusted_hp_flipped = 14 - adjusted_hp;
@@ -103,23 +111,43 @@ struct rat* rat_manager_get_rats() {
     return rat_array;
 }
 
-// Get rat count
-u8 rat_manager_get_rat_count() {
-    return rat_count;
+// Remove a rat. Return true if successful.
+bool rat_manager_remove(struct rat rat) {
+    if (rat.index >= RAT_LIMIT) {
+        return false;
+    }
+    if (!rat_array_occupied[rat.index]) {
+        return false;
+    }
+    rat_array_occupied[rat.index] = false;
+
+    // Remove sprite, and return the success value.
+    return remove_sprite(rat.sprite);
 }
 
-// If enough time has elapsed, spawn a new rat
-void _rat_manager_spawn(const struct round* curr_round, u32 time_elapsed) {
-    if (rat_count >= RAT_LIMIT) {
-        exit(1);
-    }
+// If enough time has elapsed, spawn a new rat. Return true if successful.
+bool _rat_manager_spawn(const struct round* curr_round, u32 time_elapsed) {
 
     // If there are still rats to spawn,
-    if (rat_count < curr_round -> rat_count) {
+    if (rats_spawned < curr_round -> rat_count) {
+
+        // Rat index is the array index to insert the next rat.
+        u16 rat_index = 0;
+
         // Get rat data from round
-        struct rat_spawn_entry rat_data = curr_round -> rat_spawn_entries[rat_count];
+        struct rat_spawn_entry rat_data = curr_round -> rat_spawn_entries[rats_spawned];
+
         // If it is time to spawn this rat,
         if (time_elapsed > rat_data.spawn_time) {
+
+            // Find index in rat_array for new rat.
+            while (rat_array_occupied[rat_index]) {
+                rat_index++;
+                if (rat_index >= RAT_LIMIT) {
+                    return false;
+                }
+            }
+
             // Spawn the rat
             struct rat new_rat;
             new_rat.sprite = new_sprite();
@@ -161,9 +189,12 @@ void _rat_manager_spawn(const struct round* curr_round, u32 time_elapsed) {
             new_rat.eating = -1;
             new_rat.time_until_next_bite = 0;
 
+            new_rat.index = rat_index;
+
             // Copy rat to rat array
-            rat_array[rat_count] = new_rat;
-            rat_count++;
+            rat_array[rat_index] = new_rat;
+            rat_array_occupied[rat_index] = true;
+            rats_spawned++;
         }
     }
 }
