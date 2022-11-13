@@ -14,6 +14,11 @@ const struct round* round_data;
 s32 health;
 s32 money;
 
+// Start a round
+static void _game_manager_start_round(u16 round);
+// Switch game mode
+static void _game_manager_switch_mode(enum game_state new_state);
+
 // Initialize game manager
 void game_manager_init() {
     // Initialize health and money
@@ -25,7 +30,7 @@ void game_manager_init() {
     sprite_manager_init();
 
     screen_manager_init(&sprite_manager_new_sprite);
-    interact_manager_init(&state, &sprite_manager_new_sprite, &cat_manager_add_cat, &cat_manager_remove_cat,
+    interact_manager_init(&game_manager_next_round, &sprite_manager_new_sprite, &cat_manager_add_cat, &cat_manager_remove_cat,
         &cat_manager_get_price, &game_manager_add_money, &game_manager_get_money, &cat_manager_get_tile);
 
     rat_manager_init(&sprite_manager_new_sprite, &sprite_manager_remove_sprite, &game_manager_decrease_health);
@@ -33,7 +38,7 @@ void game_manager_init() {
         &rat_manager_get_rats);
 
     // Setup round 0
-    game_manager_switch_mode(STANDBY);
+    _game_manager_switch_mode(STANDBY);
     //game_manager_start_round(round_number);
 }
 
@@ -51,8 +56,55 @@ void game_manager_update() {
     time_elapsed++;
 }
 
+// Get current game state
+enum game_state game_manager_get_state() {
+    return state;
+}
+
+// Start the next round. Return true if successful.
+bool game_manager_next_round() {
+    if (state == STANDBY) {
+        _game_manager_switch_mode(FIGHT);
+        _game_manager_start_round(round_number);
+        round_number++;
+        return true;
+    }
+    return false;
+}
+
+// Decrease health (cheese) by 1
+void game_manager_decrease_health() {
+    health--;
+    if (health <= 0) {
+        health = 0;
+        // GAME OVER SCREEN
+    }
+}
+
+// Add money.
+void game_manager_add_money(s32 amount) {
+    s32 sum = money + amount;
+    if (sum < 0) {
+        sum = 0;
+    }
+}
+
+// Get current amount of money.
+s32 game_manager_get_money() {
+    return money;
+}
+
+
+// Start a round
+static void _game_manager_start_round(u16 round) {
+    time_elapsed = 0;
+    round_data = data_rounds_get(round);
+    round_number = round;
+}
+
 // Switch game mode
-void game_manager_switch_mode(enum game_state new_state) {
+static void _game_manager_switch_mode(enum game_state new_state) {
+    state = new_state;
     switch (new_state) {
         case MAIN_MENU: {
             return;
@@ -81,36 +133,4 @@ void game_manager_switch_mode(enum game_state new_state) {
             return;
         }
     }
-}
-
-// Start a round
-void game_manager_start_round(u16 round) {
-    time_elapsed = 0;
-    round_data = data_rounds_get(round);
-    round_number = round;
-
-    if (health <= 0) {
-        exit(1); // GAME OVER SCREEN
-    }
-}
-
-// Decrease health (cheese) by 1
-void game_manager_decrease_health() {
-    health--;
-    if (health <= 0) {
-        health = 0;
-    }
-}
-
-// Add money.
-void game_manager_add_money(s32 amount) {
-    s32 sum = money + amount;
-    if (sum < 0) {
-        sum = 0;
-    }
-}
-
-// Get current amount of money.
-s32 game_manager_get_money() {
-    return money;
 }

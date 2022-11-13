@@ -3,10 +3,9 @@
 struct sprite* cursor;
 struct sprite* cursor_entity;
 
-// Pointer to game_state in game manager
-const enum game_state* const state;
-
 // Function pointers
+bool (*next_round)();
+enum game_state (*get_state)();
 static struct sprite* (*new_sprite)();
 bool (*add_cat)(u8 x, u8 y, enum cat_type type);
 bool (*remove_cat)(u8 x, u8 y);
@@ -30,7 +29,7 @@ u8 cursor_y = 0;
 
 // Initialize grid selector
 void grid_selector_init(
-    const enum game_state* const state,
+    bool (*game_manager_next_round)(),
     struct sprite* (*sprite_manager_new_sprite)(),
     bool (*cat_manager_add_cat)(u8 x, u8 y, enum cat_type type),
     bool (*cat_manager_remove_cat)(u8 x, u8 y),
@@ -43,6 +42,7 @@ void grid_selector_init(
     cursor_entity = sprite_manager_new_sprite();
 
     // Function pointers
+    next_round = game_manager_next_round;
     new_sprite = sprite_manager_new_sprite;
     add_cat = cat_manager_add_cat;
     remove_cat = cat_manager_remove_cat;
@@ -103,7 +103,7 @@ void grid_selector_update(u16 pressedKeys) {
 
         if ((pressedKeys & KEY_A) == KEY_A) {
 
-            // Press A on grid
+            // 'A' pressed on grid
             if (cursor_x < 13) {
                 if (placing) {
                     bool success = add_cat(cursor_x, cursor_y, selected_cat_type);
@@ -120,7 +120,7 @@ void grid_selector_update(u16 pressedKeys) {
                     }
                 }
 
-            // Press A on navbar
+            // 'A' pressed on navbar
             } else if (cursor_x == 13) {
 
                 // Select a cat to place
@@ -147,7 +147,7 @@ void grid_selector_update(u16 pressedKeys) {
                 
                 // Start round
                 } else if (cursor_y == 5) {
-                    
+                    next_round();
                     // TOOD: Start round
                 }
             }

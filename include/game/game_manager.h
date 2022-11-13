@@ -26,11 +26,11 @@ void game_manager_init();
 // Update game manager every frame
 void game_manager_update();
 
-// Switch game mode
-void game_manager_switch_mode(enum game_state new_state);
+// Get current game state
+enum game_state game_manager_get_state();
 
-// Start a round
-void game_manager_start_round(u16 round);
+// Start the next round
+bool game_manager_next_round();
 
 // Decrease health (cheese) by 1
 void game_manager_decrease_health();
