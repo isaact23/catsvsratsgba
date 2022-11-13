@@ -12,6 +12,9 @@
 #include "gba_timers.h"
 #include "gba_types.h"
 
+#define CHANNEL_A 'A'
+#define CHANNEL_B 'B'
+
 #define CLOCK_RATE 16777216
 #define CYCLES_PER_BLANK 280806
 
@@ -22,14 +25,23 @@
 #define TIMER_ENABLE 0x80
 #define TIMER_FREQ_1 0x0
 
+// List of sounds
+enum sounds {
+    MUSIC_BETWEEN_ROUNDS = 0,
+    MUSIC_DURING_ROUNDS,
+    MUSIC_TITLE,
+    MUSIC_WIN,
+    MUSIC_LOSE
+};
+
 // Initialize audio manager
 void audio_manager_init();
 
 // Update audio manager once per frame
 void audio_manager_update();
 
-// Play a sound effect
-void audio_manager_play_sound(const s8* sound, u32 sample_count, u32 sample_rate, char channel);
+// Play a sound effect from enum sounds. Return true if successful.
+bool audio_manager_play_sound(enum sounds sound);
 
 // Stop all sounds
 void audio_manager_stop_sounds();

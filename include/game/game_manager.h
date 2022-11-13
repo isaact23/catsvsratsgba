@@ -10,11 +10,24 @@
 
 #include "gba_types.h"
 
+enum game_state {
+    MAIN_MENU = 0,
+    TUTORIAL,
+    CREDITS,
+    STANDBY,
+    FIGHT,
+    LOSE,
+    WIN
+};
+
 // Initialize game manager
 void game_manager_init();
 
 // Update game manager every frame
 void game_manager_update();
+
+// Switch mode
+void game_manager_switch_mode(enum game_state new_state);
 
 // Start a round
 void game_manager_start_round(u16 round);

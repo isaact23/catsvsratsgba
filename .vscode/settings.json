@@ -5,6 +5,7 @@
         "data_path.h": "c",
         "stdlib.h": "c",
         "interact_manager.h": "c",
-        "cat.h": "c"
+        "cat.h": "c",
+        "screen_manager.h": "c"
     }
 }

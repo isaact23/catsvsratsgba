@@ -1,10 +1,14 @@
 #include "game/game_manager.h"
 
+// Game state
+enum game_state state;
+
 // Time elapsed since beginning of a round
 u32 time_elapsed = 0;
 
 // Rounds
-const struct round* curr_round;
+u16 round_number = 0;
+const struct round* round_data;
 
 // Lives and money
 s32 health;
@@ -12,9 +16,11 @@ s32 money;
 
 // Initialize game manager
 void game_manager_init() {
+    // Initialize health and money
     health = 100;
     money = 100;
 
+    // Initialize sub-systems
     audio_manager_init();
     sprite_manager_init();
 
@@ -26,7 +32,9 @@ void game_manager_init() {
     cat_manager_init(&sprite_manager_new_sprite, &sprite_manager_remove_sprite,
         &rat_manager_get_rats);
 
-    game_manager_start_round(0);
+    // Setup round 0
+    game_manager_switch_mode(STANDBY);
+    //game_manager_start_round(round_number);
 }
 
 // Update game manager every frame
@@ -37,16 +45,49 @@ void game_manager_update() {
     screen_manager_update(health, money);
     interact_manager_update();
 
-    rat_manager_update(curr_round, time_elapsed);
+    rat_manager_update(round_data, time_elapsed);
     cat_manager_update();
     
     time_elapsed++;
 }
 
+// Switch mode
+void game_manager_switch_mode(enum game_state new_state) {
+    switch (new_state) {
+        case MAIN_MENU: {
+            return;
+        }
+        case TUTORIAL: {
+            return;
+        }
+        case CREDITS: {
+            return;
+        }
+        case STANDBY: {
+            audio_manager_play_sound(MUSIC_BETWEEN_ROUNDS);
+            return;
+        }
+        case FIGHT: {
+            audio_manager_play_sound(MUSIC_DURING_ROUNDS);
+            return;
+        }
+        case LOSE: {
+            return;
+        }
+        case WIN: {
+            return;
+        }
+        default: {
+            return;
+        }
+    }
+}
+
 // Start a round
 void game_manager_start_round(u16 round) {
     time_elapsed = 0;
-    curr_round = data_rounds_get(round);
+    round_data = data_rounds_get(round);
+    round_number = round;
 
     if (health <= 0) {
         exit(1); // GAME OVER SCREEN
