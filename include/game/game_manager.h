@@ -26,7 +26,7 @@ void game_manager_init();
 // Update game manager every frame
 void game_manager_update();
 
-// Switch mode
+// Switch game mode
 void game_manager_switch_mode(enum game_state new_state);
 
 // Start a round

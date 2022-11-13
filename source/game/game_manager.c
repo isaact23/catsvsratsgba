@@ -25,7 +25,7 @@ void game_manager_init() {
     sprite_manager_init();
 
     screen_manager_init(&sprite_manager_new_sprite);
-    interact_manager_init(&sprite_manager_new_sprite, &cat_manager_add_cat, &cat_manager_remove_cat,
+    interact_manager_init(&state, &sprite_manager_new_sprite, &cat_manager_add_cat, &cat_manager_remove_cat,
         &cat_manager_get_price, &game_manager_add_money, &game_manager_get_money, &cat_manager_get_tile);
 
     rat_manager_init(&sprite_manager_new_sprite, &sprite_manager_remove_sprite, &game_manager_decrease_health);
@@ -51,7 +51,7 @@ void game_manager_update() {
     time_elapsed++;
 }
 
-// Switch mode
+// Switch game mode
 void game_manager_switch_mode(enum game_state new_state) {
     switch (new_state) {
         case MAIN_MENU: {

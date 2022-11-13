@@ -3,6 +3,9 @@
 struct sprite* cursor;
 struct sprite* cursor_entity;
 
+// Pointer to game_state in game manager
+const enum game_state* const state;
+
 // Function pointers
 static struct sprite* (*new_sprite)();
 bool (*add_cat)(u8 x, u8 y, enum cat_type type);
@@ -27,6 +30,7 @@ u8 cursor_y = 0;
 
 // Initialize grid selector
 void grid_selector_init(
+    const enum game_state* const state,
     struct sprite* (*sprite_manager_new_sprite)(),
     bool (*cat_manager_add_cat)(u8 x, u8 y, enum cat_type type),
     bool (*cat_manager_remove_cat)(u8 x, u8 y),
@@ -38,7 +42,7 @@ void grid_selector_init(
     cursor = sprite_manager_new_sprite();
     cursor_entity = sprite_manager_new_sprite();
 
-    // Function pointers to sprite manager and cat manager
+    // Function pointers
     new_sprite = sprite_manager_new_sprite;
     add_cat = cat_manager_add_cat;
     remove_cat = cat_manager_remove_cat;
@@ -143,6 +147,7 @@ void grid_selector_update(u16 pressedKeys) {
                 
                 // Start round
                 } else if (cursor_y == 5) {
+                    
                     // TOOD: Start round
                 }
             }

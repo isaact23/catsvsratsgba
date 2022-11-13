@@ -6,6 +6,7 @@
         "stdlib.h": "c",
         "interact_manager.h": "c",
         "cat.h": "c",
-        "screen_manager.h": "c"
+        "screen_manager.h": "c",
+        "grid_selector.h": "c"
     }
 }

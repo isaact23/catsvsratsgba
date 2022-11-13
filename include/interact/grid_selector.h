@@ -19,6 +19,7 @@
 
 // Initialize grid selector
 void grid_selector_init(
+    const enum game_state* const state,
     struct sprite* (*sprite_manager_new_sprite)(),
     bool (*cat_manager_add_cat)(u8 x, u8 y, enum cat_type type),
     bool (*cat_manager_remove_cat)(u8 x, u8 y),
