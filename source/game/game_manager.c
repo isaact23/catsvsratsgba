@@ -138,9 +138,13 @@ static void _game_manager_switch_mode(enum game_state new_state) {
             return;
         }
         case LOSE: {
+            audio_manager_stop_sounds();
+            audio_manager_play_sound(MUSIC_LOSE);
             return;
         }
         case WIN: {
+            audio_manager_stop_sounds();
+            audio_manager_play_sound(MUSIC_WIN);
             return;
         }
         default: {
