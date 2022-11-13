@@ -10,6 +10,7 @@ u8 next_eat_pos = 0; // Next position to place a rat to consume cheese, ranges f
 static struct sprite* (*new_sprite)();
 bool (*remove_sprite)(struct sprite* sprite);
 void (*decrease_health)();
+void (*end_round)();
 
 
 // If enough time has elapsed, spawn a new rat. Return true if successful.
@@ -26,18 +27,26 @@ static void _rat_manager_update_rat_position(struct rat* rat, u32 time_elapsed);
 void rat_manager_init(
     struct sprite* (*sprite_manager_new_sprite)(),
     bool (*sprite_manager_remove_sprite)(struct sprite* sprite),
-    void (*game_manager_decrease_health)()
+    void (*game_manager_decrease_health)(),
+    void (*game_manager_end_round)()
 ) {
     // Function pointer to sprite manager's new sprite
     new_sprite = sprite_manager_new_sprite;
     remove_sprite = sprite_manager_remove_sprite;
     decrease_health = game_manager_decrease_health;
+    end_round = game_manager_end_round;
 }
 
 // Update rats
 void rat_manager_update(const struct round* curr_round, u32 time_elapsed) {
-    // Spawn new rat. Ignore failures.
+    // Spawn new rat. Ignore failures (rats can be spawned later)
     _rat_manager_spawn(curr_round, time_elapsed);
+
+    // Check if all rats have been killed.
+    if (rats_alive == 0 && rats_spawned >= (curr_round -> rat_count)) {
+        end_round();
+        return;
+    }
 
     // Iterate through rats
     for (u32 i = 0; i < RAT_LIMIT; i++) {
@@ -197,6 +206,7 @@ static bool _rat_manager_spawn(const struct round* curr_round, u32 time_elapsed)
             // Copy rat to rat array
             rat_array[rat_index] = new_rat;
             rats_spawned++;
+            rats_alive++;
         }
     }
     return true;
@@ -211,6 +221,7 @@ static bool _rat_manager_remove(struct rat* rat) {
         return false;
     }
     rat -> active = false;
+    rats_alive--;
 
     // Remove sprites, and return true if both removals are successful.
     bool success1 = remove_sprite(rat -> sprite);

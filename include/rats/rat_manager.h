@@ -18,7 +18,8 @@
 void rat_manager_init(
     struct sprite* (*sprite_manager_new_sprite)(),
     bool (*sprite_manager_remove_sprite)(struct sprite* sprite),
-    void (*game_manager_decrease_health)()
+    void (*game_manager_decrease_health)(),
+    void (*game_manager_end_round)()
 );
 
 // Update rats

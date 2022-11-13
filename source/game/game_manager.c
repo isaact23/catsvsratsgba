@@ -33,7 +33,8 @@ void game_manager_init() {
     interact_manager_init(&game_manager_next_round, &sprite_manager_new_sprite, &cat_manager_add_cat, &cat_manager_remove_cat,
         &cat_manager_get_price, &game_manager_add_money, &game_manager_get_money, &cat_manager_get_tile);
 
-    rat_manager_init(&sprite_manager_new_sprite, &sprite_manager_remove_sprite, &game_manager_decrease_health);
+    rat_manager_init(&sprite_manager_new_sprite, &sprite_manager_remove_sprite, &game_manager_decrease_health,
+        &game_manager_end_round);
     cat_manager_init(&sprite_manager_new_sprite, &sprite_manager_remove_sprite,
         &rat_manager_get_rats);
 
@@ -66,10 +67,21 @@ bool game_manager_next_round() {
     if (state == STANDBY) {
         _game_manager_switch_mode(FIGHT);
         _game_manager_start_round(round_number);
-        round_number++;
         return true;
     }
     return false;
+}
+
+// Finish the current round.
+void game_manager_end_round() {
+    round_number++;
+    if (state == FIGHT) {
+        if (round_number >= ROUND_COUNT) {
+            _game_manager_switch_mode(WIN);
+        } else {
+            _game_manager_switch_mode(STANDBY);
+        }
+    }
 }
 
 // Decrease health (cheese) by 1
@@ -77,7 +89,9 @@ void game_manager_decrease_health() {
     health--;
     if (health <= 0) {
         health = 0;
-        // GAME OVER SCREEN
+        if (state == FIGHT) {
+            _game_manager_switch_mode(LOSE);
+        }
     }
 }
 

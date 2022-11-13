@@ -1,6 +1,9 @@
 #include "data/data_rounds.h"
 
 const struct round* data_rounds_get(u16 round) {
+    if (round >= ROUND_COUNT) {
+        exit(1);
+    }
     if (round == 0) {
         return &DATA_ROUNDS_ROUND0;
     }
@@ -9,7 +12,7 @@ const struct round* data_rounds_get(u16 round) {
 
 const struct round DATA_ROUNDS_ROUND0 = {
     .round_id = 0,
-    .rat_count = 60,
+    .rat_count = 1,
     .rat_spawn_entries = {
         {
             .spawn_time = 0, 

@@ -32,6 +32,9 @@ enum game_state game_manager_get_state();
 // Start the next round
 bool game_manager_next_round();
 
+// Finish the current round.
+void game_manager_end_round();
+
 // Decrease health (cheese) by 1
 void game_manager_decrease_health();
 
