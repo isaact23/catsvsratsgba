@@ -14,6 +14,9 @@ void (*add_money)(s32 amount);
 s32 (*get_money)();
 u16 (*get_cat_tile)(enum cat_type type);
 
+// Determine if a key is pressed.
+static bool pressed(enum KEYPAD_BITS queryKey);
+
 // Status of selection
 bool selecting = false;
 bool erasing = false;
@@ -26,6 +29,9 @@ u16 selected_cat_tile = 0;
 // Grid is 13 x 10. If x = 13, cursor is on navbar.
 u8 cursor_x = 2;
 u8 cursor_y = 0;
+
+// Store pressed keys.
+u16 keys;
 
 // Initialize grid selector
 void grid_selector_init(
@@ -54,9 +60,10 @@ void grid_selector_init(
 
 // Update grid selector every frame
 void grid_selector_update(u16 pressedKeys) {
+    keys = pressedKeys;
 
     // Respond to user input
-    if ((pressedKeys & KEY_RIGHT) == KEY_RIGHT) {
+    if (pressed(KEY_RIGHT)) {
         selecting = true;
         cursor_x++;
         if (cursor_x > 12 && cursor_y > 5) {
@@ -66,7 +73,7 @@ void grid_selector_update(u16 pressedKeys) {
             cursor_x = 13;
         }
 
-    } else if ((pressedKeys & KEY_DOWN) == KEY_DOWN) {
+    } else if (pressed(KEY_DOWN)) {
         selecting = true;
         cursor_y++;
         if (cursor_y > 9) {
@@ -76,24 +83,24 @@ void grid_selector_update(u16 pressedKeys) {
             cursor_y = 5;
         }
 
-    } else if ((pressedKeys & KEY_LEFT) == KEY_LEFT) {
+    } else if (pressed(KEY_LEFT)) {
         selecting = true;
         if (cursor_x > 0) {
             cursor_x--;
         }
 
-    } else if ((pressedKeys & KEY_UP) == KEY_UP) {
+    } else if (pressed(KEY_UP)) {
         selecting = true;
         if (cursor_y > 0) {
             cursor_y--;
         }
 
-    } else if ((pressedKeys & KEY_L) == KEY_L) {
+    } else if (pressed(KEY_L)) {
         selecting = true;
         cursor_x = 2;
         cursor_y = 4;
 
-    } else if ((pressedKeys & KEY_R) == KEY_R) {
+    } else if (pressed(KEY_R)) {
         selecting = true;
         cursor_x = 13;
         cursor_y = 2;
@@ -101,7 +108,7 @@ void grid_selector_update(u16 pressedKeys) {
 
     if (selecting) {
 
-        if ((pressedKeys & KEY_A) == KEY_A) {
+        if (pressed(KEY_A)) {
 
             // 'A' pressed on grid
             if (cursor_x < 13) {
@@ -153,7 +160,7 @@ void grid_selector_update(u16 pressedKeys) {
             }
 
         // Press B to cancel operation
-        } else if ((pressedKeys & KEY_B) == KEY_B) {
+        } else if (pressed(KEY_B)) {
 
             // Cancel placement
             if (placing) {
@@ -164,12 +171,26 @@ void grid_selector_update(u16 pressedKeys) {
             } else if (erasing) {
                 erasing = false;
                 grid_selector_disable_select();
-            }
-        }
 
-        // Calculate on-screen coordinates for cursor
-        u8 x = 240;
-        u8 y = 0;
+            // Cancel selecting
+            } else if (selecting) {
+                selecting = false;
+                grid_selector_disable_select();
+            }
+
+        }
+    }
+    // If A is pressed when we're not selecting, start selecting
+    else if (pressed(KEY_A)) {
+        selecting = true;
+    }
+
+    // Cursor defaults to off-screen.
+    u8 x = 240;
+    u8 y = 0;
+
+    // Calculate on-screen coordinates for cursor if selecting.
+    if (selecting) {
         if (cursor_x < 13) {
             x = cursor_x * TILE_SIZE;
             if (cursor_y < 10) {
@@ -189,31 +210,33 @@ void grid_selector_update(u16 pressedKeys) {
         } else {
             grid_selector_disable_select();
         }
-
-        // Update sprite attributes
-        cursor -> attr1 =
-            (y & 0xff) | // y position
-            (1 << 13) | // 256 colors
-            (0 << 14);  // Shape
-        cursor -> attr2 =
-            (x & 0x1ff) | // x position
-            (1 << 14);  // Size
-        cursor -> attr3 =
-            (SELECTOR_TILE_2 & 0x3ff); // Tile index
-        
-        if (!placing) {
-            x = 240;
-        }
-        cursor_entity -> attr1 =
-            (y & 0xff) | // y position
-            (1 << 13) | // 256 colors
-            (0 << 14);  // Shape
-        cursor_entity -> attr2 =
-            (x & 0x1ff) | // x position
-            (1 << 14);  // Size
-        cursor_entity -> attr3 =
-            (selected_cat_tile & 0x3ff); // Tile index
     }
+
+    // Update sprite attributes
+    cursor -> attr1 =
+        (y & 0xff) | // y position
+        (1 << 13) | // 256 colors
+        (0 << 14);  // Shape
+    cursor -> attr2 =
+        (x & 0x1ff) | // x position
+        (1 << 14);  // Size
+    cursor -> attr3 =
+        (SELECTOR_TILE_2 & 0x3ff); // Tile index
+    
+    // Disable cursor entity if we are not placing a cat.
+    if (!placing) {
+        x = 240;
+    }
+    cursor_entity -> attr1 =
+        (y & 0xff) | // y position
+        (1 << 13) | // 256 colors
+        (0 << 14);  // Shape
+    cursor_entity -> attr2 =
+        (x & 0x1ff) | // x position
+        (1 << 14);  // Size
+    cursor_entity -> attr3 =
+        (selected_cat_tile & 0x3ff); // Tile index
+        
 }
 
 // Enable selection mode
@@ -228,6 +251,11 @@ void grid_selector_disable_select() {
     selecting = false;
     erasing = false;
     placing = false;
-    cursor_x = 14;
-    cursor_y = 10;
+    cursor_x = 10;
+    cursor_y = 4;
+}
+
+// Determine if a key is pressed.
+static bool pressed(enum KEYPAD_BITS queryKey) {
+    return ((keys & queryKey) == queryKey);
 }
