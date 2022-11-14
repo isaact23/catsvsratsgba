@@ -6,6 +6,8 @@
 
 #include <stdint.h>
 
+#include "gba_types.h"
+
 #define IMAGE_RAT_DEFAULT_WALK_WIDTH 2
 #define IMAGE_RAT_DEFAULT_WALK_HEIGHT 4
 #define IMAGE_RAT_DEFAULT_WALK_PALETTE_SIZE 6
