@@ -23,7 +23,7 @@ static void _game_manager_switch_mode(enum game_state new_state);
 void game_manager_init() {
     // Initialize health and money
     health = 100;
-    money = 100;
+    money = 10;
 
     // Initialize sub-systems
     audio_manager_init();
@@ -101,6 +101,7 @@ void game_manager_add_money(s32 amount) {
     if (sum < 0) {
         sum = 0;
     }
+    money = sum;
 }
 
 // Get current amount of money.
