@@ -14,6 +14,16 @@ bool cat_storage_add_cat(struct cat_storage* cat_storage, struct cat new_cat) {
         return false;
     }
     
+    // TODO: Make sure the cat isn't on a path.
+
+    // Make sure there are no cats already at this coordinate
+    for (u8 i = 0; i < (cat_storage -> cat_count); i++) {
+        struct cat target = cat_storage -> cat_array[i];
+        if (target.grid_x == new_cat.grid_x && target.grid_y == new_cat.grid_y) {
+            return false;
+        }
+    }
+    
     // Add cat to array
     cat_storage -> cat_array[cat_storage -> cat_count] = new_cat;
     cat_storage -> cat_count++;

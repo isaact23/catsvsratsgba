@@ -22,7 +22,7 @@ bool selecting = false;
 bool erasing = false;
 bool placing = false;
 enum cat_type selected_cat_type = CAT_NORMAL;
-s32 selected_cat_price;
+s32 selected_cat_price = 0;
 u16 selected_cat_tile = 0;
 
 // Store coordinates of cursor.
@@ -120,6 +120,7 @@ void grid_selector_update(u16 pressedKeys) {
                         placing = false;
                     }
                 } else if (erasing) {
+
                     bool success = remove_cat(cursor_x, cursor_y);
                     if (success) {
                         grid_selector_disable_select();
@@ -155,7 +156,6 @@ void grid_selector_update(u16 pressedKeys) {
                 // Start round
                 } else if (cursor_y == 5) {
                     next_round();
-                    // TOOD: Start round
                 }
             }
 

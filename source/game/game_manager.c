@@ -23,7 +23,7 @@ static void _game_manager_switch_mode(enum game_state new_state);
 void game_manager_init() {
     // Initialize health and money
     health = 100;
-    money = 10;
+    money = 100;
 
     // Initialize sub-systems
     audio_manager_init();
