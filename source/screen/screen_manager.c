@@ -24,6 +24,10 @@ void screen_manager_init(struct sprite* (*sprite_manager_new_sprite)()) {
                  (0 << 13) | // Disable wrapping
                  (0 << 14);  // 32x32 tiles
 
+    // Scroll background 1
+    REG_BG1HOFS = -40;
+    REG_BG1VOFS = -15;
+
     // Initialize tilemap
     tilemap_init();
 

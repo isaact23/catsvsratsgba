@@ -8,7 +8,7 @@
 #include "gba_types.h"
 
 #define TILEMAP_WIN_WIDTH 32
-#define TILEMAP_WIN_HEIGHT 20
+#define TILEMAP_WIN_HEIGHT 32
 
 extern const u16 TILEMAP_WIN [];
 

@@ -28,7 +28,7 @@ void tilemap_init() {
 
     // Load tile data for win gui into screen block 17
     dest = SCREEN_BASE_BLOCK(17);
-    for (int i = 0; i < TILEMAP_WIN_WIDTH * TILEMAP_WIN_HEIGHT; i++) { // 1080 bytes fits in 1 screen block (2 kilobytes)
+    for (int i = 0; i < TILEMAP_WIN_WIDTH * TILEMAP_WIN_HEIGHT; i++) { // 2048 bytes fits in 1 screen block (2 kilobytes)
         dest[i] = TILEMAP_WIN[i];
     }
 }
