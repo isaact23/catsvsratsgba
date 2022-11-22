@@ -9,9 +9,9 @@
 #include "gba_types.h"
 
 #define IMAGE_TILES_WIDTH 10
-#define IMAGE_TILES_HEIGHT 18
+#define IMAGE_TILES_HEIGHT 22
 
-#define IMAGE_TILES_PALETTE_SIZE 66
+#define IMAGE_TILES_PALETTE_SIZE 67
 
 extern const u8 IMAGE_TILES_DATA [];
 extern const u16 IMAGE_TILES_PALETTE [];
