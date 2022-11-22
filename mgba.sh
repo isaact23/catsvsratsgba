@@ -1,8 +1,8 @@
 #!/bin/bash
 (
-    sleep 1
+    sleep 2
     echo "started"
 )&
-sleep 0.5
+sleep 1
 echo $1
-mgba-qt $1 -g4
+mgba-qt $1 -g
