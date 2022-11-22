@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "data/data_tilemap.h"
+#include "data/data_tilemap_win.h"
 #include "data/image_tiles.h"
 
 #include "gba_types.h"
