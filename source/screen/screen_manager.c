@@ -30,3 +30,13 @@ void screen_manager_init(struct sprite* (*sprite_manager_new_sprite)()) {
 void screen_manager_update(s32 health, s32 money) {
     text_manager_update(health, money);
 }
+
+// Display win GUI.
+void screen_manager_win_gui() {
+
+}
+
+// Display loss GUI.
+void screen_manager_lose_gui() {
+    
+}
