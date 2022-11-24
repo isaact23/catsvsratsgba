@@ -213,29 +213,29 @@ void grid_selector_update(u16 pressedKeys) {
     }
 
     // Update sprite attributes
+    cursor -> attr0 =
+        OBJ_Y(y) |
+        ATTR0_COLOR_256 |
+        ATTR0_SQUARE;
     cursor -> attr1 =
-        (y & 0xff) | // y position
-        (1 << 13) | // 256 colors
-        (0 << 14);  // Shape
+        OBJ_X(x) |
+        ATTR1_SIZE_16;
     cursor -> attr2 =
-        (x & 0x1ff) | // x position
-        (1 << 14);  // Size
-    cursor -> attr3 =
-        (SELECTOR_TILE_2 & 0x3ff); // Tile index
+        OBJ_CHAR(SELECTOR_TILE_2);
     
     // Disable cursor entity if we are not placing a cat.
     if (!placing) {
         x = 240;
     }
+    cursor_entity -> attr0 =
+        OBJ_Y(y) |
+        ATTR0_COLOR_256 |
+        ATTR0_SQUARE;
     cursor_entity -> attr1 =
-        (y & 0xff) | // y position
-        (1 << 13) | // 256 colors
-        (0 << 14);  // Shape
+        OBJ_X(x) |
+        ATTR1_SIZE_16;
     cursor_entity -> attr2 =
-        (x & 0x1ff) | // x position
-        (1 << 14);  // Size
-    cursor_entity -> attr3 =
-        (selected_cat_tile & 0x3ff); // Tile index
+        OBJ_CHAR(selected_cat_tile);
         
 }
 

@@ -9,9 +9,9 @@ u8 sprite_count = 0;
 void sprite_manager_init() {
     // Move all unused sprites off-screen
     for (u32 i = 0; i < SPRITE_LIMIT; i++) {
-        sprite_array[i].attr1 = 160;
-        sprite_array[i].attr2 = 240;
-        sprite_array[i].attr3 = 0;
+        sprite_array[i].attr0 = 160;
+        sprite_array[i].attr1 = 240;
+        sprite_array[i].attr2 = 0;
         sprite_array[i].dummy = 0;
         sprite_array_occupied[i] = false;
     }
@@ -52,9 +52,9 @@ struct sprite* sprite_manager_new_sprite() {
     }
 
     // Zero out attributes and return pointer to sprite
+    new_sprite -> attr0 = 0;
     new_sprite -> attr1 = 0;
     new_sprite -> attr2 = 0;
-    new_sprite -> attr3 = 0;
     sprite_count++;
     return new_sprite;
 }
@@ -68,8 +68,8 @@ bool sprite_manager_remove_sprite(struct sprite* sprite) {
     }
 
     // Move sprite off-screen
-    sprite -> attr1 = 160;
-    sprite -> attr2 = 240;
+    sprite -> attr0 = 160;
+    sprite -> attr1 = 240;
 
     // Free up space for new sprites
     u32 index = (sprite - sprite_array) / 8; // Use pointer arithmetic to get sprite index

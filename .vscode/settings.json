@@ -8,6 +8,7 @@
         "cat.h": "c",
         "screen_manager.h": "c",
         "grid_selector.h": "c",
-        "gba_types.h": "c"
+        "gba_types.h": "c",
+        "cat_storage.h": "c"
     }
 }

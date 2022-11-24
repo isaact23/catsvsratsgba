@@ -35,22 +35,22 @@ void text_manager_update(s32 health, s32 money) {
         } else {
             money_digit = _get_digit(money, NUM_CNT - i - 1);
         }
-        money_num -> attr1 =
-            ((NUM_MONEY_Y) & 0xff) |
-            (1 << 13) | // 256 colors
-            (0 << 14);  // Shape
+        money_num -> attr0 =
+            OBJ_Y(NUM_MONEY_Y) |
+            ATTR0_COLOR_256 |
+            ATTR0_SQUARE;
         if (money_digit < 0) {
-            money_num -> attr2 =
-                (240) | // Hide number
-                (0 << 14);  // Size
+            money_num -> attr1 =
+                OBJ_X(240) | // Hide number
+                ATTR1_SIZE_8;
         } else {
-            money_num -> attr2 =
-                ((NUM_X + (i * NUM_WIDTH)) & 0x1ff) |
-                (0 << 14);  // Size
+            money_num -> attr1 =
+                OBJ_Y(NUM_X + (i * NUM_WIDTH)) |
+                ATTR1_SIZE_8;
         }
-        money_num -> attr3 =
-            ((NUM_TILE + (money_digit * 2)) & 0x3ff) | // Tile index
-            (1 << 12);  // Priority
+        money_num -> attr2 =
+            OBJ_CHAR(NUM_TILE + (money_digit * 2)) |
+            ATTR2_PRIORITY(1);
 
         s8 health_digit;
         if (health >= 999) {
@@ -58,22 +58,22 @@ void text_manager_update(s32 health, s32 money) {
         } else {
             health_digit = _get_digit(health, NUM_CNT - i - 1);
         } 
-        health_num -> attr1 =
-            ((NUM_HEALTH_Y) & 0xff) |
-            (1 << 13) | // 256 colors
-            (0 << 14);  // Shape
+        health_num -> attr0 =
+            OBJ_Y(NUM_HEALTH_Y) |
+            ATTR0_COLOR_256 |
+            ATTR0_SQUARE;
         if (health_digit < 0) {
-            health_num -> attr2 =
-                (240) | // Hide number
-                (0 << 14);  // Size
+            health_num -> attr1 =
+                OBJ_X(240) | // Hide number
+                ATTR1_SIZE_8;
         } else {
-            health_num -> attr2 =
-                ((NUM_X + (i * NUM_WIDTH)) & 0x1ff) |
-                (0 << 14);  // Size
+            health_num -> attr1 =
+                OBJ_X(NUM_X + (i * NUM_WIDTH)) |
+                ATTR1_SIZE_8;
         }
-        health_num -> attr3 =
-            ((NUM_TILE + (health_digit * 2)) & 0x3ff) | // Tile index
-            (1 << 12);  // Priority
+        health_num -> attr2 =
+            OBJ_CHAR(NUM_TILE + (health_digit * 2)) |
+            ATTR2_PRIORITY(1);
     }
 }
 

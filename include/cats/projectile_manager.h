@@ -6,6 +6,8 @@
 #include "datatypes/projectile.h"
 #include "datatypes/rat.h"
 
+#include "gba_sprites.h"
+
 #define PROJECTILE_LIMIT 10
 
 #define HIT_RADIUS 6

@@ -57,14 +57,14 @@ void projectile_manager_update() {
 
             // Update projectile sprite OAM 
             struct sprite* sprite = projectile -> sprite;
-            sprite -> attr1 = 
-                (proj_y & 0xff) |
-                (1 << 13) | // Palette mode
-                ((projectile -> shape) << 14);
+            sprite -> attr0 = 
+                OBJ_Y(proj_y) |
+                ATTR0_COLOR_256 | // Palette mode
+                OBJ_SHAPE(projectile -> shape);
+            sprite -> attr1 =
+                OBJ_X(proj_x);
             sprite -> attr2 =
-                (proj_x & 0x1ff);
-            sprite -> attr3 =
-                ((projectile -> tile) & 0x3ff); // Tile index
+                OBJ_CHAR(projectile -> tile);
 
         }
         
