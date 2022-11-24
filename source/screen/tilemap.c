@@ -13,10 +13,7 @@ void tilemap_init() {
     // Load image into char block 0, two bytes at a time
     vu16* dest = CHAR_BASE_BLOCK(0);
     u16* image = (u16*) IMAGE_TILES_DATA;
-    if (IMAGE_TILES_WIDTH * IMAGE_TILES_HEIGHT > 250) {
-        exit(1);
-    }
-    for (int i = 0; i < IMAGE_TILES_WIDTH * IMAGE_TILES_HEIGHT * 32; i++) { // 5760 bytes fits in 1 char block (16 kilobytes)
+    for (int i = 0; i < IMAGE_TILES_WIDTH * IMAGE_TILES_HEIGHT * 32; i++) { // 19200 bytes fits in 2 char block (16 kilobytes)
         dest[i] = image[i];
     }
 
