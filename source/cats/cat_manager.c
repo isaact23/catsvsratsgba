@@ -102,15 +102,15 @@ void cat_manager_update() {
 
         // Update cat sprite
         struct sprite* sprite = cat -> sprite;
+        sprite -> attr0 =
+            OBJ_Y(cat -> pixel_y) |
+            ATTR0_COLOR_256 |
+            ATTR0_SQUARE;
         sprite -> attr1 =
-            ((cat -> pixel_y) & 0xff) | // y position
-            (1 << 13) | // 256 colors
-            (0 << 14);  // Shape
+            OBJ_X(cat -> pixel_x) |
+            ATTR1_SIZE_16;
         sprite -> attr2 =
-            ((cat -> pixel_x) & 0x1ff) | // x position
-            (1 << 14);  // Size
-        sprite -> attr3 =
-            (tile & 0x3ff); // Tile index
+            OBJ_CHAR(tile);
     }
 }
 

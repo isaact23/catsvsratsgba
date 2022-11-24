@@ -102,16 +102,16 @@ void rat_manager_update(const struct round* curr_round, u32 time_elapsed) {
             
         // Send rat data to sprite struct
         struct sprite* sprite = rat -> sprite;
+        sprite -> attr0 =
+            OBJ_Y(rat -> y) |
+            ATTR0_COLOR_256 |
+            ATTR0_SQUARE;
         sprite -> attr1 =
-            ((rat -> y) & 0xff) |
-            (1 << 13) | // 256 colors
-            (0 << 14);  // Shape
+            OBJ_X(rat -> x) |
+            ATTR1_SIZE_16;
         sprite -> attr2 =
-            ((rat -> x) & 0x1ff) |
-            (1 << 14);  // Size
-        sprite -> attr3 =
-            ((rat -> tile_id) & 0x3ff) | // Tile index
-            (1 << 12);  // Priority
+            OBJ_CHAR(rat -> tile_id) |
+            OBJ_PRIORITY(1);  // Priority
         
         // Update HP bar
         // Move something from range 0 to MAX_HP to range 14 to 0, then pick tile
@@ -120,14 +120,15 @@ void rat_manager_update(const struct round* curr_round, u32 time_elapsed) {
         u8 tile = (adjusted_hp_flipped * 4) + HP_TILE;
 
         struct sprite* hp_bar = rat -> hp_bar;
+        hp_bar -> attr0 =
+            OBJ_Y((rat -> y) - 6) |
+            ATTR0_COLOR_256 |
+            ATTR0_WIDE;
         hp_bar -> attr1 =
-            (((rat -> y) - 6) & 0xff) |
-            (1 << 13) |
-            (1 << 14); // Horizontal shape
+            OBJ_X(rat -> x) |
+            ATTR1_SIZE_8;
         hp_bar -> attr2 =
-            ((rat -> x) & 0x1ff);
-        hp_bar -> attr3 =
-            tile & 0x3ff;
+            OBJ_CHAR(tile);
     }
 }
 

@@ -7,6 +7,7 @@
 #include "datatypes/rat.h"
 #include "datatypes/round.h"
 
+#include "gba_sprites.h"
 #include "gba_types.h"
 
 #define RAT_LIMIT 64

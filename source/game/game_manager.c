@@ -39,7 +39,7 @@ void game_manager_init() {
         &rat_manager_get_rats);
 
     // Setup round 0
-    _game_manager_switch_mode(WIN);
+    _game_manager_switch_mode(STANDBY);
     //game_manager_start_round(round_number);
 }
 

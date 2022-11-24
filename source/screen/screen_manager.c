@@ -1,5 +1,11 @@
 #include "screen/screen_manager.h"
 
+// The frame for dancing rats
+u16 dance_frame = 0;
+
+// Function pointers
+struct sprite* (*new_sprite)();
+
 // Initialize the screen.
 void screen_manager_init(struct sprite* (*sprite_manager_new_sprite)()) {
     // Set up display control
@@ -7,7 +13,7 @@ void screen_manager_init(struct sprite* (*sprite_manager_new_sprite)()) {
         (0 << 0)  | // Display mode 0
         (0 << 6)  | // 1 for 1D sprite mode, 0 for 2D sprite mode
         (1 << 8)  | // Enable background 0
-        (1 << 9)  | // Enable background 1
+        (0 << 9)  | // Disable background 1
         (1 << 12);  // Screen display OBJ
 
     // Set up background 0
@@ -25,7 +31,7 @@ void screen_manager_init(struct sprite* (*sprite_manager_new_sprite)()) {
                  (0 << 14);  // 32x32 tiles
 
     // Scroll background 1
-    REG_BG1HOFS = -40;
+    REG_BG1HOFS = -24;
     REG_BG1VOFS = -15;
 
     // Initialize tilemap
@@ -33,6 +39,9 @@ void screen_manager_init(struct sprite* (*sprite_manager_new_sprite)()) {
 
     // Initialize text
     text_manager_init(sprite_manager_new_sprite);
+
+    // Set function pointers
+    new_sprite = sprite_manager_new_sprite;
 }
 
 // Update the screen.
@@ -42,7 +51,12 @@ void screen_manager_update(s32 health, s32 money) {
 
 // Display win GUI.
 void screen_manager_win_gui() {
+    // Enable background 1
+    REG_DISPCNT |= (1 << 9);
 
+    // Create dancing cats
+    struct sprite* cat1 = new_sprite();
+    
 }
 
 // Display loss GUI.
