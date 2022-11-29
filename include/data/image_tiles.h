@@ -9,7 +9,7 @@
 #include "gba_types.h"
 
 #define IMAGE_TILES_WIDTH 10
-#define IMAGE_TILES_HEIGHT 30
+#define IMAGE_TILES_HEIGHT 31
 
 #define IMAGE_TILES_PALETTE_SIZE 66
 
