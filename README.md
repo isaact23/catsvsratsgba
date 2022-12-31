@@ -1,6 +1,8 @@
 # Cats vs. Rats GBA Edition
 
-1,081 lines of code as of 7/29/22
+![Cats vs Rats on mGBA Emulator]('screenshots/screenshot2.png')
+
+![Cats vs Rats on GBA]('screenshots/gba2.png')
 
 See https://github.com/walkingeyerobot/pokeemerald/wiki/wsl2-and-vscode-setup for development environment info
 
