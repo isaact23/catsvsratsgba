@@ -34,7 +34,8 @@
 
 // Initialize cat manager
 void cat_manager_init(
-    struct sprite* (*sprite_manager_new_sprite)(), bool (*sprite_manager_remove_sprite)(),
+    struct sprite* (*sprite_manager_new_sprite)(),
+    bool (*sprite_manager_remove_sprite)(struct sprite* sprite),
     struct rat* (*rat_manager_get_rats)()
 );
 

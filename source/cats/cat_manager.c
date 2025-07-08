@@ -5,7 +5,7 @@ struct cat_storage cat_storage;
 
 // Function pointers
 static struct sprite* (*new_sprite)();
-static bool (*remove_sprite)();
+static bool (*remove_sprite)(struct sprite* sprite);
 struct rat* (*get_rats)();
 u8 (*get_rat_count)();
 
