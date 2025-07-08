@@ -72,7 +72,7 @@ bool sprite_manager_remove_sprite(struct sprite* sprite) {
     sprite -> attr1 = 240;
 
     // Free up space for new sprites
-    u32 index = (sprite - sprite_array) / 8; // Use pointer arithmetic to get sprite index
+    u32 index = sprite - sprite_array; // Use pointer arithmetic to get sprite index
     sprite_array_occupied[index] = false;
     sprite_count--;
     return true;
