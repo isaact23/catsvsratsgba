@@ -137,6 +137,21 @@ struct rat* rat_manager_get_rats() {
     return rat_array;
 }
 
+// Reset rat manager for new round
+void rat_manager_reset() {
+    // Reset counters
+    rats_spawned = 0;
+    rats_alive = 0;
+    next_eat_pos = 0;
+    
+    // Clear all active rats
+    for (u32 i = 0; i < RAT_LIMIT; i++) {
+        if (rat_array[i].active) {
+            _rat_manager_remove(&rat_array[i]);
+        }
+    }
+}
+
 // If enough time has elapsed, spawn a new rat. Return true if successful.
 static bool _rat_manager_spawn(const struct round* curr_round, u32 time_elapsed) {
 

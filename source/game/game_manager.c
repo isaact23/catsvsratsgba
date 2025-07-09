@@ -1,4 +1,5 @@
 #include "game/game_manager.h"
+#include "rats/rat_manager.h"
 
 // Game state
 enum game_state state;
@@ -51,7 +52,9 @@ void game_manager_update() {
     screen_manager_update(health, money);
     interact_manager_update();
 
-    rat_manager_update(round_data, time_elapsed);
+    if (state == FIGHT) {
+        rat_manager_update(round_data, time_elapsed);
+    }
     cat_manager_update();
     
     time_elapsed++;
@@ -74,8 +77,8 @@ bool game_manager_next_round() {
 
 // Finish the current round.
 void game_manager_end_round() {
-    round_number++;
     if (state == FIGHT) {
+    round_number++;
         if (round_number >= ROUND_COUNT) {
             _game_manager_switch_mode(WIN);
         } else {
@@ -113,6 +116,7 @@ s32 game_manager_get_money() {
 // Start a round
 static void _game_manager_start_round(u16 round) {
     time_elapsed = 0;
+    rat_manager_reset();
     round_data = data_rounds_get(round);
     round_number = round;
 }

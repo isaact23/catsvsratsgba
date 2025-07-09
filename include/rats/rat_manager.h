@@ -29,4 +29,7 @@ void rat_manager_update(const struct round* curr_round, u32 time_elapsed);
 // Get array of rats
 struct rat* rat_manager_get_rats();
 
+// Reset rat manager for new round
+void rat_manager_reset();
+
 #endif

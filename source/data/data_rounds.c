@@ -6,19 +6,46 @@ const struct round* data_rounds_get(u16 round) {
     }
     if (round == 0) {
         return &DATA_ROUNDS_ROUND0;
+    } else if (round == 1) {
+        return &DATA_ROUNDS_ROUND1;
+    } else if (round == 2) {
+        return &DATA_ROUNDS_ROUND2;
     }
     exit(1);
 }
 
 const struct round DATA_ROUNDS_ROUND0 = {
     .round_id = 0,
+    .rat_count = 3,
+    .rat_spawn_entries = {
+        {0, RAT_NORMAL, 0},
+        {30, RAT_NORMAL, 0},
+        {60, RAT_NORMAL, 1},
+    }
+};
+
+const struct round DATA_ROUNDS_ROUND1 = {
+    .round_id = 1,
     .rat_count = 10,
     .rat_spawn_entries = {
-        {
-            .spawn_time = 0, 
-            .rat_type = RAT_NORMAL,
-            .path_id = 0
-        },
+        {0, RAT_NORMAL, 0},
+        {20, RAT_NORMAL, 0},
+        {40, RAT_NORMAL, 0},
+        {60, RAT_NORMAL, 0},
+        {80, RAT_NORMAL, 0},
+        {100, RAT_NORMAL, 1},
+        {120, RAT_NORMAL, 1},
+        {140, RAT_NORMAL, 1},
+        {160, RAT_NORMAL, 1},
+        {180, RAT_NORMAL, 1},
+    }
+};
+
+const struct round DATA_ROUNDS_ROUND2 = {
+    .round_id = 2,
+    .rat_count = 10,
+    .rat_spawn_entries = {
+        {0, RAT_NORMAL, 0},
         {30, RAT_NORMAL, 0},
         {35, RAT_FAST, 0},
         {60, RAT_NORMAL, 1},
@@ -28,63 +55,5 @@ const struct round DATA_ROUNDS_ROUND0 = {
         {150, RAT_FAST, 1},
         {160, RAT_NORMAL, 0},
         {170, RAT_NORMAL, 1},
-        // {360, RAT_FAST, 1},
-        // {420, RAT_FAST, 1},
-        // {480, RAT_FAST, 1},
-
-        // {500, 1, 0},
-        // {510, 1, 1},
-        // {520, 1, 0},
-        // {530, 1, 1},
-        // {540, 1, 0},
-        // {550, 1, 1},
-        // {560, 1, 0},
-        // {570, 1, 1},
-        // {580, 1, 0},
-        // {590, 1, 1},
-        
-        // {600, 1, 0},
-        // {610, 1, 1},
-        // {620, 1, 0},
-        // {630, 1, 1},
-        // {640, 1, 0},
-        // {650, 1, 1},
-        // {660, 1, 0},
-        // {670, 1, 1},
-        // {680, 1, 0},
-        // {690, 1, 1},
-
-        // {700, 1, 0},
-        // {710, 1, 1},
-        // {720, 1, 0},
-        // {730, 1, 1},
-        // {740, 1, 0},
-        // {750, 1, 1},
-        // {760, 1, 0},
-        // {770, 1, 1},
-        // {780, 1, 0},
-        // {790, 1, 1},
-
-        // {800, 1, 0},
-        // {810, 1, 1},
-        // {820, 1, 0},
-        // {830, 1, 1},
-        // {840, 1, 0},
-        // {850, 1, 1},
-        // {860, 1, 0},
-        // {870, 1, 1},
-        // {880, 1, 0},
-        // {890, 1, 1},
-
-        // {900, 1, 0},
-        // {910, 1, 1},
-        // {920, 1, 0},
-        // {930, 1, 1},
-        // {940, 1, 0},
-        // {950, 1, 1},
-        // {960, 1, 0},
-        // {970, 1, 1},
-        // {980, 1, 0},
-        // {990, 1, 1},
     }
 };

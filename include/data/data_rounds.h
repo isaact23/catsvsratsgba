@@ -6,10 +6,12 @@
 
 #include "datatypes/round.h"
 
-#define ROUND_COUNT 1
+#define ROUND_COUNT 3
 
 const struct round* data_rounds_get(u16 round);
 
 extern const struct round DATA_ROUNDS_ROUND0;
+extern const struct round DATA_ROUNDS_ROUND1;
+extern const struct round DATA_ROUNDS_ROUND2;
 
 #endif
