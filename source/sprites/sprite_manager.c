@@ -66,9 +66,8 @@ bool sprite_manager_remove_sprite(struct sprite* sprite) {
         return false;
     }
 
-    // Move sprite off-screen
-    sprite -> attr0 = 160;
-    sprite -> attr1 = 240;
+    // Disable sprite
+    sprite -> attr0 = 1 << 9;
 
     // Free up space for new sprites
     u32 index = sprite - sprite_array; // Use pointer arithmetic to get sprite index

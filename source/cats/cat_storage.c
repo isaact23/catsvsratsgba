@@ -43,6 +43,8 @@ bool cat_storage_remove_cat(struct cat_storage* cat_storage, u8 x, u8 y) {
         struct cat target = cat_storage -> cat_array[i];
         if (target.grid_x == x && target.grid_y == y) {
 
+            sprite_manager_remove_sprite(target.sprite);
+
             // Move cat at end of array to slot of cat being removed
             cat_storage -> cat_array[i] = cat_storage -> cat_array[cat_storage -> cat_count - 1];
             cat_storage -> cat_count--;

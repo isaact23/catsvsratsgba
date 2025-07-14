@@ -10,7 +10,7 @@
 #define GRID_HEIGHT 10
 #define CAT_LIMIT 20
 
-// Datastructure for storing cats
+// Data structure for storing cats
 struct cat_storage {
     struct cat cat_array [CAT_LIMIT];
     u8 cat_count;
