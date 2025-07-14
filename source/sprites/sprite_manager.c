@@ -9,8 +9,8 @@ u8 sprite_count = 0;
 void sprite_manager_init() {
     // Move all unused sprites off-screen
     for (u32 i = 0; i < SPRITE_LIMIT; i++) {
-        sprite_array[i].attr0 = 160;
-        sprite_array[i].attr1 = 240;
+        sprite_array[i].attr0 = 1 << 9;
+        sprite_array[i].attr1 = 0;
         sprite_array[i].attr2 = 0;
         sprite_array[i].dummy = 0;
         sprite_array_occupied[i] = false;
@@ -20,8 +20,7 @@ void sprite_manager_init() {
     dmaCopy(IMAGE_SPRITES_PALETTE, (void*) SPRITE_PALETTE_MEMORY, IMAGE_SPRITES_PALETTE_SIZE * 2);
 
     // Copy sprite into sprite image memory
-    u16* sprite16 = (u16*) IMAGE_SPRITES_DATA;
-    dmaCopy(sprite16, (void*) SPRITE_IMAGE_MEMORY, IMAGE_SPRITES_WIDTH * IMAGE_SPRITES_HEIGHT * 64);
+    dmaCopy(IMAGE_SPRITES_DATA, (void*) SPRITE_IMAGE_MEMORY, IMAGE_SPRITES_WIDTH * IMAGE_SPRITES_HEIGHT * 64);
 }
 
 // Update sprites in memory every vblank
